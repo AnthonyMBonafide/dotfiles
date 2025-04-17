@@ -6,7 +6,7 @@ source $HOME/.gitaliases
 
 source $HOME/.historyconfig
 
-export PATH=$PATH:/opt/bin:$HOME/go/bin:/opt/homebrew/bin:/bin:/usr/bin:$HOME/.cargo/bin:$HOME/.config/tmux/plugins/tmuxifier/bin
+export PATH=$PATH:/opt/bin:$HOME/go/bin:/opt/homebrew/bin:/bin:/usr/bin:$HOME/.cargo/bin:$HOME/.config/tmux/plugins/tmuxifier/bin:$HOME/scripts/
 # Path to your oh-my-zsh installation.
 export VISUAL=nvim
 export EDITOR="$VISUAL"
