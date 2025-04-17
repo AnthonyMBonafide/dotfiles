@@ -1,0 +1,12 @@
+DEFAULT_BRANCH="main"
+DEFAULT_ORIGN="origin"
+
+alias g="git"
+alias gf="git fetch --all"
+alias grom="git rebase $DEFAULT_ORIGN/$DEFAULT_BRANCH"
+alias ga="git add ."
+alias gc="git commit -s -S"
+alias gca="git commit -s -S -a"
+alias gs="git status"
+alias gl="git log"
+alias gd="git diff"

@@ -1,0 +1,37 @@
+[url "ssh://git@github.com/"]
+        insteadOf = https://github.com/
+[init]
+  defaultBranch = main
+[user]
+	signingkey = 07E73A5681E60D93
+	email = anthony.bonafide@shipt.com
+	name = Anthony M. Bonafide
+[core]
+  editor = nvim
+  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  pager = less
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[maintenance]
+	repo = /Users/anthony.bonafide/projects/work/metropolis
+	repo = /Users/anthony.bonafide/projects/work/retailer
+	repo = /Users/anthony.bonafide/projects/work/xlr8r
+	repo = /Users/anthony.bonafide/projects/work/loyalty
+	repo = /Users/anthony.bonafide/projects/work/rod
+	repo = /Users/anthony.bonafide/projects/work/zod
+[alias]
+	fetcha = fetch --all
+	rebaseom = rebase origin/main
+	commits = commit -s -S
+	staash = stash --all
+[diff]
+	tool = vimdiff
+[merge]
+  tool = fugitive
+[mergetool]
+  keepBackup = false
+[mergetool "fugitive"]
+	cmd = nvim -d -c \"wincmd l\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+

@@ -1,0 +1,14 @@
+layout {
+    pane{
+        name "NVIM"
+        cwd "/Users/anthony.bonafide/projects"
+        command "exa"
+        focus true
+      }
+    pane split_direction="horizontal" {
+        pane{
+            cwd "/Users/anthony.bonafide/projects"
+          }
+    }
+}
+

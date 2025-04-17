@@ -1,0 +1,47 @@
+layout {
+   default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+      }    
+
+    tab name="Code Editor" focus=true{
+      pane command="nvim"{
+          name "NVIM"
+          focus true
+        }
+      pane split_direction="horizontal" {
+          pane{
+              name "Terminal"
+            }
+      }
+    }
+
+    tab name="Code Runner" {
+        pane{
+          name "Code Runner"
+        }
+      }
+
+    tab name="Local Database" {
+        pane{
+          name "Local Database"
+        }
+      }
+
+    tab name="Staging Database"{
+        pane{
+          name "Staging Database"
+        }
+      }
+
+    tab name="Production Database"{
+      pane{
+        name "Production Database"
+      }
+    }
+}
