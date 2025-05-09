@@ -14,4 +14,9 @@ export GOBIN="$HOME/go/bin"
 export GPG_TTY=$(tty)
 gpgconf --launch gpg-agent
 
+# Git completions
+fpath=(~/.zsh $fpath)
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+autoload -Uz compinit && compinit
+
 source $HOME/.clitools
