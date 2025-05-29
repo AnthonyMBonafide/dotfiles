@@ -37,3 +37,8 @@ ripgrep
 starship
 pinentry-mac
 atuin
+markdownlint-cli
+markdown-toc
+prettier
+sqlfluff
+ghostty

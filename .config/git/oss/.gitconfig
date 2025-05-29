@@ -1,7 +1,7 @@
 [url "ssh://git@github.com/"]
         insteadOf = https://github.com/
 [user]
-	signingkey = 07E73A5681E60D93
+	signingkey = /Users/anthony/.ssh/id_ed25519.pub
 	email = AnthonyMBonafide@pm.me
 	name = Anthony M. Bonafide
 

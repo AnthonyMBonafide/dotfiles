@@ -3,7 +3,7 @@
 [init]
   defaultBranch = main
 [user]
-	signingkey = 07E73A5681E60D93
+	signingkey = /Users/anthony/.ssh/id_ed25519.pub
 	email = anthony.bonafide@shipt.com
 	name = Anthony M. Bonafide
 [core]
@@ -14,13 +14,6 @@
 	ui = auto
 [branch]
 	sort = -committerdate
-[maintenance]
-	repo = /Users/anthony.bonafide/projects/work/metropolis
-	repo = /Users/anthony.bonafide/projects/work/retailer
-	repo = /Users/anthony.bonafide/projects/work/xlr8r
-	repo = /Users/anthony.bonafide/projects/work/loyalty
-	repo = /Users/anthony.bonafide/projects/work/rod
-	repo = /Users/anthony.bonafide/projects/work/zod
 [alias]
 	fetcha = fetch --all
 	rebaseom = rebase origin/main
@@ -34,4 +27,5 @@
   keepBackup = false
 [mergetool "fugitive"]
 	cmd = nvim -d -c \"wincmd l\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
-
+[gpg]
+	format = ssh

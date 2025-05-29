@@ -51,6 +51,13 @@ Use the scripts to bootstrap a system, pick the one that matches your system.
 These scripts are meant to install a package manager, necessary packages, run 
 `stow`
 
+
+### Mac Additional Setup
+
+- Set `Caps lock` to `Control`
+- Go into security settings and allow Alacrity to be run since it is not signed from Brew repo
+
+
 #### Work In Progress
 
 Eventually this will be able to bootstrap a system with one command from a
@@ -59,3 +66,12 @@ could run something like:
 ```shell
 curl -s https://raw.githubusercontent.com/AnthonyMBonafide/dotfiles/main/bootstrap.sh | bash
 ```
+
+#### TODO
+
+[ ] Remove hardcoded directories, especially ones with username (i.e. zellij config location for plugins)
+[ ] Error on Alacrity startup due to gnupg files not being created(dirty fix - run gnupg)
+[ ] Create empty .workaliases file to get rid of errors upon startup
+[ ] Trigger loading NVIM plugins so first time opening does not have errors/see loading
+[ ] Create script for creating ssh key which can be used for easier Github setup
+

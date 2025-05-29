@@ -6,7 +6,7 @@ option_as_alt = "Both"
 program = "/opt/homebrew/bin/zellij"
 
 [env]
-XDG_CONFIG_HOME = "/Users/anthony.bonafide/.config"
+XDG_CONFIG_HOME = "/Users/anthony/.config"
 
 [font]
 normal = { family = "Hack Nerd Font", style = "Regular" }
