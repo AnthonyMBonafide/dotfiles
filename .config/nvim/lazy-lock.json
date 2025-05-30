@@ -11,7 +11,7 @@
   "fzf-lua": { "branch": "main", "commit": "29e982dfc96a134fecc80853c8cb8324e43e574b" },
   "git-worktree.nvim": { "branch": "main", "commit": "3ad8c17a3d178ac19be925284389c14114638ebb" },
   "gitsigns.nvim": { "branch": "main", "commit": "4baa13519c2168cc9a7890a3580c50226ed018fb" },
-  "grug-far.nvim": { "branch": "main", "commit": "b8fa19b786333538ba89a444a8d31bfd3095ca3e" },
+  "grug-far.nvim": { "branch": "main", "commit": "7434d9247c9b95234e058b07b393443d5adeb2fe" },
   "harpoon": { "branch": "harpoon2", "commit": "ed1f853847ffd04b2b61c314865665e1dadf22c7" },
   "kulala.nvim": { "branch": "main", "commit": "aa462decb4aa2f0cb9783fba4ad8f401b042c3be" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
@@ -63,6 +63,5 @@
   "vim-dadbod-completion": { "branch": "master", "commit": "a8dac0b3cf6132c80dc9b18bef36d4cf7a9e1fe6" },
   "vim-dadbod-ui": { "branch": "master", "commit": "460432301a5cb280ea265ddfa15c9f3dcd1d26b7" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
-  "yanky.nvim": { "branch": "main", "commit": "04775cc6e10ef038c397c407bc17f00a2f52b378" },
-  "zellij-nav.nvim": { "branch": "main", "commit": "91cc2a642d8927ebde50ced5bf71ba470a0fc116" }
+  "yanky.nvim": { "branch": "main", "commit": "04775cc6e10ef038c397c407bc17f00a2f52b378" }
 }
