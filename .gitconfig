@@ -18,6 +18,14 @@
   diff = diff --word-diff
 	bare-clone = !git-bare-clone.sh
   worktreea = !git-worktree-add.sh
+[gpg]
+	format = ssh
+[user]
+	signingkey = /Users/anthony/.ssh/id_ed25519.pub
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
 [column]
 	ui = auto
 [branch]
@@ -32,14 +40,3 @@
   keepBackup = false
 [mergetool "fugitive"]
 	cmd = nvim -d -c \"wincmd l\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
-
-
-
-[gpg]
-	format = ssh
-[user]
-	signingkey = /Users/anthony/.ssh/id_ed25519.pub
-[commit]
-	gpgsign = true
-[tag]
-	gpgSign = true
