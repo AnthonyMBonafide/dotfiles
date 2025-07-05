@@ -1,5 +1,3 @@
-alacritty
-brave-browser
 bruno
 font-hack-nerd-font
 font-jetbrains-mono-nerd-font

@@ -1,5 +1,12 @@
 # Import me last
 
+alias ls='eza'
+alias l='eza -al --icons always -b --git --total-size'
+alias lt='eza -al --icons always -b --git --total-size -T'
+alias cd='z'
+alias ..='z ..'
+alias pms='podman machine start'
+
 source <(fzf --zsh)
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"

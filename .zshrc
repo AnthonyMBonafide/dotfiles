@@ -3,6 +3,7 @@ alias n='nvim'
 source $HOME/.dockeraliases
 source $HOME/.workaliases
 source $HOME/.gitaliases
+source $HOME/.brewaliases
 
 source $HOME/.historyconfig
 
