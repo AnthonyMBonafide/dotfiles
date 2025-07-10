@@ -12,6 +12,7 @@
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   pager = less
+	excludesFile = ~/.gitignore_global
 [alias]
 	fetch = fetch --all
   blame = blame -w -C -C -C
