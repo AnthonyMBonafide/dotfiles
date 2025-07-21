@@ -1,4 +1,5 @@
 alias bu="brew update && brew upgrade"
+
 alias src="source ~/.zshrc"
 alias gb="go build ./... && go test -run=XXX_SHOULD_NEVER_MATCH_XXX ./..."
 alias gbt="go test -run=XXX_SHOULD_NEVER_MATCH_XXX ./..."

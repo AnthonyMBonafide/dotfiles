@@ -9,4 +9,4 @@ default-command = "log"
 
 [revsets]
 # Show commits that are not in `main@origin`
-log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())"
+# log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())"

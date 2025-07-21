@@ -43,3 +43,5 @@ prettier
 sqlfluff
 ghostty
 firefox
+fish
+lazyjj

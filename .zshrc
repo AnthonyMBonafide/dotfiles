@@ -1,3 +1,14 @@
+autoload -Uz compinit
+compinit
+
+# Allow to edit command in editor
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line # Binds Ctrl+X Ctrl+E to open editor
+
+# Allow Vim mode 
+bindkey -v
+
 alias n='nvim'
 
 source $HOME/.dockeraliases
@@ -20,4 +31,5 @@ fpath=(~/.zsh $fpath)
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 autoload -Uz compinit && compinit
 
+source $HOME/.zsh/jj.completion.zsh
 source $HOME/.clitools
