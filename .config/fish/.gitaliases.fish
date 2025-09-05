@@ -20,7 +20,7 @@ abbr gwtr git worktree remove
 abbr gwtrf git worktree remove --force
 
 # JJ aliases
-abbr jcb jj bookmark create -r@ AnthonyMBonafide/
+abbr jbc jj bookmark create -r@ AnthonyMBonafide/
 abbr jbla jj bookmark list -a
 abbr jbl jj bookmark list
 abbr jgp jj git push -r@ --allow-new
