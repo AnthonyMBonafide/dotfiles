@@ -9,6 +9,10 @@ abbr lt 'eza -al --icons always -b --git --total-size -T'
 abbr cd z
 abbr .. 'z ..'
 abbr pms 'podman machine start'
+fish_add_path /opt/homebrew/opt/llvm/bin
+
+set -gx LDFLAGS -L/opt/homebrew/opt/llvm/lib
+set -gx CPPFLAGS -I/opt/homebrew/opt/llvm/include
 
 # starship init fish | source
 zoxide init fish | source

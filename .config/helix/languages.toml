@@ -1,0 +1,16 @@
+[[language]]
+name = "go"
+
+[language.debugger]
+command = "dlv"                    # Assuming Delve is installed and in your PATH
+name = "delve"
+transport = "tcp"
+port-arg = "--listen=127.0.0.1:{}" # Delve listens on a specific port
+args = ["debug", "${file}"]
+
+[[language.debugger.templates]]
+name = "binary"
+request = "launch"
+
+[language.debugger.templates.args]
+program = "{0}" # Path to the Go binary you want to debug
