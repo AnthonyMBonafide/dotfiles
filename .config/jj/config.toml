@@ -13,4 +13,6 @@ default-command = "log"
 
 [revset-aliases]
 # set all remote bookmarks (commits pushed to remote branches) to be immutable
+# this has the side effect of making a new change on top of the existing one
+# when pushing changes. Also, displaying with `jj log` or simply `jj`
 'immutable_heads()' = "builtin_immutable_heads() | remote_bookmarks()"
