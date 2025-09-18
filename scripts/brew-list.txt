@@ -12,7 +12,6 @@ luarocks
 neovim
 ollama
 pgcli
-postgresql@14
 qemu
 task
 yq
@@ -25,7 +24,6 @@ wget
 zoxide
 zsh
 zellij
-adr-tools
 bat
 docker-completion
 eza
