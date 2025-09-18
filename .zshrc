@@ -12,11 +12,14 @@ bindkey -v
 alias n='nvim'
 
 source $HOME/.dockeraliases
-source $HOME/.workaliases
-source $HOME/.gitaliases
+source source $HOME/.gitaliases
 source $HOME/.brewaliases
-
 source $HOME/.historyconfig
+
+FILE_TO_LOAD="$HOME/.workaliases"
+if [ -f "$FILE_TO_LOAD" ]; then
+  source "$FILE_TO_LOAD"
+fi
 
 export PATH=$PATH:/opt/bin:$HOME/go/bin:/opt/homebrew/bin:/bin:/usr/bin:$HOME/.cargo/bin:$HOME/.config/tmux/plugins/tmuxifier/bin:$HOME/scripts/
 # Path to your oh-my-zsh installation.

@@ -55,6 +55,9 @@ done
 
 # # Remove outdated versions from the cellar.
 brew cleanup
+# Install TPM (Tmux Plugin Manager) Press prefix + I to install plugins
+# Prefix is Ctrl + b by default but Ctrl + <Space> is with custom config
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Set the time notifications stay on the screen to 2 seconds
 defaults write com.apple.notificationcenterui bannerTime -int 2

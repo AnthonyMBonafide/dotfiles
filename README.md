@@ -12,11 +12,12 @@ version control.
 The contents of this directory are for setting up common system configurations
 as well as common tools. For example:
 
-- ZSH
+- Fish Shell
 - Neo Vim
 - Git
-- Alacritty
-- Zellij
+- JuJutsu(JJ)
+- Ghostty
+- Tmux
 - etc
 
 ## Set up
@@ -70,6 +71,8 @@ in this repo.
 - You may have to run `sudo
 /opt/homebrew/Cellar/podman/5.5.0/bin/podman-mac-helper install` for MacOS
   followed by `podman machine stop` then `podman machine start`
+- Open a terminal with Tmux running and have TPM install all plugins by running
+  `Crtl + <Space> then I`
 
 ### Scripts
 
@@ -97,10 +100,10 @@ bash
 
 #### TODO
 
-[ ] Remove hardcoded directories, especially ones with username (i.e. zellij
+[x] Remove hardcoded directories, especially ones with username (i.e. zellij
 config location for plugins)
 [ ] Error on Alacrity startup due to gnupg files not being created(dirty fix -
 run gnupg)
-[ ] Create empty .workaliases file to get rid of errors upon startup
+[x] Create empty .workaliases file to get rid of errors upon startup
 [ ] Trigger loading NVIM plugins so first time opening does not have errors/see loading
 [ ] Create script for creating ssh key which can be used for easier Github setup

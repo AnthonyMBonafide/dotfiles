@@ -1,3 +1,8 @@
 theme = tokyonight_night
+mouse-hide-while-typing = true
+background-blur-radius = 20
+window-decoration = true
+macos-option-as-alt = true
+background-opacity = 0.7
 
 font-size = 20
