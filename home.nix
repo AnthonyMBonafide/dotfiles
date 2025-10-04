@@ -7,8 +7,12 @@
     ./modules/terminals.nix
     ./modules/development.nix
     ./modules/editors.nix
-    ./modules/system.nix
     ./modules/packages.nix
+  ];
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "claude-code"
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage
@@ -22,7 +26,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
 
   # Additional packages can be added here or in the individual modules
   # Most packages are now organized in modules/

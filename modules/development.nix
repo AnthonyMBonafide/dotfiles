@@ -3,6 +3,7 @@
 {
   # Development packages
   home.packages = with pkgs; [
+    jujutsu
     # Languages & Compilers
     gcc
     go
@@ -16,9 +17,6 @@
     # Build & Task tools
     qemu
 
-    # Documentation
-    adr-tools
-
     # Container tools
     podman-compose
 
@@ -27,8 +25,11 @@
 
     # GitHub CLI (managed manually for config preservation)
     gh
-  ];
 
+    # AI Development tools
+    claude-code
+
+  ];
   # Git Configuration
   programs.git = {
     enable = true;

@@ -3,12 +3,7 @@
 {
   # General packages, fonts, and applications
   home.packages = with pkgs; [
-    # AI/ML
-    ollama
-
-    # Browsers
-    firefox
-
+    podman
     # Fonts
     # Nerd Fonts are now separate packages in the nerd-fonts namespace
     nerd-fonts.hack
@@ -17,15 +12,11 @@
 
     # Note: The following macOS applications are typically better installed via Homebrew casks
     # because they need to be in /Applications or have special system integration:
-    # - bruno (API client)
-    # - keepassxc (Password manager)
-    # - meetingbar (Menu bar calendar)
-    # - scroll-reverser (Mouse/trackpad utility)
     # - spotify (Music streaming)
     # - ghostty (Terminal - may not be in nixpkgs yet)
-    #
+    # - firefox (Browser - for some reason nix install does not work)
     # These should be installed via:
-    # brew install --cask bruno keepassxc meetingbar scroll-reverser spotify ghostty
+    # brew install --cask spotify ghostty firefox
   ];
 
   # Font configuration
