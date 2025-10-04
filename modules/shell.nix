@@ -54,6 +54,14 @@
     # Shell initialization
     shellInit = ''
       set fish_greeting
+
+      # Add Nix paths
+      if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+        source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+      end
+
+      # Add home-manager session variables
+      set -gx PATH $HOME/.nix-profile/bin $PATH
     '';
 
     # Environment variables
