@@ -1,8 +1,1 @@
-tt.*
-.tests
-doc/tags
-debug
-.repro
-foo.*
-*.log
-data
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/nvim/.gitignore

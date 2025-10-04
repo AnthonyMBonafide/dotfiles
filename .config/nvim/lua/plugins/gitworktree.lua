@@ -1,15 +1,1 @@
-return {
-  {
-    "polarmutex/git-worktree.nvim",
-    version = "^2",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    enabled = true,
-    config = function()
-      require("telescope").load_extension("git_worktree")
-
-      vim.keymap.set("n", "gW", function()
-        require("telescope").extensions.git_worktree.git_worktree()
-      end, { desc = "Worktrees" })
-    end,
-  },
-}
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/nvim/lua/plugins/gitworktree.lua

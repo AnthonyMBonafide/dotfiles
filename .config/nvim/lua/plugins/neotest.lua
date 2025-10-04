@@ -1,17 +1,1 @@
-return {
-  "nvim-neotest/neotest",
-  opts = {
-    output = {
-      enabled = true,
-      open_on_run = false, -- This prevents the output window from opening automatically
-    },
-    --   output_panel = {
-    --     enabled = true,
-    --     open = false, -- This prevents the output panel from opening automatically
-    --   },
-    --   quickfix = {
-    --     enabled = false, -- This disables quickfix list population
-    --     open = false,
-    --   },
-  },
-}
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/nvim/lua/plugins/neotest.lua

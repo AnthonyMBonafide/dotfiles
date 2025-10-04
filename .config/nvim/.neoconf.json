@@ -1,15 +1,1 @@
-{
-  "neodev": {
-    "library": {
-      "enabled": true,
-      "plugins": true
-    }
-  },
-  "neoconf": {
-    "plugins": {
-      "lua_ls": {
-        "enabled": true
-      }
-    }
-  }
-}
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/nvim/.neoconf.json

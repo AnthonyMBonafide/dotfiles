@@ -1,16 +1,1 @@
-return {
-  "folke/trouble.nvim",
-  cmd = { "Trouble" },
-  opts = {
-    modes = {
-      symbols = { -- Configure symbols mode
-        win = {
-          type = "split", -- split window
-          relative = "win", -- relative to current window
-          position = "right", -- right side
-          size = 0.45, -- 30% of the window
-        },
-      },
-    },
-  },
-}
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/nvim/lua/plugins/trouble.lua

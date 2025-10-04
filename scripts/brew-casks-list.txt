@@ -1,9 +1,0 @@
-bruno
-font-hack-nerd-font
-font-jetbrains-mono-nerd-font
-font-powerline-symbols
-font-ubuntu-nerd-font
-keepassxc
-meetingbar
-scroll-reverser
-spotify

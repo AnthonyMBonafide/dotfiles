@@ -1,2 +1,0 @@
-postgresql@14
-adr-tools

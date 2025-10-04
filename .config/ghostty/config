@@ -1,9 +1,1 @@
-theme = tokyonight_night
-mouse-hide-while-typing = true
-background-blur-radius = 20
-window-decoration = true
-macos-option-as-alt = true
-background-opacity = 0.7
-
-font-size = 20
-keybind = shift+enter=text:\x1b\r
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/ghostty/config

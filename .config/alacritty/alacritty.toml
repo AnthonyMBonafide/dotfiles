@@ -1,17 +1,1 @@
-[window]
-startup_mode = "Fullscreen"
-option_as_alt = "Both"
-
-[terminal.shell]
-program = "/opt/homebrew/bin/zellij"
-
-[env]
-XDG_CONFIG_HOME = "/Users/anthony/.config"
-
-[font]
-normal = { family = "Hack Nerd Font", style = "Regular" }
-bold = { style = "Bold" }
-italic = { style = "Italic" }
-size = 15
-
-[terminal]
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/alacritty/alacritty.toml

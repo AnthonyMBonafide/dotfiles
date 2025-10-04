@@ -1,1 +1,1 @@
-source "$HOME/.cargo/env.fish"
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/fish/conf.d/rustup.fish

@@ -1,16 +1,1 @@
-return {
-  "nvim-treesitter/nvim-treesitter",
-  opts = {
-    ensure_installed = {
-      "bash",
-      "json",
-      "lua",
-      "markdown",
-      "markdown_inline",
-      "yaml",
-      "go",
-      "rust",
-      "zig",
-    },
-  },
-}
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/nvim/lua/plugins/treesitter.lua

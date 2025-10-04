@@ -9,7 +9,6 @@
     fd           # Better find
     ripgrep      # Better grep
     lsd          # LSDeluxe - another ls alternative
-    zoxide       # Smart cd
 
     # Search and navigation
     fzf          # Fuzzy finder
@@ -26,7 +25,7 @@
     wget
 
     # Task management
-    taskwarrior  # Task/todo manager (called 'task' in brew)
+    taskwarrior3  # Task/todo manager (called 'task' in brew)
 
     # Git tools
     lazygit      # Terminal UI for git
@@ -35,19 +34,18 @@
     # Zig language server
     zls
 
-    # Other shells (for compatibility)
-    zsh
-
     # Terminal multiplexer
     tmux
-
-    # Dotfiles management
-    stow
 
     # GNU utilities
     gnupg
     pinentry_mac
   ];
+
+  programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
 
   # Fish Shell Configuration
   programs.fish = {
@@ -58,22 +56,48 @@
       set fish_greeting
     '';
 
-    # Interactive shell configuration
-    interactiveShellInit = ''
-      # Add paths
-      fish_add_path /opt/homebrew/opt/llvm/bin
-      fish_add_path /opt/homebrew/bin/
-      fish_add_path $HOME/go/bin
-    '';
-
-    # Shell aliases
-    shellAliases = {
-      # Note: Individual alias files (.dockeraliases.fish, .workaliases.fish, etc.)
-      # should be migrated here or sourced via shellInit if they contain complex logic
-    };
-
     # Environment variables
-    shellAbbrs = {};
+    shellAbbrs = {
+        src = "source ~/.config/fish/config.fish";
+        gb = "go build ./... && go test -run=XXX_SHOULD_NEVER_MATCH_XXX ./...";
+        gbt = "go test -run=XXX_SHOULD_NEVER_MATCH_XXX ./...";
+        n = "nvim";
+        ls = "eza";
+        l = "eza -al --icons always -b --git";
+        lt = "eza -al --icons always -b --git --total-size -T";
+        cd = "z";
+        ".." = "z ..";
+        pms = "podman machine start";
+
+# Git
+        g = "git";
+        gf = "git fetch --all";
+        grom = "git rebase $DEFAULT_ORIGN/$DEFAULT_BRANCH";
+        gfrom = "git fetch --all && git rebase origin/main";
+        gp = "git push origin HEAD";
+        gpwl = "git push origin HEAD --force-with-lease";
+        ga = "git add .";
+        gc = "git commit -s -S";
+        gca = "git commit -s -S -a -u";
+        gs = "git status";
+        gl = "git log";
+        gd = "git diff";
+        gwta = "gf && git worktreea";
+        gcpe = "git commit -s -S -a -u && git push origin HEAD";
+        gcpef = "git commit -s -S -a -u && git push origin HEAD --force-with-lease";
+        gwtr = "git worktree remove";
+        gwtrf = "git worktree remove --force";
+
+        # JJ aliases
+        jbc = "jj bookmark create -r@ AnthonyMBonafide/";
+        jbla = "jj bookmark list -a";
+        jbl = "jj bookmark list";
+        jgp = "jj git push -r@ --allow-new";
+        jbm = "jj bookmark move -f@- -t@";
+        jrm = "jj rebase -s @ -d main";
+        jgf = "jj git fetch";
+        jd = "jj desc";
+      };
   };
 
   # Note: If you have alias files, you can still source them:
@@ -92,9 +116,6 @@
   home.sessionVariables = {
     VISUAL = "nvim";
     EDITOR = "nvim";
-    GOBIN = "$HOME/go/bin";
-    LDFLAGS = "-L/opt/homebrew/opt/llvm/lib";
-    CPPFLAGS = "-I/opt/homebrew/opt/llvm/include";
   };
 
   # Starship Prompt

@@ -1,8 +1,1 @@
-return {
-  "Ruskei/undotree",
-  dependencies = "nvim-lua/plenary.nvim",
-  config = true,
-  keys = { -- load the plugin only when using it's keybinding:
-    { "<leader>su", "<cmd>lua require('undotree').toggle()<cr>" },
-  },
-}
+/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/nvim/lua/plugins/undotree.lua
