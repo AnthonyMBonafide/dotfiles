@@ -1,7 +1,0 @@
-export CONTAINERMGR=podman
-alias docker='podman'
-#alias docker-compose='podman-compose'
-alias dcu='docker-compose up -d'
-alias dcd='docker-compose down -v'
-alias dcowui='podman create -p 127.0.0.1:3000:8080 --network=pasta:-T,11434 --add-host=localhost:127.0.0.1 --env "OLLAMA_BASE_URL=http://localhost:11434" --env "ANONYMIZED_TELEMETRY=False" -v open-webui:/app/backend/data --label io.containers.autoupdate=registry --name open-webui ghcr.io/open-webui/open-webui:main'
-alias dsowui='podman start open-webui'

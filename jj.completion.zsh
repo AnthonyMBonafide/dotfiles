@@ -1,1 +1,0 @@
-.zsh/jj.completion.zsh
