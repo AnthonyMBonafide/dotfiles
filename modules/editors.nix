@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, flakeRoot, ... }:
 
 {
   # Editor and writing tools
@@ -28,7 +28,7 @@
   # Symlink the entire Neovim configuration directory
   # This includes init.lua and the lua/ directory with all your configs
   xdg.configFile."nvim" = {
-    source = ../.config/nvim;
+    source = flakeRoot + /.config/nvim;
     recursive = true;
   };
 
@@ -38,6 +38,6 @@
   };
 
   # Symlink helix config files instead of reading them at build time
-  xdg.configFile."helix/config.toml".source = ../.config/helix/config.toml;
-  xdg.configFile."helix/languages.toml".source = ../.config/helix/languages.toml;
+  xdg.configFile."helix/config.toml".source = flakeRoot + /.config/helix/config.toml;
+  xdg.configFile."helix/languages.toml".source = flakeRoot + /.config/helix/languages.toml;
 }

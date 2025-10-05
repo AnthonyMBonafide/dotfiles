@@ -9,7 +9,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }:
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -19,6 +19,10 @@
 
         modules = [
           ./home.nix
+          {
+            # Make flake root available to all modules
+            _module.args.flakeRoot = self;
+          }
         ];
       };
     };

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, flakeRoot, ... }:
 
 {
   # Development packages
@@ -127,12 +127,12 @@
   # Jujutsu (jj) Configuration
   # Since jj uses TOML and has specific complex configuration,
   # we'll reference the existing config file
-  xdg.configFile."jj/config.toml".source = ../.config/jj/config.toml;
+  xdg.configFile."jj/config.toml".source = flakeRoot + /.config/jj/config.toml;
 
   # GitHub CLI Configuration
   # Note: We're not using programs.gh.enable because we want to manage the config files manually
   # to preserve your existing gh configuration exactly as-is
   # Link gh config files directly
-  xdg.configFile."gh/config.yml".source = ../.config/gh/config.yml;
-  xdg.configFile."gh/hosts.yml".source = ../.config/gh/hosts.yml;
+  xdg.configFile."gh/config.yml".source = flakeRoot + /.config/gh/config.yml;
+  xdg.configFile."gh/hosts.yml".source = flakeRoot + /.config/gh/hosts.yml;
 }
