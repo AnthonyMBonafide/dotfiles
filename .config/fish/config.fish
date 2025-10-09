@@ -8,12 +8,11 @@ fish_add_path $HOME/go/bin
 
 set fish_greeting
 source $HOME/.config/fish/.dockeraliases.fish
-source $HOME/.config/fish/.workaliases.fish
 source $HOME/.config/fish/.gitaliases.fish
 source $HOME/.config/fish/.brewaliases.fish
 
 # This file is not checked into a VCS and is not guaranteed to be created 
-if test -e $HOME/.config/fish/.workaliases.fish
+if test -f $HOME/.config/fish/.workaliases.fish
     source $HOME/.config/fish/.workaliases.fish
 end
 

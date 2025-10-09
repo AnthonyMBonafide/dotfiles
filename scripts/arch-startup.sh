@@ -9,7 +9,7 @@ pacman -Syu --no-confirm
 # bash <(curl -s https://raw.githubusercontent.com/mylinuxforwork/hyprland-starter/main/setup.sh)
 
 # Install packages
-pacman -S git alacritty zellij starship ripgrep fzf go zig lazygit neovim zoxide stow luarocks fd bat eza --no-confirm
+pacman -S git ghostty starship ripgrep fzf go zig lazygit lazyjj jujutsu neovim zoxide stow luarocks fd bat eza fish --no-confirm
 
 # Pull from Github TODO make public
 git clone https://github.com/AnthonyMBonafide/dotfiles.git ~

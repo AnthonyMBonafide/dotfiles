@@ -4,13 +4,13 @@ set -gx OLLAMA_CONTEXT_LENGTH 8192
 
 abbr n nvim
 abbr ls eza
-abbr l 'eza -al --icons always -b --git --total-size'
+abbr l 'eza -al --icons always -b --git'
 abbr lt 'eza -al --icons always -b --git --total-size -T'
 abbr cd z
 abbr .. 'z ..'
 abbr pms 'podman machine start'
 fish_add_path /opt/homebrew/opt/llvm/bin
-
+fish_add_path $HOME/.local/bin
 set -gx LDFLAGS -L/opt/homebrew/opt/llvm/lib
 set -gx CPPFLAGS -I/opt/homebrew/opt/llvm/include
 
