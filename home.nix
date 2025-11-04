@@ -16,8 +16,9 @@
   ];
 
   # Home Manager needs a bit of information about you and the paths it should manage
-  home.username = "Anthony";
-  home.homeDirectory = "/Users/Anthony";
+  # These are now set in host-specific configurations (hosts/*.nix)
+  # home.username is set by host config
+  # home.homeDirectory is set by host config
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

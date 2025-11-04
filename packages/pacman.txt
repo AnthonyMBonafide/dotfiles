@@ -1,0 +1,76 @@
+# Package list for Arch Linux (pacman)
+# Install with: sudo pacman -S --needed - < packages/pacman.txt
+
+# Shell & CLI Tools
+bat
+eza
+fd
+ripgrep
+fzf
+tldr
+jq
+yq
+wget
+tmux
+gnupg
+zsh
+zoxide
+
+# File monitoring
+watchexec
+
+# Development Tools
+gcc
+go
+rust
+rust-analyzer
+git
+github-cli
+qemu-full
+podman
+
+# Kafka tools
+kcat
+
+# Version Control
+jujutsu
+
+# Editors
+neovim
+helix
+tree-sitter
+lua-language-server
+markdownlint-cli
+prettier
+
+# Terminals
+alacritty
+kitty
+zellij
+
+# Shell
+fish
+starship
+atuin
+
+# Git tools
+lazygit
+
+# Task management
+taskwarrior
+
+# Fonts (Nerd Fonts)
+ttf-hack-nerd
+ttf-jetbrains-mono-nerd
+ttf-ubuntu-nerd
+
+# Additional utilities
+xclip
+wl-clipboard
+pinentry
+
+# Notes:
+# - Most packages are available in official repos or AUR
+# - For AUR packages, use yay or paru:
+#   yay -S lazyjj-git
+# - Some tools like golangci-lint might need to be installed via go install

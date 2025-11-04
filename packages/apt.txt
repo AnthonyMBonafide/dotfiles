@@ -1,0 +1,50 @@
+# Package list for Debian/Ubuntu (apt)
+# Install with: xargs -a packages/apt.txt sudo apt install -y
+
+# Shell & CLI Tools
+bat
+exa
+fd-find
+ripgrep
+fzf
+tldr
+jq
+wget
+tmux
+gnupg
+zsh
+
+# Development Tools
+gcc
+golang
+cargo
+rustc
+rust-analyzer
+git
+gh
+qemu-system
+
+# Editors
+neovim
+helix
+
+# Terminals
+alacritty
+kitty
+zellij
+
+# Shell
+fish
+starship
+
+# Additional utilities
+curl
+wget
+xclip
+pinentry-curses
+
+# Notes:
+# - Some packages may have different names on different Ubuntu/Debian versions
+# - Install eza from: https://github.com/eza-community/eza (not in apt by default)
+# - Install lazygit, lazyjj, atuin, zoxide from their release pages or via cargo
+# - Install Nerd Fonts manually from: https://www.nerdfonts.com/

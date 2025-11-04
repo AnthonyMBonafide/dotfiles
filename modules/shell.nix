@@ -39,7 +39,12 @@
 
     # GNU utilities
     gnupg
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+    # macOS-specific packages
     pinentry_mac
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+    # Linux-specific packages
+    pinentry-curses  # or pinentry-gtk2 if you prefer GUI
   ];
 
   programs.zoxide = {
@@ -76,7 +81,7 @@
         cd = "z";
         ".." = "z ..";
         pms = "podman machine start";
-        hms = "home-manager switch --flake .#Anthony";
+        hms = "home-manager switch --flake .#macbook-pro";
 
 # Git
         g = "git";

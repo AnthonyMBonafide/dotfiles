@@ -22,17 +22,19 @@ Enable quick, consistent setup of any new system with identical configurations u
 ### What's Complete
 - ✅ Nix flake infrastructure (`flake.nix`, `flake.lock`)
 - ✅ Home Manager base configuration (`home.nix`)
+- ✅ **Multi-system support** - Cross-platform configurations for macOS and Linux
+- ✅ **Host-specific configurations** in `hosts/` directory
+- ✅ **Platform conditionals** in modules (macOS vs Linux packages)
 - ✅ Core modules:
-  - `modules/shell.nix` - Fish, Starship, Atuin, CLI tools
+  - `modules/shell.nix` - Fish, Starship, Atuin, CLI tools (with platform detection)
   - `modules/terminals.nix` - Alacritty, Kitty, Ghostty, Zellij
-  - `modules/development.nix` - Git, Go, databases, dev tools
+  - `modules/development.nix` - Git, Go, Rust, databases, dev tools
   - `modules/editors.nix` - Editor configurations
-  - `modules/neovim.nix` - Neovim with LazyVim setup
+  - `modules/neovim.nix` - Neovim with LazyVim setup, rust-analyzer configured
   - `modules/packages.nix` - Fonts, applications, general packages
 
 ### What's In Progress
-- 🔄 Neovim configuration (recently updated)
-- 🔄 Editor modules refinement
+- 🔄 Testing on actual Linux systems (Arch/Manjaro/Endeavor)
 - 🔄 Testing full migration from Stow to Nix
 
 ### Legacy/Coexisting
@@ -44,8 +46,14 @@ Enable quick, consistent setup of any new system with identical configurations u
 
 ```
 dotfiles/
-├── flake.nix              # Main flake configuration with home-manager
-├── home.nix               # Home-manager entry point (imports modules)
+├── README.md              # Main installation guide (Nix + traditional)
+├── NIX-README.md          # Detailed Nix Home Manager documentation
+├── Brewfile               # Homebrew packages (macOS without Nix)
+├── flake.nix              # Nix flake with multi-system support
+├── home.nix               # Nix home-manager entry point
+├── hosts/                 # Host-specific Nix configurations
+│   ├── macbook-pro.nix    # macOS configuration
+│   └── arch-desktop.nix   # Linux (Arch) configuration
 ├── modules/               # Nix modules (organized by category)
 │   ├── shell.nix          # Shell environment (Fish, Starship, CLI tools)
 │   ├── terminals.nix      # Terminal emulators
@@ -53,7 +61,17 @@ dotfiles/
 │   ├── editors.nix        # Text editors and formatters
 │   ├── neovim.nix         # Neovim-specific configuration
 │   └── packages.nix       # Fonts, applications, general packages
-├── .config/               # Source configuration files
+├── packages/              # Package lists for non-Nix installations
+│   ├── apt.txt            # Debian/Ubuntu packages
+│   ├── pacman.txt         # Arch/Manjaro/Endeavor packages
+│   ├── dnf.txt            # Fedora/RHEL packages
+│   ├── winget.txt         # Windows packages
+│   └── README.md          # Package list documentation
+├── scripts/               # Installation and helper scripts
+│   ├── bootstrap.sh       # Universal installer (detects OS)
+│   ├── link-configs.sh    # Manual config symlinking
+│   └── README.md          # Script documentation
+├── .config/               # Source configuration files (works with/without Nix)
 │   ├── nvim/              # Neovim LazyVim configuration
 │   ├── fish/              # Fish shell configs
 │   ├── starship.toml      # Starship prompt
@@ -64,19 +82,32 @@ dotfiles/
 │   ├── kitty/             # Kitty terminal
 │   ├── karabiner/         # Karabiner Elements (macOS)
 │   └── gh/                # GitHub CLI
-├── README.md              # Original Stow-based documentation
-└── NIX-README.md          # Nix Home Manager documentation
-
-Git config files (.gitconfig, .gitignore_global) and tmux (.tmux.conf)
-are in the root directory.
+└── Root-level configs:
+    ├── .gitconfig         # Git configuration
+    ├── .gitignore_global  # Global gitignore
+    └── .tmux.conf         # Tmux configuration
 ```
 
 ## Key Design Decisions
 
+### Dual Installation Support
+The repository supports **both Nix and traditional package managers**:
+
+1. **Nix Home Manager** (Recommended for personal machines)
+   - Fully declarative and reproducible
+   - Multi-system support via flake
+   - Easy rollback and updates
+
+2. **Traditional Package Managers** (For work/restricted environments)
+   - Brewfile for macOS (Homebrew)
+   - Package lists for Linux (apt, pacman, dnf)
+   - Bootstrap script auto-detects OS
+   - Stow or manual symlinking for configs
+
 ### Hybrid Approach
-1. **Nix-managed packages**: All CLI tools, development tools, fonts
-2. **Symlinked configs**: Complex configs (LazyVim, Starship) kept in `.config/`
-3. **Homebrew fallback**: macOS GUI apps that integrate better with system
+1. **Nix-managed packages**: All CLI tools, development tools, fonts (when using Nix)
+2. **Symlinked configs**: Complex configs (LazyVim, Starship) kept in `.config/` - work with or without Nix
+3. **Homebrew/System packages**: When Nix not available (work machines)
 
 ### Why Symlinks for Some Configs?
 - LazyVim has its own plugin manager and update mechanism
@@ -86,9 +117,37 @@ are in the root directory.
 ### Module Organization
 Each module is self-contained and can be commented out in `home.nix` if needed for debugging or platform-specific builds.
 
+### Multi-System Support
+The configuration now supports multiple systems and architectures:
+- **macOS Apple Silicon**: `home-manager switch --flake .#macbook-pro`
+- **macOS Intel**: `home-manager switch --flake .#macbook-intel`
+- **Linux x86_64**: `home-manager switch --flake .#arch-desktop`
+- **Linux ARM**: `home-manager switch --flake .#arch-arm`
+- **Legacy (backward compatible)**: `home-manager switch --flake .#Anthony`
+
+Platform-specific packages are automatically selected based on the system architecture using `pkgs.lib.optionals` and `pkgs.stdenv.isDarwin`/`pkgs.stdenv.isLinux`.
+
 ## Working with This Project
 
 ### Common Tasks
+
+#### Switching Configurations on Different Systems
+```bash
+# On macOS (current system)
+home-manager switch --flake .#macbook-pro
+
+# On Linux (Arch/Manjaro/Endeavor)
+home-manager switch --flake .#arch-desktop
+
+# First time on a new system
+nix run home-manager/master -- switch --flake .#<hostname>
+```
+
+#### Adding a New Host Configuration
+1. Create a new file in `hosts/` (e.g., `hosts/my-laptop.nix`)
+2. Define `home.username` and `home.homeDirectory`
+3. Add host-specific packages if needed
+4. Add new entry in `flake.nix` under `homeConfigurations`
 
 #### Adding a New Package
 1. Identify the right module:
@@ -97,16 +156,46 @@ Each module is self-contained and can be commented out in `home.nix` if needed f
    - Editor/formatter → `modules/editors.nix`
    - GUI app/font → `modules/packages.nix`
 2. Add package to `home.packages` list
-3. Test with: `home-manager switch --flake .#Anthony`
+3. For platform-specific packages, use:
+   ```nix
+   ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+     # macOS only
+   ] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+     # Linux only
+   ];
+   ```
+4. Test with: `home-manager switch --flake .#<hostname>`
 
 #### Adding a New Configuration
 1. If it's a program with home-manager module: Configure in appropriate module file using `programs.<name>.*`
 2. If it's a custom config: Add to `.config/` and symlink via `home.file` or `xdg.configFile`
 
 #### Modifying Existing Configs
-1. Edit files in `.config/` directory
-2. Run: `home-manager switch --flake .#Anthony`
+1. Edit files in `.config/` directory or module files
+2. Run: `home-manager switch --flake .#<hostname>`
 3. Nix will re-symlink updated configurations
+
+#### Working with Non-Nix Installations (Work Machines)
+
+**Installing on a work machine:**
+```bash
+# Option 1: Automatic (recommended)
+./scripts/bootstrap.sh
+
+# Option 2: Manual (macOS with Homebrew)
+brew bundle install
+stow .
+
+# Option 3: Configs only
+./scripts/link-configs.sh
+```
+
+**Adding a package (non-Nix):**
+1. Add to `Brewfile` (macOS) or appropriate `packages/*.txt` file
+2. Install manually: `brew install <pkg>` or `sudo pacman -S <pkg>`
+3. Update bootstrap script if it's a common package
+
+**Philosophy:** The `.config/` directory is the source of truth. Packages can be installed via Nix OR traditional package managers, but configs work either way.
 
 #### Testing Changes
 ```bash
@@ -201,10 +290,13 @@ home.packages = with pkgs; [
 - [x] Migrate development tools
 - [x] Migrate editor configurations
 - [x] Set up Neovim with LazyVim
-- [ ] Test on Arch Linux
+- [x] Configure rust-analyzer for Neovim
+- [x] **Create multi-system support in flake.nix**
+- [x] **Add host-specific configurations (macOS, Linux)**
+- [x] **Implement platform conditionals in modules**
+- [ ] Test on actual Arch Linux hardware
 - [ ] Test on different Arch variants (Manjaro, Endeavor)
-- [ ] Create platform-specific configurations
-- [ ] Document Windows compatibility approach
+- [ ] Document Windows/WSL compatibility approach
 - [ ] Full switch from Stow to Nix
 - [ ] Archive/remove Stow documentation
 

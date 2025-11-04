@@ -6,15 +6,18 @@ This repository now supports **Nix Home-Manager** for declarative system configu
 
 ```
 dotfiles/
-├── flake.nix              # Main flake configuration
+├── flake.nix              # Main flake configuration (multi-system support)
 ├── home.nix               # Home-manager entry point
+├── hosts/                 # Host-specific configurations
+│   ├── macbook-pro.nix    # macOS configuration
+│   └── arch-desktop.nix   # Linux (Arch) configuration
 ├── .config/               # Original configuration files (referenced by modules)
 └── modules/               # Organized configuration modules
-    ├── shell.nix          # Fish, Starship, Atuin, CLI tools
+    ├── shell.nix          # Fish, Starship, Atuin, CLI tools (with platform detection)
     ├── terminals.nix      # Alacritty, Kitty, Ghostty, Zellij
-    ├── development.nix    # Git, Go, Databases, Dev tools
-    ├── editors.nix        # Neovim, Helix, Linters/Formatters
-    ├── system.nix         # Karabiner Elements (macOS)
+    ├── development.nix    # Git, Go, Rust, Databases, Dev tools
+    ├── editors.nix        # Helix, Linters/Formatters
+    ├── neovim.nix         # Neovim/LazyVim configuration
     └── packages.nix       # Fonts, Applications, General packages
 ```
 
@@ -42,15 +45,44 @@ dotfiles/
    nix flake update
    ```
 
-3. Build and activate the configuration:
+3. Build and activate the configuration for your system:
+
+   **On macOS (Apple Silicon):**
    ```bash
-   nix run home-manager/master -- switch --flake .#Anthony
+   nix run home-manager/master -- switch --flake .#macbook-pro
+   ```
+
+   **On macOS (Intel):**
+   ```bash
+   nix run home-manager/master -- switch --flake .#macbook-intel
+   ```
+
+   **On Linux (Arch/Manjaro/Endeavor - x86_64):**
+   ```bash
+   nix run home-manager/master -- switch --flake .#arch-desktop
+   ```
+
+   **On Linux (ARM):**
+   ```bash
+   nix run home-manager/master -- switch --flake .#arch-arm
    ```
 
 ### Subsequent Updates
 
 After making changes to your configuration:
 
+**On macOS:**
+```bash
+home-manager switch --flake .#macbook-pro
+# or use the Fish alias: hms
+```
+
+**On Linux:**
+```bash
+home-manager switch --flake .#arch-desktop
+```
+
+**Legacy (backward compatible):**
 ```bash
 home-manager switch --flake .#Anthony
 ```
@@ -104,21 +136,25 @@ brew install --cask \
 - **Download tools**: wget
 - **Task management**: taskwarrior
 - **Git tools**: lazygit, lazyjj
-- **Other**: zsh, tmux, stow, gnupg, pinentry_mac, zls
+- **Other**: tmux, stow, gnupg, zls
+- **Platform-specific**: pinentry_mac (macOS), pinentry-curses (Linux)
 
 ### Development Tools (modules/development.nix)
-- **Languages**: gcc, go
-- **Go tools**: go-swagger, golang-migrate, golangci-lint
-- **Databases**: postgresql_14, pgcli
-- **Container tools**: docker-completion, podman-compose
+- **Languages**: gcc, go, rust-analyzer
+- **Go tools**: golangci-lint
+- **Databases**: podman-compose
 - **Kafka**: kcat
-- **Documentation**: adr-tools
+- **Container tools**: podman-compose
 - **Virtualization**: qemu
 - **VCS**: git, jujutsu (jj), gh (GitHub CLI)
+- **AI Tools**: claude-code
 
-### Editors & Writing (modules/editors.nix)
-- **Editors**: neovim, helix
-- **Lua**: luarocks
+### Editors & Writing
+- **Neovim** (modules/neovim.nix): LazyVim configuration with LSP support
+  - Configured language servers: rust-analyzer, nixd, gopls, and more
+  - Custom plugins: copilot, lazyjj, kulala, mini.files, and more
+  - Full Rust, Go, Nix, Markdown support
+- **Helix** (modules/editors.nix): Modern modal editor
 - **Linters/Formatters**: markdownlint-cli, prettier, sqlfluff
 
 ### Terminals (modules/terminals.nix)
@@ -142,6 +178,100 @@ If a package fails to build, comment it out in the relevant module and install v
 ```bash
 brew install <package-name>
 ```
+
+## Multi-System Support
+
+This configuration supports multiple operating systems and architectures using Nix flakes and host-specific configurations.
+
+### Available Configurations
+
+| Configuration    | System          | Use Case                           |
+|------------------|-----------------|-------------------------------------|
+| `macbook-pro`    | aarch64-darwin  | macOS on Apple Silicon (M1/M2/M3)  |
+| `macbook-intel`  | x86_64-darwin   | macOS on Intel processors           |
+| `arch-desktop`   | x86_64-linux    | Arch/Manjaro/Endeavor on x86_64     |
+| `arch-arm`       | aarch64-linux   | Arch Linux on ARM (Raspberry Pi, etc.) |
+| `Anthony`        | aarch64-darwin  | Legacy alias (backward compatible)  |
+
+### Platform-Specific Packages
+
+The configuration automatically selects platform-specific packages using Nix conditionals:
+
+```nix
+home.packages = with pkgs; [
+  # Cross-platform packages
+  ripgrep
+  fd
+  bat
+] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+  # macOS-only packages
+  pinentry_mac
+] ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
+  # Linux-only packages
+  pinentry-curses
+  xclip
+];
+```
+
+### Adding a New System Configuration
+
+To add a new system (e.g., a work laptop or desktop):
+
+1. **Create a host configuration file** in `hosts/`:
+   ```bash
+   # Example: hosts/work-laptop.nix
+   ```
+
+2. **Define the host-specific settings**:
+   ```nix
+   { config, pkgs, ... }:
+
+   {
+     # System information
+     home.username = "anthony";  # Your username on this system
+     home.homeDirectory = "/home/anthony";  # Or /Users/Anthony for macOS
+
+     # Host-specific packages (optional)
+     home.packages = with pkgs; [
+       # Add any packages unique to this system
+     ];
+   }
+   ```
+
+3. **Add the configuration to `flake.nix`**:
+   ```nix
+   homeConfigurations = {
+     # ... existing configurations ...
+
+     "work-laptop" = mkHomeConfiguration {
+       system = "x86_64-linux";  # or aarch64-darwin for macOS
+       hostModule = ./hosts/work-laptop.nix;
+     };
+   };
+   ```
+
+4. **Activate on the new system**:
+   ```bash
+   cd ~/dotfiles
+   nix run home-manager/master -- switch --flake .#work-laptop
+   ```
+
+5. **Update the Fish alias** in `modules/shell.nix` for convenience:
+   ```nix
+   hms = "home-manager switch --flake .#work-laptop";
+   ```
+
+### Supported Architectures
+
+- **macOS**: `aarch64-darwin` (Apple Silicon), `x86_64-darwin` (Intel)
+- **Linux**: `x86_64-linux` (AMD/Intel 64-bit), `aarch64-linux` (ARM 64-bit)
+
+### Windows/WSL Support
+
+For Windows Subsystem for Linux (WSL), use the Linux configurations:
+- WSL runs as `x86_64-linux`
+- Use `arch-desktop` or create a WSL-specific host config
+- Note: Some GUI features may be limited in WSL
 
 ## Customization
 

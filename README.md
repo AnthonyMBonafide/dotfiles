@@ -1,109 +1,320 @@
 # dotfiles
 
-Personal collection of dotfiles that contain configurations for commonly used
-tools and system configurations
+Personal collection of dotfiles for consistent development environment across multiple systems.
 
 ## Overview
 
-This repo is organized using [GNU Stow](https://www.gnu.org/software/stow)
-which helps in setting up dotfiles in a way that can also be tracked with
-version control.
+This repository supports **two installation methods**:
 
-The contents of this directory are for setting up common system configurations
-as well as common tools. For example:
+1. **[Nix Home Manager](#installation-with-nix-recommended)** - Declarative, reproducible (recommended for personal machines)
+2. **[Traditional Package Managers](#installation-without-nix)** - Homebrew, apt, pacman, etc. (for work/restricted machines)
 
-- Fish Shell
-- Neo Vim
-- Git
-- JuJutsu(JJ)
-- Ghostty
-- Tmux
-- etc
+**Configurations included:**
+- Fish Shell + Starship + Atuin
+- Neovim (LazyVim) with full LSP support
+- Git + Jujutsu (jj)
+- Tmux, Zellij
+- Ghostty, Kitty, Alacritty terminals
+- Modern CLI tools (ripgrep, fd, bat, eza, fzf, etc.)
+- Development tools (Go, Rust, Docker/Podman, etc.)
 
-## Set up
+## Quick Start
 
-Clone this repository to the `HOME` (`~`) directory.
+### If You Can Use Nix (Personal Machines)
 
-```shell
-cd ~
-git clone git@github.com:AnthonyMBonafide/dotfiles.git
+```bash
+# Install Nix
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+
+# Clone and activate
+git clone git@github.com:AnthonyMBonafide/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+nix run home-manager/master -- switch --flake .#macbook-pro  # or .#arch-desktop
 ```
 
-Once cloned run `stow` to place the files in the correct directory:
+See [NIX-README.md](./NIX-README.md) for full Nix documentation.
 
-```shell
+### If You Can't Use Nix (Work/Restricted Machines)
+
+```bash
+# Clone repository
+git clone git@github.com:AnthonyMBonafide/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+
+# Run bootstrap script (detects your OS and installs accordingly)
+./scripts/bootstrap.sh
+```
+
+---
+
+## Installation with Nix (Recommended)
+
+**Advantages:**
+- ✅ Fully declarative and reproducible
+- ✅ Easy rollback to previous versions
+- ✅ Works on macOS and Linux
+- ✅ Isolated from system packages
+
+**See [NIX-README.md](./NIX-README.md) for:**
+- Multi-system support (macOS, Arch, Manjaro, Endeavor)
+- Adding new host configurations
+- Platform-specific packages
+- Full documentation
+
+---
+
+## Installation without Nix
+
+For work machines or environments where Nix is not available/allowed.
+
+### Option 1: Bootstrap Script (Automatic)
+
+The bootstrap script detects your environment and installs using the best available method:
+
+```bash
+cd ~/dotfiles
+./scripts/bootstrap.sh
+```
+
+**What it does:**
+1. Detects your OS and architecture
+2. Checks for Nix (uses if available)
+3. Falls back to system package manager:
+   - **macOS** → Homebrew (uses `Brewfile`)
+   - **Arch/Manjaro/Endeavor** → pacman
+   - **Ubuntu/Debian** → apt
+   - **Fedora/RHEL** → dnf
+4. Symlinks all configurations
+
+### Option 2: Manual Installation
+
+#### macOS (Homebrew)
+
+```bash
+# Install Homebrew if needed
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install packages
+cd ~/dotfiles
+brew bundle install
+
+# Link configurations
+stow .
+# Or: ./scripts/link-configs.sh
+```
+
+#### Arch Linux / Manjaro / Endeavor OS
+
+```bash
+# Install packages
+cd ~/dotfiles
+sudo pacman -S --needed - < packages/pacman.txt
+
+# For AUR packages (lazyjj, etc.)
+yay -S lazyjj-git
+
+# Link configurations
 stow .
 ```
 
-This will place all the files in this directory in the correct spot.
+#### Ubuntu / Debian
 
-If there are errors stating that files already exist in a location you can
-backup the existing files and re-execute the command, like:
+```bash
+cd ~/dotfiles
+xargs -a packages/apt.txt sudo apt install -y
 
-```shell
-mv ~/.zshrc ~/.zshrc.bak
+# Link configurations
 stow .
 ```
 
-or use the `--adopt` flag to use the existing files to overwrite the ones
-in this repo.
+See [packages/README.md](./packages/README.md) for more package manager options.
 
-### Additional Items
+### Option 3: Configuration Files Only
 
-**Git**:
+If you need to install packages separately (highly restricted environment):
 
-- Create or copy an existing SSH key to ~/.ssh/id_ed25519 and ~/.ssh/id_ed25519.pub
-- Upload SSH keys to Github. Be sure to add the SSH public key for
-  authentication and signing(currently this requires you to add two different
-  keys, one for each purpose). Also, configure the key for SSO/SAML to get access
-  to private organizations
-- Create base locations under `~/projects` directory `~/projects/work/` and `~/projects/oss/`
-  Authenticate Github CLI tool with `gh auth login`
-
-**NeoVim**:
-
-- Open to allow all plugins to download
-- Run `healthcheck` and install any missing tools via home-brew
-
-**Podman**:
-
-- Create new VM for Podman with `podman machine init`.
-- You may have to run `sudo
-/opt/homebrew/Cellar/podman/5.5.0/bin/podman-mac-helper install` for MacOS
-  followed by `podman machine stop` then `podman machine start`
-- Open a terminal with Tmux running and have TPM install all plugins by running
-  `Crtl + <Space> then I`
-
-### Scripts
-
-Use the scripts to bootstrap a system, pick the one that matches your system.
-These scripts are meant to install a package manager, necessary packages, run
-`stow`
-
-### Mac Additional Setup
-
-- Set `Caps lock` to `Control`
-- Go into security settings and allow Alacrity/Ghostty to be run since it is
-  not signed from Brew repo
-
-#### Work In Progress
-
-Eventually this will be able to bootstrap a system with one command from a
-fresh install with no need for pre-installed packages like `git`. Ideally one
-could run something like:
-
-```shell
-curl -s
-https://raw.githubusercontent.com/AnthonyMBonafide/dotfiles/main/bootstrap.sh |
-bash
+```bash
+cd ~/dotfiles
+./scripts/link-configs.sh
 ```
 
-#### TODO
+This only creates symlinks for configuration files without installing any packages.
 
-[x] Remove hardcoded directories, especially ones with username (i.e. zellij
-config location for plugins)
-[ ] Error on Alacrity startup due to gnupg files not being created(dirty fix -
-run gnupg)
-[x] Create empty .workaliases file to get rid of errors upon startup
-[ ] Trigger loading NVIM plugins so first time opening does not have errors/see loading
-[ ] Create script for creating ssh key which can be used for easier Github setup
+---
+
+## Installation Decision Tree
+
+```
+Can you install Nix?
+├─ Yes → Use Nix Home Manager (see NIX-README.md)
+│   ├─ macOS: nix run home-manager/master -- switch --flake .#macbook-pro
+│   └─ Linux: nix run home-manager/master -- switch --flake .#arch-desktop
+│
+└─ No → Use Traditional Package Managers
+    ├─ Automatic: ./scripts/bootstrap.sh
+    ├─ macOS: brew bundle install && stow .
+    ├─ Arch: sudo pacman -S - < packages/pacman.txt && stow .
+    ├─ Ubuntu: xargs -a packages/apt.txt sudo apt install -y && stow .
+    └─ Restricted: ./scripts/link-configs.sh (configs only)
+```
+
+---
+
+## Post-Installation
+
+After installing packages and linking configs:
+
+### Set Fish as Default Shell
+
+```bash
+# Add Fish to /etc/shells (if not present)
+which fish | sudo tee -a /etc/shells
+
+# Change default shell
+chsh -s $(which fish)
+```
+
+### Git Setup
+
+```bash
+# Generate SSH key (if needed)
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Upload to GitHub
+# - Add SSH public key for authentication
+# - Add SSH public key for signing (yes, add it twice)
+# - Configure for SSO/SAML if needed
+
+# Authenticate GitHub CLI
+gh auth login
+
+# Create project directories
+mkdir -p ~/projects/work ~/projects/oss
+```
+
+### Neovim Setup
+
+```bash
+# Open Neovim (plugins will auto-install with LazyVim)
+nvim
+
+# Run health check
+:checkhealth
+```
+
+### Podman Setup (macOS)
+
+```bash
+# Initialize Podman VM
+podman machine init
+podman machine start
+
+# If needed, install helper
+sudo /opt/homebrew/Cellar/podman/*/bin/podman-mac-helper install
+```
+
+### macOS-Specific
+
+- **Caps Lock → Control**: System Settings → Keyboard → Modifier Keys
+- **Allow unsigned apps**: System Settings → Privacy & Security (for Ghostty, Alacritty)
+
+---
+
+## Repository Structure
+
+```
+dotfiles/
+├── README.md              # This file - installation guide
+├── NIX-README.md          # Nix-specific documentation
+├── Brewfile               # Homebrew packages (macOS without Nix)
+├── flake.nix              # Nix flake configuration
+├── home.nix               # Nix home-manager entry
+├── hosts/                 # Host-specific Nix configs
+├── modules/               # Nix modules (shell, dev, editors, etc.)
+├── packages/              # Package lists for apt/pacman/dnf/winget
+├── scripts/               # Installation and helper scripts
+│   ├── bootstrap.sh       # Universal installer
+│   └── link-configs.sh    # Manual config linking
+└── .config/               # Source configuration files
+    ├── nvim/              # Neovim (LazyVim)
+    ├── fish/              # Fish shell
+    ├── starship.toml      # Starship prompt
+    ├── helix/             # Helix editor
+    ├── kitty/             # Kitty terminal
+    ├── alacritty/         # Alacritty terminal
+    ├── ghostty/           # Ghostty terminal
+    ├── zellij/            # Zellij multiplexer
+    └── ...
+```
+
+---
+
+## Documentation
+
+- **[NIX-README.md](./NIX-README.md)** - Complete Nix Home Manager guide
+- **[packages/README.md](./packages/README.md)** - Package manager lists
+- **[scripts/README.md](./scripts/README.md)** - Installation scripts
+- **[Claude.md](./Claude.md)** - Context for Claude Code AI
+
+---
+
+## Updating
+
+### With Nix
+
+```bash
+cd ~/dotfiles
+git pull
+home-manager switch --flake .#macbook-pro
+```
+
+### Without Nix
+
+```bash
+cd ~/dotfiles
+git pull
+
+# Update packages
+brew bundle install  # macOS
+# or: sudo pacman -Syu  # Arch
+# or: sudo apt upgrade  # Ubuntu
+
+# Relink configs (if changed)
+stow .
+```
+
+---
+
+## Troubleshooting
+
+### Configs Not Applied
+
+```bash
+# Verify symlinks
+ls -la ~/.config/nvim
+ls -la ~/.config/fish
+
+# Re-run stow
+cd ~/dotfiles
+stow --restow .
+```
+
+### Package Not Found
+
+Check the appropriate package list in `packages/` and install manually or comment out from the list.
+
+### Nix Build Fails
+
+```bash
+# Try updating flake
+nix flake update
+
+# Or fall back to non-Nix method
+./scripts/bootstrap.sh
+```
+
+---
+
+## Contributing
+
+This is a personal dotfiles repository, but feel free to fork and adapt for your own use!

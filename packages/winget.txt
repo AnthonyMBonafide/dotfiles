@@ -1,0 +1,48 @@
+# Package list for Windows (winget)
+# Install with PowerShell:
+# Get-Content packages/winget.txt | ForEach-Object { winget install -e --id $_ }
+
+# Or install individually with: winget install -e --id <package-id>
+
+# Terminal & Shell
+Microsoft.WindowsTerminal
+# Or: Ghostty.Ghostty (if available)
+
+# CLI Tools
+sharkdp.bat
+eza-community.eza
+sharkdp.fd
+BurntSushi.ripgrep.MSVC
+junegunn.fzf
+Git.Git
+GitHub.cli
+
+# Development Tools
+GoLang.Go
+Rustlang.Rust.MSVC
+
+# Editors
+Neovim.Neovim
+# Or: Helix.Helix (if available)
+
+# Fonts
+# Nerd Fonts can be installed via:
+# - Scoop: scoop bucket add nerd-fonts && scoop install Hack-NF JetBrainsMono-NF
+# - Or download from: https://www.nerdfonts.com/
+
+# Additional Tools (if available)
+# CoreyButler.NVMforWindows
+# Docker.DockerDesktop
+
+# Notes for WSL:
+# - If using WSL, follow the Linux (apt/pacman/dnf) installation instead
+# - WSL uses the Linux kernel, so use apt.txt for Ubuntu-based WSL
+# - For better experience, install Windows Terminal and use WSL inside it
+# - Fonts installed on Windows are available in WSL terminals
+#
+# Manual installations recommended:
+# - Starship: https://starship.rs/
+# - Atuin: https://atuin.sh/
+# - Zoxide: cargo install zoxide
+# - Fish shell: Use WSL for best experience
+# - lazygit: scoop install lazygit

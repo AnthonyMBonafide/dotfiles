@@ -1,0 +1,50 @@
+# Package list for Fedora/RHEL (dnf)
+# Install with: xargs -a packages/dnf.txt sudo dnf install -y
+
+# Shell & CLI Tools
+bat
+fd-find
+ripgrep
+fzf
+jq
+yq
+wget
+tmux
+gnupg2
+zsh
+
+# Development Tools
+gcc
+golang
+cargo
+rust
+rust-analyzer
+git
+gh
+qemu-system-x86
+
+# Editors
+neovim
+helix
+
+# Terminals
+alacritty
+kitty
+
+# Shell
+fish
+starship
+
+# Additional utilities
+xclip
+wl-clipboard
+pinentry
+
+# Notes:
+# - Enable COPR or RPM Fusion for some packages
+# - Install eza from: cargo install eza
+# - Install zoxide from: cargo install zoxide
+# - Install lazygit from: https://github.com/jesseduffield/lazygit
+# - Install atuin from: cargo install atuin
+# - Nerd Fonts need manual installation from: https://www.nerdfonts.com/
+# - Some tools might be in EPEL repository for RHEL
