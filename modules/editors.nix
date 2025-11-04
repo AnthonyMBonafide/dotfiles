@@ -13,23 +13,16 @@
     sqlfluff
   ];
 
-  # Neovim Configuration
-  programs.neovim = {
+  # LazyVim Configuration
+  programs.lazyvim = {
     enable = true;
+  };
+
+  # Set Neovim as default editor
+  programs.neovim = {
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-
-    # Neovim has its own complex Lua configuration
-    # Instead of translating it to Nix, we'll symlink the entire config directory
-    # This preserves your LazyVim setup and all plugins
-  };
-
-  # Symlink the entire Neovim configuration directory
-  # This includes init.lua and the lua/ directory with all your configs
-  xdg.configFile."nvim" = {
-    source = flakeRoot + /.config/nvim;
-    recursive = true;
   };
 
   # Helix Editor Configuration
