@@ -76,6 +76,7 @@
         cd = "z";
         ".." = "z ..";
         pms = "podman machine start";
+        hms = "home-manager switch --flake .#Anthony";
 
 # Git
         g = "git";
