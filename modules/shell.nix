@@ -14,6 +14,7 @@
     fzf          # Fuzzy finder
     tldr         # Simplified man pages
 
+
     # File monitoring and execution
     watchexec    # Execute commands on file changes
 
@@ -81,7 +82,8 @@
         cd = "z";
         ".." = "z ..";
         pms = "podman machine start";
-        hms = "home-manager switch --flake .#macbook-pro";
+        hmsm = "home-manager switch --flake .#macbook-pro";
+        hmsa = "home-manager switch --flake .#arch-desktop";
 
 # Git
         g = "git";

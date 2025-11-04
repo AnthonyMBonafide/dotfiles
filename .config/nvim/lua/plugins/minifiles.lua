@@ -1,0 +1,1 @@
+/nix/store/b9apvvam85crkmfz1nhmbpc8krjiy2p9-home-manager-files/.config/nvim/lua/plugins/minifiles.lua

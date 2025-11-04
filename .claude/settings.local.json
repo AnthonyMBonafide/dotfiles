@@ -4,7 +4,8 @@
       "Bash(test:*)",
       "Bash(cat:*)",
       "WebFetch(domain:github.com)",
-      "Read(//Users/Anthony/dotfiles/.config/nvim/lua/config/**)"
+      "Read(//Users/Anthony/dotfiles/.config/nvim/lua/config/**)",
+      "Bash(jj config:*)"
     ],
     "deny": [],
     "ask": []

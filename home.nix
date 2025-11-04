@@ -40,4 +40,18 @@
 
   # Enable XDG base directories
   xdg.enable = true;
-}
+
+  # Nix garbage collection and store optimization
+  nix = {
+    package = pkgs.nix;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+    settings = {
+      auto-optimise-store = true;
+    };
+  };
+
+ }

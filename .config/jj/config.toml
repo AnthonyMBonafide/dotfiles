@@ -1,1 +1,43 @@
-/nix/store/l8n7fwbdyypz9l1zg08pnv4q7ckk7pk3-home-manager-files/.config/jj/config.toml
+#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+name = "Anthony M. Bonafide"
+email = "AnthonyMBonafide@pm.me"
+
+[ui]
+default-command = "log"
+editor = "nvim"
+
+# override user.email if the repository is located under ~/projects/work
+[[--scope]]
+--when.repositories = ["~/projects/work"]
+[--scope.user]
+email = "anthony.bonafide@shipt.com"
+
+
+[revsets]
+# Show commits that are not in `main@origin`
+# log = "present(@) | ancestors(immutable_heads().., 10) | present(trunk())"
+
+[revset-aliases]
+# set all remote bookmarks (commits pushed to remote branches) to be immutable
+# this has the side effect of making a new change on top of the existing one
+# when pushing changes. Also, displaying with `jj log` or simply `jj`
+'immutable_heads()' = "builtin_immutable_heads() | remote_bookmarks()"
+
+[signing]
+behavior = "own"
+backend = "ssh"
+key = "~/.ssh/id_ed25519.pub"
+
+[git]
+colocate = true
+push-new-bookmarks = true
+git_push_bookmark = '"AnthonyMBonafide/push-" ++ change_id.short()'
+# Prevent pushing work in progress or anything explicitly labeled "private"
+private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
+
+[snapshot]
+# This is the default value, but it's good to be explicit
+max-new-file-size = "1MiB"
