@@ -7,6 +7,7 @@
     # Languages & Compilers
     gcc
     go
+    rust-analyzer
 
     # Go tools
     golangci-lint

@@ -3,7 +3,8 @@
     "allow": [
       "Bash(test:*)",
       "Bash(cat:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Read(//Users/Anthony/dotfiles/.config/nvim/lua/config/**)"
     ],
     "deny": [],
     "ask": []
