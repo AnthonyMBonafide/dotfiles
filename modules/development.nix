@@ -5,24 +5,21 @@
   home.packages = with pkgs; [
     jujutsu
     # Languages & Compilers
-    gcc
-    go
-    rust-analyzer
+    # gcc
+    # go
+    # rust-analyzer
 
     # Go tools
-    golangci-lint
+    # golangci-lint
 
     # API & Testing tools
     bruno  # API client (if available in nixpkgs)
 
     # Build & Task tools
-    qemu
+    # qemu
 
     # Container tools
     podman-compose
-
-    # Kafka tools
-    kcat
 
     # GitHub CLI (managed manually for config preservation)
     gh
