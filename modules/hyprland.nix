@@ -210,13 +210,18 @@ in
       # Applications
       bind = $mainMod, Return, exec, ghostty
       bind = $mainMod, Q, killactive,
-      bind = $mainMod, M, exit,
+      bind = $mainMod SHIFT, Escape, exit,
+      bind = $mainMod, Escape, exec, wlogout
       bind = $mainMod, E, exec, thunar
       bind = $mainMod, V, togglefloating,
-      bind = $mainMod, D, exec, wofi --show drun
+      bind = $mainMod SHIFT, Space, exec, wofi --show drun
       bind = $mainMod, P, pseudo,
       bind = $mainMod, J, togglesplit,
       bind = $mainMod, F, fullscreen,
+      bind = $mainMod, B, exec, firefox
+      bind = $mainMod SHIFT, B, exec, firefox --private-window
+      bind = $mainMod, M, exec, spotify
+      bind = $mainMod, D, exec, discord
 
       # Screenshot
       bind = , Print, exec, grim -g "$(slurp)" - | swappy -f -
@@ -295,7 +300,7 @@ in
       bind = , XF86MonBrightnessDown, exec, brightnessctl set 5%-
 
       # Lock screen
-      bind = $mainMod, L, exec, hyprlock
+      bind = $mainMod SHIFT, L, exec, hyprlock
     '';
   };
 
