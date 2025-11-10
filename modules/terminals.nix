@@ -1,8 +1,16 @@
-{ config, pkgs, flakeRoot, ... }:
+{ config, pkgs, ... }:
 
 {
-  # Ghostty Terminal
-  # Ghostty might not have native home-manager support yet
-  # We'll use xdg.configFile to symlink the config
-  xdg.configFile."ghostty/config".source = flakeRoot + /.config/ghostty/config-2;
+  # Ghostty Terminal Configuration
+  xdg.configFile."ghostty/config".text = ''
+    theme = TokyoNight
+    mouse-hide-while-typing = true
+    background-blur-radius = 20
+    window-decoration = true
+    macos-option-as-alt = true
+    background-opacity = 0.7
+
+    font-size = 20
+    keybind = shift+enter=text:\x1b\r
+  '';
 }

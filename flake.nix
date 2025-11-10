@@ -61,5 +61,29 @@
           hostModule = ./hosts/macbook-pro.nix;
         };
       };
+
+      nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/nixos/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.anthony = { ... }: {
+                imports = [
+                  ./home.nix
+                  ./hosts/nixos-desktop.nix
+                  lazyvim.homeManagerModules.default
+                ];
+                # Make flake root available to this home-manager configuration
+                _module.args.flakeRoot = self;
+              };
+            }
+          ];
+        };
+      };
     };
+
 }

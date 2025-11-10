@@ -4,6 +4,7 @@
   # Import all module configurations
   imports = [
     ./modules/shell.nix
+    ./modules/ssh.nix
     ./modules/terminals.nix
     ./modules/development.nix
     ./modules/editors.nix
@@ -43,7 +44,7 @@
 
   # Nix garbage collection and store optimization
   nix = {
-    package = pkgs.nix;
+    package = pkgs.lib.mkDefault pkgs.nix;
     gc = {
       automatic = true;
       dates = "weekly";

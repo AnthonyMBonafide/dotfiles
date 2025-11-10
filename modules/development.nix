@@ -1,4 +1,4 @@
-{ config, pkgs, flakeRoot, ... }:
+{ config, pkgs, ... }:
 
 {
   # Development packages
@@ -35,6 +35,12 @@
     # User information
     userEmail = "AnthonyMBonafide@pm.me";
     userName = "Anthony M. Bonafide";
+
+    # SSH-based commit signing
+    signing = {
+      key = "~/.ssh/id_ed25519.pub";
+      signByDefault = true;
+    };
 
     # Core settings
     extraConfig = {
@@ -73,13 +79,13 @@
         tool = "vimdiff";
       };
 
-      # GPG settings
+      # GPG settings for SSH signing
       gpg = {
         format = "ssh";
-      };
-
-      "gpg \"ssh\"" = {
-        program = "/nix/store/bzicv3xa9497vxamn9dcbi71i7n2rn92-openssh-10.0p2/bin/ssh-keygen";
+        ssh = {
+          program = "${pkgs.openssh}/bin/ssh-keygen";
+          allowedSignersFile = "${config.home.homeDirectory}/.config/git/allowed_signers";
+        };
       };
 
       # Init settings
@@ -169,9 +175,40 @@
   '';
 
   # GitHub CLI Configuration
-  # Note: We're not using programs.gh.enable because we want to manage the config files manually
-  # to preserve your existing gh configuration exactly as-is
-  # Link gh config files directly
-  xdg.configFile."gh/config.yml".source = flakeRoot + /.config/gh/config.yml;
-  xdg.configFile."gh/hosts.yml".source = flakeRoot + /.config/gh/hosts.yml;
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "https";
+      prompt = "enabled";
+      aliases = {
+        co = "pr checkout";
+      };
+      version = "1";
+    };
+  };
+
+  # GitHub CLI hosts configuration
+  xdg.configFile."gh/hosts.yml".text = ''
+    github.com:
+        user: AnthonyMBonafide
+        git_protocol: ssh
+        users:
+            AnthonyMBonafide:
+  '';
+
+  # Git allowed signers file for SSH signing verification
+  # This activation script generates the allowed_signers file from your actual SSH key
+  # so it automatically stays in sync when you regenerate keys
+  home.activation.generateAllowedSigners = config.lib.dag.entryAfter ["writeBoundary"] ''
+    SSH_KEY="${config.home.homeDirectory}/.ssh/id_ed25519.pub"
+    SIGNERS_FILE="${config.home.homeDirectory}/.config/git/allowed_signers"
+
+    if [ -f "$SSH_KEY" ]; then
+      mkdir -p "$(dirname "$SIGNERS_FILE")"
+      # Remove old symlink/file if it exists
+      $DRY_RUN_CMD rm -f "$SIGNERS_FILE"
+      echo "${config.programs.git.userEmail} $(cat "$SSH_KEY")" > "$SIGNERS_FILE"
+      $DRY_RUN_CMD chmod 644 "$SIGNERS_FILE"
+    fi
+  '';
 }
