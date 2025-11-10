@@ -12,9 +12,8 @@
   ];
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-    "claude-code"
-  ];
+  # Note: This is set in host-specific configs for standalone home-manager
+  # On NixOS, this is handled by the system config
 
   # Home Manager needs a bit of information about you and the paths it should manage
   # These are now set in host-specific configurations (hosts/*.nix)

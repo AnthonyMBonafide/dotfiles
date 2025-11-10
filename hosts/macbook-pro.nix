@@ -10,6 +10,11 @@
   # System architecture is defined in flake.nix
   # This host uses: aarch64-darwin (Apple Silicon)
 
+  # Allow unfree packages for standalone home-manager
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "claude-code"
+  ];
+
   # Host-specific packages (if any)
   home.packages = with pkgs; [
     # Add macOS-specific packages here if needed

@@ -11,6 +11,11 @@
   # System architecture is defined in flake.nix
   # This host uses: x86_64-linux
 
+  # Allow unfree packages for standalone home-manager
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "claude-code"
+  ];
+
   # Linux-specific packages
   home.packages = with pkgs; [
     # Display/GUI tools

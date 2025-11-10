@@ -4,14 +4,7 @@
   # SSH Client Configuration
   programs.ssh = {
     enable = true;
-
-    # Automatically add keys to ssh-agent
-    addKeysToAgent = "yes";
-
-    # Only use authentication identities configured in ssh config
-    extraConfig = ''
-      IdentitiesOnly yes
-    '';
+    enableDefaultConfig = false;
 
     # Host-specific configurations
     matchBlocks = {
@@ -20,6 +13,13 @@
         user = "git";
         identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
+        addKeysToAgent = "yes";
+      };
+
+      # Default wildcard match block for all other hosts
+      "*" = {
+        identitiesOnly = true;
+        addKeysToAgent = "yes";
       };
     };
   };
