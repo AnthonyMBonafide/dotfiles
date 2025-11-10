@@ -110,6 +110,13 @@
     #media-session.enable = true;
   };
 
+  # Bluetooth configuration
+  # Enable Bluetooth hardware support but disable it on boot to save battery
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;  # Bluetooth will be off by default
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 

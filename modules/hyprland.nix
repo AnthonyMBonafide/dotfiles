@@ -11,6 +11,9 @@
     hyprlock           # Screen locker
     hyprpicker         # Color picker
 
+    # Wallpapers
+    nixos-artwork.wallpapers.nineish-dark-gray
+
     # Status bar and system tray
     waybar             # Highly customizable status bar
 
@@ -104,7 +107,7 @@
           kb_layout = us
           kb_variant =
           kb_model =
-          kb_options = caps:ctrl,compose:ralt
+          kb_options = ctrl:nocaps,compose:ralt
           kb_rules =
 
           follow_mouse = 1
@@ -689,10 +692,10 @@
     # Hyprpaper (wallpaper) configuration
     "hypr/hyprpaper.conf".text = ''
       # Preload wallpapers
-      # preload = ~/Pictures/wallpaper.jpg
+      preload = ${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/backgrounds/nixos/nix-wallpaper-nineish-dark-gray.png
 
       # Set wallpaper for all monitors
-      # wallpaper = ,~/Pictures/wallpaper.jpg
+      wallpaper = ,${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/backgrounds/nixos/nix-wallpaper-nineish-dark-gray.png
 
       # Enable splash text rendering
       splash = false
@@ -741,6 +744,6 @@
 
     # XKB configuration to reduce warnings
     XKB_DEFAULT_LAYOUT = "us";
-    XKB_DEFAULT_OPTIONS = "caps:ctrl,compose:ralt";
+    XKB_DEFAULT_OPTIONS = "ctrl:nocaps,compose:ralt";
   };
 }
