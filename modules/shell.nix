@@ -154,6 +154,7 @@
           bind -M insert \eOA _atuin_bind_up
           bind -M insert \e\[A _atuin_bind_up
       end
+      # END of atuin fish 4.0+ workaround - remove everything above once atuin is fixed
     '';
 
     # Environment variables
@@ -203,7 +204,7 @@
   };
 
   # Note: If you have alias files, you can still source them:
-  # Source rust environment in fish (conditionally)
+  # Source rust environment in fish (conditionally to avoid errors if cargo not installed)
   xdg.configFile."fish/conf.d/rustup.fish".text = ''
     if test -f "$HOME/.cargo/env.fish"
       source "$HOME/.cargo/env.fish"
@@ -238,6 +239,7 @@
     description = "The current jj status"
     detect_folders = [".jj"]
     symbol = "🥋 "
+    # Using TOML multi-line string (""") to properly escape the command with single quotes
     command = """
 jj log --revisions @ --no-graph --ignore-working-copy --color always --limit 1 --template '
   separate(" ",
