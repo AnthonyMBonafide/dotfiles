@@ -70,6 +70,92 @@
       set -gx PATH $HOME/.nix-profile/bin $PATH
     '';
 
+    # Interactive shell config - manually initialize atuin for fish 4.0+ compatibility
+    # TODO: Remove this manual initialization once atuin > 18.8.0 fixes the deprecated bind -k syntax
+    # See: https://github.com/atuinsh/atuin/issues/2613 and https://github.com/atuinsh/atuin/pull/2616
+    # To remove: Delete this entire interactiveShellInit block and set enableFishIntegration = true below
+    interactiveShellInit = ''
+      # Manual atuin initialization (without deprecated -k syntax for fish 4.0+)
+      set -gx ATUIN_SESSION (atuin uuid)
+      set --erase ATUIN_HISTORY_ID
+
+      function _atuin_preexec --on-event fish_preexec
+          if not test -n "$fish_private_mode"
+              set -g ATUIN_HISTORY_ID (atuin history start -- "$argv[1]")
+          end
+      end
+
+      function _atuin_postexec --on-event fish_postexec
+          set -l s $status
+          if test -n "$ATUIN_HISTORY_ID"
+              ATUIN_LOG=error atuin history end --exit $s -- $ATUIN_HISTORY_ID &>/dev/null &
+              disown
+          end
+          set --erase ATUIN_HISTORY_ID
+      end
+
+      function _atuin_search
+          set -l keymap_mode
+          switch $fish_key_bindings
+              case fish_vi_key_bindings
+                  switch $fish_bind_mode
+                      case default
+                          set keymap_mode vim-normal
+                      case insert
+                          set keymap_mode vim-insert
+                  end
+              case '*'
+                  set keymap_mode emacs
+          end
+
+          set -l ATUIN_H (ATUIN_SHELL_FISH=t ATUIN_LOG=error ATUIN_QUERY=(commandline -b) atuin search --keymap-mode=$keymap_mode $argv -i 3>&1 1>&2 2>&3 | string collect)
+
+          if test -n "$ATUIN_H"
+              if string match --quiet '__atuin_accept__:*' "$ATUIN_H"
+                  set -l ATUIN_HIST (string replace "__atuin_accept__:" "" -- "$ATUIN_H" | string collect)
+                  commandline -r "$ATUIN_HIST"
+                  commandline -f repaint
+                  commandline -f execute
+                  return
+              else if string match --quiet '__atuin_chain_command__:*' "$ATUIN_H"
+                  set -l new_command (string replace "__atuin_chain_command__:" "" -- "$ATUIN_H" | string collect)
+                  set -l current_command (commandline -b)
+                  commandline -r "$current_command $new_command"
+              else
+                  commandline -r "$ATUIN_H"
+              end
+          end
+
+          commandline -f repaint
+      end
+
+      function _atuin_bind_up
+          if commandline --search-mode; or commandline --paging-mode
+              up-or-search
+              return
+          end
+
+          set -l lineno (commandline --line)
+          switch $lineno
+              case 1
+                  _atuin_search --shell-up-key-binding
+              case '*'
+                  up-or-search
+          end
+      end
+
+      # Set up key bindings without deprecated -k syntax
+      bind \cr _atuin_search
+      bind \eOA _atuin_bind_up
+      bind \e\[A _atuin_bind_up
+
+      if bind -M insert > /dev/null 2>&1
+          bind -M insert \cr _atuin_search
+          bind -M insert \eOA _atuin_bind_up
+          bind -M insert \e\[A _atuin_bind_up
+      end
+    '';
+
     # Environment variables
     shellAbbrs = {
         src = "source ~/.config/fish/config.fish";
@@ -117,9 +203,11 @@
   };
 
   # Note: If you have alias files, you can still source them:
-  # Source rust environment in fish
+  # Source rust environment in fish (conditionally)
   xdg.configFile."fish/conf.d/rustup.fish".text = ''
-    source "$HOME/.cargo/env.fish"
+    if test -f "$HOME/.cargo/env.fish"
+      source "$HOME/.cargo/env.fish"
+    end
   '';
 
   # If the alias files exist, you can source them too
@@ -150,26 +238,26 @@
     description = "The current jj status"
     detect_folders = [".jj"]
     symbol = "🥋 "
-    command = '''
-    jj log --revisions @ --no-graph --ignore-working-copy --color always --limit 1 --template '
-      separate(" ",
-        change_id.shortest(4),
-        bookmarks,
-        "|",
-        concat(
-          if(conflict, "💥"),
-          if(divergent, "🚧"),
-          if(hidden, "👻"),
-          if(immutable, "🔒"),
-        ),
-        raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)"),
-        raw_escape_sequence("\x1b[1;32m") ++ coalesce(
-          truncate_end(29, description.first_line(), "…"),
-          "(no description set)",
-        ) ++ raw_escape_sequence("\x1b[0m"),
-      )
-    '
-    '''
+    command = """
+jj log --revisions @ --no-graph --ignore-working-copy --color always --limit 1 --template '
+  separate(" ",
+    change_id.shortest(4),
+    bookmarks,
+    "|",
+    concat(
+      if(conflict, "💥"),
+      if(divergent, "🚧"),
+      if(hidden, "👻"),
+      if(immutable, "🔒"),
+    ),
+    raw_escape_sequence("\\x1b[1;32m") ++ if(empty, "(empty)"),
+    raw_escape_sequence("\\x1b[1;32m") ++ coalesce(
+      truncate_end(29, description.first_line(), "…"),
+      "(no description set)",
+    ) ++ raw_escape_sequence("\\x1b[0m"),
+  )
+'
+"""
 
     # optionally disable git modules
     [git_state]
@@ -192,9 +280,12 @@
   '';
 
   # Atuin - Shell History
+  # WORKAROUND: atuin 18.8.0 uses deprecated 'bind -k' syntax incompatible with fish 4.0+
+  # TODO: Change enableFishIntegration back to true once atuin > 18.8.0 is available
+  # See: https://github.com/atuinsh/atuin/issues/2613
   programs.atuin = {
     enable = true;
-    enableFishIntegration = true;
+    enableFishIntegration = false;  # Temporarily disabled - using manual init in interactiveShellInit above
     # Reference existing atuin config
     settings = {
       enter_accept = true;

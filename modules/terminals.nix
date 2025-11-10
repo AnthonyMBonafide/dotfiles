@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  # Terminal packages
+  home.packages = with pkgs; [
+    ghostty
+  ];
+
   # Ghostty Terminal Configuration
   xdg.configFile."ghostty/config".text = ''
     theme = TokyoNight

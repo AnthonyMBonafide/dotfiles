@@ -77,11 +77,12 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.anthony = {
     isNormalUser = true;
     description = "Anthony Bonafide";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
     packages = with pkgs; [
     #  thunderbird
 	git
@@ -101,6 +102,9 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Enable fish shell system-wide
+  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

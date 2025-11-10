@@ -6,7 +6,10 @@
       "WebFetch(domain:github.com)",
       "Read(//Users/Anthony/dotfiles/.config/nvim/lua/config/**)",
       "Bash(jj config:*)",
-      "Read(//home/anthony/.ssh/**)"
+      "Read(//home/anthony/.ssh/**)",
+      "Read(//nix/store/**)",
+      "Read(//home/anthony/.config/fish/conf.d/**)",
+      "Read(//home/anthony/.config/fish/**)"
     ],
     "deny": [],
     "ask": []
