@@ -92,6 +92,28 @@
   # Enable Flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  # Nix garbage collection and store optimization (system-level)
+  # Note: User-level GC is configured in home.nix via home-manager
+  nix.gc = {
+    # Automatically clean up old system profiles and unused packages
+    automatic = true;
+
+    # Run GC weekly (same schedule as home-manager for consistency)
+    dates = "weekly";
+
+    # Delete system generations older than 30 days
+    # Keep at least 2-3 recent generations for safe rollback
+    options = "--delete-older-than 30d";
+  };
+
+  # Automatically optimize the Nix store to save disk space
+  # This deduplicates identical files (hard-linking them)
+  nix.settings.auto-optimise-store = true;
+
+  # Automatically clean up old boot entries to prevent /boot from filling up
+  # This is critical on systems with small /boot partitions
+  boot.loader.systemd-boot.configurationLimit = 10;
+
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "anthony";

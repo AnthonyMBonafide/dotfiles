@@ -42,15 +42,42 @@
   xdg.enable = true;
 
   # Nix garbage collection and store optimization
+  # These settings help manage disk usage by automatically cleaning up old/unused packages
   nix = {
     package = pkgs.lib.mkDefault pkgs.nix;
+
     gc = {
+      # Automatically run garbage collection to free up disk space
       automatic = true;
+
+      # Schedule: uses systemd.time calendar event format
+      # "weekly" = once per week, "daily" = once per day
+      # Weekly is a good balance - not too aggressive, prevents accumulation
       dates = "weekly";
+
+      # Delete derivations and outputs older than 30 days
+      # Adjust based on your needs:
+      #   - 7d: Aggressive, saves space, but harder to rollback
+      #   - 30d: Balanced (recommended for most users)
+      #   - 90d: Conservative, easier to rollback, uses more space
       options = "--delete-older-than 30d";
+
+      # Alternative: Keep last N generations instead of time-based
+      # Uncomment to use generation-based cleanup instead:
+      # options = "--delete-generations +5";
     };
+
     settings = {
+      # Automatically deduplicate identical files in the store to save space
+      # This can save significant disk space (often 10-30% reduction)
       auto-optimise-store = true;
+
+      # Trigger garbage collection automatically when free space is low
+      # min-free: Run GC when available space falls below this threshold (in bytes)
+      # max-free: Run GC until this much space is available
+      # Uncomment if you want disk-space-based GC (in addition to time-based):
+      # min-free = ${toString (1024 * 1024 * 1024)};    # 1 GB
+      # max-free = ${toString (5 * 1024 * 1024 * 1024)}; # 5 GB
     };
   };
 
