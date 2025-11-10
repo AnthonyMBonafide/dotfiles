@@ -12,7 +12,9 @@
       "Read(//home/anthony/.config/fish/**)",
       "Bash(hyprctl:*)",
       "Bash(journalctl:*)",
-      "Bash(systemctl:*)"
+      "Bash(systemctl:*)",
+      "Bash(ssh-keygen:*)",
+      "Bash(/dev/null)"
     ],
     "deny": [],
     "ask": []

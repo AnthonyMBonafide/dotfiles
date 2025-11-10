@@ -18,6 +18,7 @@
 
       # Default wildcard match block for all other hosts
       "*" = {
+        identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
         addKeysToAgent = "yes";
       };

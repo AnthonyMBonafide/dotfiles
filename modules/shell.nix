@@ -53,6 +53,12 @@
       enableFishIntegration = true;
     };
 
+  # Direnv - Automatic environment loading
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;  # Better Nix integration with caching
+  };
+
   # Fish Shell Configuration
   programs.fish = {
     enable = true;
