@@ -32,18 +32,13 @@
   programs.git = {
     enable = true;
 
-    # User information
-    userEmail = "AnthonyMBonafide@pm.me";
-    userName = "Anthony M. Bonafide";
+    settings = {
+      # User information
+      user = {
+        email = "AnthonyMBonafide@pm.me";
+        name = "Anthony M. Bonafide";
+      };
 
-    # SSH-based commit signing
-    signing = {
-      key = "~/.ssh/id_ed25519.pub";
-      signByDefault = true;
-    };
-
-    # Core settings
-    extraConfig = {
       # Aliases
       alias = {
         blame = "blame -w -C -C -C";
@@ -117,6 +112,12 @@
       "url \"ssh://git@github.com/\"" = {
         insteadOf = "https://github.com/";
       };
+    };
+
+    # SSH-based commit signing
+    signing = {
+      key = "~/.ssh/id_ed25519.pub";
+      signByDefault = true;
     };
 
     # Include conditional configs for work
@@ -207,7 +208,7 @@
       mkdir -p "$(dirname "$SIGNERS_FILE")"
       # Remove old symlink/file if it exists
       $DRY_RUN_CMD rm -f "$SIGNERS_FILE"
-      echo "${config.programs.git.userEmail} $(cat "$SSH_KEY")" > "$SIGNERS_FILE"
+      echo "${config.programs.git.settings.user.email} $(cat "$SSH_KEY")" > "$SIGNERS_FILE"
       $DRY_RUN_CMD chmod 644 "$SIGNERS_FILE"
     fi
   '';

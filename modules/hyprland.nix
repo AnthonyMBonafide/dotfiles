@@ -74,7 +74,7 @@ in
 
     # Fonts (if not already configured)
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     font-awesome       # For waybar icons
 
     # Other useful tools
