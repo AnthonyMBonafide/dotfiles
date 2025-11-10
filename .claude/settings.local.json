@@ -9,7 +9,10 @@
       "Read(//home/anthony/.ssh/**)",
       "Read(//nix/store/**)",
       "Read(//home/anthony/.config/fish/conf.d/**)",
-      "Read(//home/anthony/.config/fish/**)"
+      "Read(//home/anthony/.config/fish/**)",
+      "Bash(hyprctl:*)",
+      "Bash(journalctl:*)",
+      "Bash(systemctl:*)"
     ],
     "deny": [],
     "ask": []
