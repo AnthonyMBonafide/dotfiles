@@ -324,14 +324,14 @@
 
       lang.rust = {
         enable = true;
-        installDependencies = true;
-        installRuntimeDependencies = true;
+        installDependencies = false;
+        installRuntimeDependencies = false;
       };
 
       lang.go = {
         enable = true;
-        installDependencies = true;
-        installRuntimeDependencies = true;
+        installDependencies = false;
+        installRuntimeDependencies = false;
       };
 
       # Testing and debugging
@@ -347,18 +347,20 @@
     # Additional packages (optional)
     extraPackages = with pkgs; [
       tree-sitter    # Tree-sitter CLI
+      gcc            # C compiler for treesitter parsers
       nixd           # Nix LSP
       alejandra      # Nix formatter
       statix         # Nix linter
       rust-analyzer  # Rust LSP (needs to be explicit for PATH)
+      bacon          # Rust background compiler
       lldb           # Debug adapter for Rust/C/C++
       vscode-extensions.vadimcn.vscode-lldb  # CodeLLDB adapter for DAP
     ];
 
     # Only needed for languages not covered by LazyVim
-    treesitterParsers = with pkgs.vimPlugins.nvim-treesitter.grammarPlugins; [
-      templ     # Go templ files
-    ];
+    # treesitterParsers = with pkgs.vimPlugins.nvim-treesitter.grammarPlugins; [
+    #   templ     # Go templ files
+    # ];
   };
 
   # # Set Neovim as default editor

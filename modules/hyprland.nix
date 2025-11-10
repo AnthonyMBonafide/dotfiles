@@ -1,5 +1,12 @@
 { config, pkgs, ... }:
 
+let
+  # Download scenic wallpaper from wallhaven
+  wallpaper = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/gj/wallhaven-gjj89q.jpg";
+    sha256 = "sha256-BMyPZCT704JDjqsx6nMjfPs30S/Bq3gbpvksQM+BiBc=";
+  };
+in
 {
   # Hyprland window manager and ecosystem
   # This module configures Hyprland with all necessary tools and utilities
@@ -13,6 +20,7 @@
 
     # Wallpapers
     nixos-artwork.wallpapers.nineish-dark-gray
+    gnome-backgrounds  # Scenic photography wallpapers
 
     # Status bar and system tray
     waybar             # Highly customizable status bar
@@ -692,10 +700,10 @@
     # Hyprpaper (wallpaper) configuration
     "hypr/hyprpaper.conf".text = ''
       # Preload wallpapers
-      preload = ${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/backgrounds/nixos/nix-wallpaper-nineish-dark-gray.png
+      preload = ${wallpaper}
 
       # Set wallpaper for all monitors
-      wallpaper = ,${pkgs.nixos-artwork.wallpapers.nineish-dark-gray}/share/backgrounds/nixos/nix-wallpaper-nineish-dark-gray.png
+      wallpaper = ,${wallpaper}
 
       # Enable splash text rendering
       splash = false
