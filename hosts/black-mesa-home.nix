@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  # Host-specific home-manager configuration for NixOS Desktop
+  # Host-specific home-manager configuration for NixOS Laptop
 
   # Import window manager modules for this system
   # Both Hyprland and Niri are available - you can choose at login

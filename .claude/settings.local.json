@@ -14,7 +14,10 @@
       "Bash(journalctl:*)",
       "Bash(systemctl:*)",
       "Bash(ssh-keygen:*)",
-      "Bash(/dev/null)"
+      "Bash(/dev/null)",
+      "Bash(niri validate:*)",
+      "Bash(niri msg:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

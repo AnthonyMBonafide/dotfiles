@@ -83,6 +83,27 @@
             }
           ];
         };
+
+        black-mesa = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/black-mesa/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.anthony = { ... }: {
+                imports = [
+                  ./home.nix
+                  ./hosts/black-mesa-home.nix
+                  lazyvim.homeManagerModules.default
+                ];
+                # Make flake root available to this home-manager configuration
+                _module.args.flakeRoot = self;
+              };
+            }
+          ];
+        };
       };
     };
 
