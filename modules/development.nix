@@ -59,6 +59,7 @@
       # Commit settings
       commit = {
         gpgSign = true;
+        signoff = true;
       };
 
       # Core settings

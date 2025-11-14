@@ -181,7 +181,7 @@
 # Git
         g = "git";
         gf = "git fetch --all";
-        grom = "git rebase $DEFAULT_ORIGN/$DEFAULT_BRANCH";
+        grom = "git rebase origin/main";
         gfrom = "git fetch --all && git rebase origin/main";
         gp = "git push origin HEAD";
         gpwl = "git push origin HEAD --force-with-lease";
