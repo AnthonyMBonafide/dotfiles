@@ -45,6 +45,29 @@
   # Enable the X11 windowing system (still needed for XWayland).
   services.xserver.enable = true;
 
+  # NVIDIA GPU Configuration
+  # Enable proprietary NVIDIA drivers for better multi-monitor support
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.graphics.enable = true;
+
+  hardware.nvidia = {
+    # Use the production branch driver (recommended for most users)
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+    # Modesetting is required for Wayland compositors
+    modesetting.enable = true;
+
+    # Enable the NVIDIA settings menu
+    nvidiaSettings = true;
+
+    # Power management (may help with multi-monitor stability)
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+
+    # Open source kernel module (still beta, use false for stable)
+    open = false;
+  };
+
   # Hyprland Configuration
   # Enable Hyprland window manager
   programs.hyprland = {
@@ -124,8 +147,13 @@
     powerOnBoot = false;  # Bluetooth will be off by default
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  # Enable libinput with natural scrolling for mouse
+  services.xserver.libinput = {
+    enable = true;
+    mouse = {
+      naturalScrolling = true;
+    };
+  };
 
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.anthony = {

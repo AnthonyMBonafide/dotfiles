@@ -67,6 +67,9 @@ in
 
     # Idle management
     swayidle           # Idle daemon for auto-locking
+
+    # Monitor management
+    wlopm              # Wayland output power management
   ];
 
   # Niri configuration
@@ -103,12 +106,47 @@ in
     }
 
     // Output configuration (monitors)
-    output "eDP-1" {
+    // Left monitor: Dell P2419H (1920x1080)
+    output "DP-3" {
         mode "1920x1080@60.000"
         scale 1.0
         transform "normal"
         position x=0 y=0
     }
+
+    // Right monitor: Dell AW2521HF (1920x1080)
+    output "DP-2" {
+        mode "1920x1080@60.000"
+        scale 1.0
+        transform "normal"
+        position x=1920 y=0
+    }
+
+    // Right monitor (third monitor - will activate when detected)
+    // Uncomment and configure when third monitor is detected
+    // Check which port with: cat /sys/class/drm/card0-*/status
+    // output "DP-1" {
+    //     mode "1920x1080@60.000"
+    //     scale 1.0
+    //     transform "normal"
+    //     position x=3840 y=0
+    // }
+
+    // Alternatively for DP-4:
+    // output "DP-4" {
+    //     mode "1920x1080@60.000"
+    //     scale 1.0
+    //     transform "normal"
+    //     position x=3840 y=0
+    // }
+
+    // Or for HDMI:
+    // output "HDMI-A-1" {
+    //     mode "1920x1080@60.000"
+    //     scale 1.0
+    //     transform "normal"
+    //     position x=3840 y=0
+    // }
 
     // Layout configuration
     // Niri's unique scrollable tiling layout
@@ -223,8 +261,8 @@ in
         // ============================================================
         Mod+Q { close-window; }
         Mod+V { toggle-window-floating; }
-        Mod+F { fullscreen-window; }
-        Mod+Shift+F { toggle-windowed-fullscreen; }
+        Mod+F { set-column-width "100%"; }
+        Mod+Shift+F { fullscreen-window; }
 
         // ============================================================
         // SYSTEM CONTROLS
@@ -288,17 +326,33 @@ in
         // ============================================================
         // MONITOR MANAGEMENT (Multi-Monitor)
         // ============================================================
-        // Focus different monitors
+        // Focus different monitors (vim keys)
         Mod+Ctrl+H { focus-monitor-left; }
         Mod+Ctrl+J { focus-monitor-down; }
         Mod+Ctrl+K { focus-monitor-up; }
         Mod+Ctrl+L { focus-monitor-right; }
 
-        // Move windows to different monitors
+        // Focus different monitors (arrow keys)
+        Mod+Ctrl+Left { focus-monitor-left; }
+        Mod+Ctrl+Down { focus-monitor-down; }
+        Mod+Ctrl+Up { focus-monitor-up; }
+        Mod+Ctrl+Right { focus-monitor-right; }
+
+        // Move windows to different monitors (vim keys)
         Mod+Ctrl+Shift+H { move-column-to-monitor-left; }
         Mod+Ctrl+Shift+J { move-column-to-monitor-down; }
         Mod+Ctrl+Shift+K { move-column-to-monitor-up; }
         Mod+Ctrl+Shift+L { move-column-to-monitor-right; }
+
+        // Move windows to different monitors (arrow keys)
+        Mod+Ctrl+Shift+Left { move-column-to-monitor-left; }
+        Mod+Ctrl+Shift+Down { move-column-to-monitor-down; }
+        Mod+Ctrl+Shift+Up { move-column-to-monitor-up; }
+        Mod+Ctrl+Shift+Right { move-column-to-monitor-right; }
+
+        // Power management for monitors
+        Mod+Shift+P { spawn "${pkgs.niri}/bin/niri" "msg" "action" "power-off-monitors"; }
+        Mod+Ctrl+P { spawn "${pkgs.wlopm}/bin/wlopm" "--toggle" "*"; }
 
         // ============================================================
         // WORKSPACE MANAGEMENT
@@ -366,7 +420,7 @@ in
         Mod+Shift+R { switch-preset-window-height; }
 
         // Advanced column operations
-        Mod+Ctrl+F { set-column-width "100%"; }
+        Mod+Ctrl+F { toggle-windowed-fullscreen; }
         Mod+Ctrl+C { center-column; }
         Mod+Shift+C { center-column; }
 
