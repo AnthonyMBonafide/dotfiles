@@ -85,7 +85,7 @@ in
   # Hyprland-specific configurations
   wayland.windowManager.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    xwayland.enable = true;  # XWayland for X11 apps (mainly gaming)
     systemd.enable = true;  # Enable systemd integration
 
     extraConfig = ''
@@ -128,7 +128,8 @@ in
           }
       }
 
-      # XWayland configuration
+      # XWayland configuration (for X11 apps like Steam)
+      # Note: Requires gaming module for services.xserver.enable
       xwayland {
           force_zero_scaling = true
       }
@@ -680,18 +681,18 @@ in
       }
 
       listener {
-        timeout = 300  # 5 minutes
+        timeout = 300  # 5 minutes - dim screen
         on-timeout = brightnessctl -s set 10
         on-resume = brightnessctl -r
       }
 
       listener {
-        timeout = 600  # 10 minutes
+        timeout = 900  # 15 minutes - lock screen with hyprlock
         on-timeout = loginctl lock-session
       }
 
       listener {
-        timeout = 900  # 15 minutes
+        timeout = 1800  # 30 minutes - turn off monitors
         on-timeout = hyprctl dispatch dpms off
         on-resume = hyprctl dispatch dpms on
       }

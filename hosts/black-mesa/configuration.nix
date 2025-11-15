@@ -8,18 +8,12 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/nixos/gaming.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Steam Games Storage
-  fileSystems."/mnt/steamgames" = {
-    device = "/dev/disk/by-uuid/1499f235-0e1a-4caf-8663-c7948bd7097b";
-    fsType = "ext4";
-    options = [ "nofail" ];  # Don't fail boot if drive is missing
-  };
 
   networking.hostName = "black-mesa"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -49,8 +43,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system (still needed for XWayland).
-  services.xserver.enable = true;
+  # X11 server and XWayland configuration moved to modules/nixos/gaming.nix
 
   # NVIDIA GPU Configuration
   # Enable proprietary NVIDIA drivers for better multi-monitor support
@@ -230,20 +223,7 @@
   # Enable fish shell system-wide
   programs.fish.enable = true;
 
-  # Steam Configuration
-  # Enable Steam with proper graphics drivers and 32-bit support
-  programs.steam = {
-    enable = true;
-    # Enable GameScope for better Wayland compatibility
-    gamescopeSession.enable = true;
-    # Remote play and local network game streaming
-    remotePlay.openFirewall = true;
-    # Enable dedicated server support
-    dedicatedServer.openFirewall = true;
-  };
-
-  # GameMode for performance optimization during gaming
-  programs.gamemode.enable = true;
+  # Gaming configuration (Steam, GameMode, etc.) is in modules/nixos/gaming.nix
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

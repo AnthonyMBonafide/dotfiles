@@ -17,7 +17,7 @@ in
     wofi               # Application launcher
     dunst              # Notification daemon
     libnotify          # For notify-send command
-    xwayland-satellite # XWayland support for X11 apps like Steam
+    # xwayland-satellite is provided by the gaming module (modules/nixos/gaming.nix)
 
     # Screenshots and screen recording
     grim               # Screenshot tool for wayland
@@ -234,8 +234,9 @@ in
     // Prefer no window decorations (server-side decorations)
     prefer-no-csd
 
+    // XWayland configuration (for X11 apps like Steam)
     // XWayland is automatically integrated via xwayland-satellite (since niri 25.08)
-    // No configuration needed - just ensure xwayland-satellite is installed
+    // Note: Requires gaming module which provides xwayland-satellite and services.xserver.enable
 
     // Environment variables for compatibility
     environment {
@@ -251,7 +252,7 @@ in
     spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${wallpaper}"
     spawn-at-startup "${pkgs.wl-clipboard}/bin/wl-paste" "--type" "text" "--watch" "${pkgs.cliphist}/bin/cliphist" "store"
     spawn-at-startup "${pkgs.wl-clipboard}/bin/wl-paste" "--type" "image" "--watch" "${pkgs.cliphist}/bin/cliphist" "store"
-    spawn-at-startup "${pkgs.swayidle}/bin/swayidle" "-w" "timeout" "300" "${pkgs.hyprlock}/bin/hyprlock" "timeout" "600" "${pkgs.niri}/bin/niri msg action power-off-monitors"
+    spawn-at-startup "${pkgs.swayidle}/bin/swayidle" "-w" "timeout" "300" "${pkgs.brightnessctl}/bin/brightnessctl -s set 10" "resume" "${pkgs.brightnessctl}/bin/brightnessctl -r" "timeout" "900" "${pkgs.swaylock-effects}/bin/swaylock -f" "timeout" "1800" "${pkgs.niri}/bin/niri msg action power-off-monitors"
 
     // Keybindings
     // Modifier key: Super (Windows key)
@@ -280,7 +281,7 @@ in
         // ============================================================
         Mod+Shift+Escape { quit; }
         Mod+Escape { spawn "${pkgs.wlogout}/bin/wlogout"; }
-        Mod+Shift+Backspace { spawn "${pkgs.hyprlock}/bin/hyprlock"; }
+        Mod+Shift+Backspace { spawn "${pkgs.swaylock-effects}/bin/swaylock" "-f"; }
         Mod+O { toggle-overview; }
 
         // ============================================================
@@ -565,6 +566,7 @@ in
     executable = true;
   };
 
+  # Screensaver/lock configuration is in modules/screensaver.nix
   # GTK, Qt, and environment variables are handled by hyprland.nix
   # No need to duplicate them here since both modules are imported together
 }

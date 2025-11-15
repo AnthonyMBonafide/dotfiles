@@ -8,6 +8,7 @@
   imports = [
     ../modules/hyprland.nix
     ../modules/niri.nix
+    ../modules/screensaver.nix
   ];
 
   # User information (required for home-manager)
