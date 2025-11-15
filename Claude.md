@@ -236,6 +236,12 @@ home-manager switch --switch-generation <number>
 4. **Test assumptions** - check if packages exist in nixpkgs before adding
 5. **Maintain consistency** - follow existing naming/organization patterns
 
+### When Modifying Niri Configuration
+1. **Always validate changes** - Run `niri validate` after modifying `modules/niri.nix`
+2. **Check config syntax** - Niri uses KDL (KubeDoc Language) which has strict syntax requirements
+3. **Test before committing** - Invalid Niri configs can prevent the window manager from starting
+4. **Validation command**: `niri validate` (checks default location) or `niri validate -c <path>` for custom config path
+
 ### When Adding Configuration
 1. **Prefer editing existing files** over creating new ones
 2. **Don't create documentation files** unless explicitly requested

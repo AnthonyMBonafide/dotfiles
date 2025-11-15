@@ -22,7 +22,9 @@
       "Bash(done)",
       "Bash(lspci:*)",
       "Bash(echo:*)",
-      "Bash(niri --help:*)"
+      "Bash(niri --help:*)",
+      "Bash(nix search:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []

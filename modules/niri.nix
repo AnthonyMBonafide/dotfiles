@@ -17,6 +17,7 @@ in
     wofi               # Application launcher
     dunst              # Notification daemon
     libnotify          # For notify-send command
+    xwayland-satellite # XWayland support for X11 apps like Steam
 
     # Screenshots and screen recording
     grim               # Screenshot tool for wayland
@@ -98,7 +99,7 @@ in
         }
 
         mouse {
-            natural-scroll
+            // natural-scroll disabled for traditional mouse scrolling
             accel-speed 0.0
         }
 
@@ -242,6 +243,7 @@ in
     }
 
     // Spawn programs at startup
+    spawn-at-startup "${pkgs.xwayland-satellite}/bin/xwayland-satellite"
     spawn-at-startup "${pkgs.waybar}/bin/waybar"
     spawn-at-startup "${pkgs.dunst}/bin/dunst"
     spawn-at-startup "${pkgs.networkmanagerapplet}/bin/nm-applet"
