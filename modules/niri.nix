@@ -98,6 +98,7 @@ in
         }
 
         mouse {
+            natural-scroll
             accel-speed 0.0
         }
 

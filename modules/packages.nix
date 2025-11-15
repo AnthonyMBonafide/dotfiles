@@ -8,8 +8,7 @@
     # Applications
     discord
     spotify
-    # Disabling steam as it does not seem to work with Wayland. Need to work this out later
-    # steam
+    # Steam is now enabled at system level in configuration.nix with proper Wayland support
 
     # Fonts
     # Nerd Fonts are now separate packages in the nerd-fonts namespace

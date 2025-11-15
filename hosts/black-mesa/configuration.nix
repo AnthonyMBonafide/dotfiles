@@ -207,6 +207,21 @@
   # Enable fish shell system-wide
   programs.fish.enable = true;
 
+  # Steam Configuration
+  # Enable Steam with proper graphics drivers and 32-bit support
+  programs.steam = {
+    enable = true;
+    # Enable GameScope for better Wayland compatibility
+    gamescopeSession.enable = true;
+    # Remote play and local network game streaming
+    remotePlay.openFirewall = true;
+    # Enable dedicated server support
+    dedicatedServer.openFirewall = true;
+  };
+
+  # GameMode for performance optimization during gaming
+  programs.gamemode.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
