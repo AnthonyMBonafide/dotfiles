@@ -233,6 +233,14 @@ in
     // Prefer no window decorations (server-side decorations)
     prefer-no-csd
 
+    // XWayland is automatically integrated via xwayland-satellite (since niri 25.08)
+    // No configuration needed - just ensure xwayland-satellite is installed
+
+    // Environment variables for compatibility
+    environment {
+        // DISPLAY is automatically set by niri when xwayland-satellite is available
+    }
+
     // Spawn programs at startup
     spawn-at-startup "${pkgs.waybar}/bin/waybar"
     spawn-at-startup "${pkgs.dunst}/bin/dunst"

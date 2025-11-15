@@ -21,7 +21,8 @@
       "Bash(for port in /sys/class/drm/card0-*/status)",
       "Bash(done)",
       "Bash(lspci:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(niri --help:*)"
     ],
     "deny": [],
     "ask": []
