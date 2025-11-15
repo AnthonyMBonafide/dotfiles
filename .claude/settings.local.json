@@ -20,7 +20,8 @@
       "WebSearch",
       "Bash(for port in /sys/class/drm/card0-*/status)",
       "Bash(done)",
-      "Bash(lspci:*)"
+      "Bash(lspci:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

@@ -148,7 +148,7 @@
   };
 
   # Enable libinput with natural scrolling for mouse
-  services.xserver.libinput = {
+  services.libinput = {
     enable = true;
     mouse = {
       naturalScrolling = true;
