@@ -14,6 +14,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Steam Games Storage
+  fileSystems."/mnt/steamgames" = {
+    device = "/dev/disk/by-uuid/1499f235-0e1a-4caf-8663-c7948bd7097b";
+    fsType = "ext4";
+    options = [ "nofail" ];  # Don't fail boot if drive is missing
+  };
+
   networking.hostName = "black-mesa"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -193,6 +200,22 @@
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.grub.configurationLimit = 10;
 
+  # Power Management Configuration
+  # Disable automatic suspend and hibernation
+  services.logind.settings = {
+    Login = {
+      HandleLidSwitch = "ignore";  # Don't suspend on lid close
+      HandleLidSwitchDocked = "ignore";
+      HandleLidSwitchExternalPower = "ignore";
+      HandlePowerKey = "ignore";
+      IdleAction = "ignore";
+      IdleActionSec = 0;
+    };
+  };
+
+  # Disable GNOME automatic suspend
+  services.gnome.gnome-settings-daemon.enable = true;
+
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "anthony";
@@ -229,6 +252,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
+    swayidle  # Idle management for Wayland
+    swaylock  # Screen locker for Wayland
   #  wget
   ];
 

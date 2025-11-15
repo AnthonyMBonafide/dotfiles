@@ -695,11 +695,6 @@ in
         on-timeout = hyprctl dispatch dpms off
         on-resume = hyprctl dispatch dpms on
       }
-
-      listener {
-        timeout = 1800  # 30 minutes
-        on-timeout = systemctl suspend
-      }
     '';
 
     # Hyprpaper (wallpaper) configuration
