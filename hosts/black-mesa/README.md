@@ -79,6 +79,7 @@ This configuration inherits all modules from the shared configuration:
 - **Bluetooth**: Enabled but off by default (battery saving)
 - **Networking**: NetworkManager
 - **Auto-login**: Enabled for user `anthony`
+- **Gaming**: Steam, GameMode, XWayland, MangoHud, Goverlay
 
 ### User-Level (Home Manager)
 - **Shell**: Fish with Starship prompt and Atuin history
@@ -163,10 +164,206 @@ If Hyprland or Niri don't appear in GDM:
 2. Check that the window managers are enabled in `configuration.nix`
 3. Rebuild and reboot
 
+## Gaming with Steam
+
+Black Mesa includes a dedicated gaming module with Steam and performance optimizations.
+
+### Launching Steam
+
+Steam is installed system-wide and can be launched several ways:
+
+```bash
+# From terminal
+steam
+
+# From application launcher (Wofi in Hyprland/Niri)
+Super + Shift + Space, then type "Steam"
+
+# From GNOME applications menu
+```
+
+### Steam Library Location
+
+The configuration includes a dedicated drive for Steam games:
+
+- **Mount Point**: `/mnt/steamgames`
+- **Type**: ext4 filesystem
+- **Options**: `nofail` (system boots even if drive is missing)
+
+To set Steam to use this library:
+
+1. Launch Steam
+2. **Settings** → **Storage**
+3. Add library folder: `/mnt/steamgames`
+4. Set as default for new installations
+
+### GameScope (Wayland Gaming)
+
+GameScope is enabled for better Wayland compatibility:
+
+```bash
+# Launch a game with GameScope
+gamescope -- %command%
+
+# Or set as Steam launch option for a game:
+# Right-click game → Properties → Launch Options:
+gamescope -f -- %command%
+```
+
+**GameScope Features:**
+- Better performance on Wayland
+- Custom resolution/refresh rate
+- Integer scaling
+- Reduced input latency
+
+### GameMode (Performance Optimization)
+
+GameMode automatically optimizes system performance when games run:
+
+**Features:**
+- CPU governor set to performance mode
+- Process priority boost
+- GPU performance mode (NVIDIA)
+- Automatic activation when supported games launch
+
+**Manual activation:**
+```bash
+# Launch with GameMode
+gamemoderun %command%
+
+# Check if GameMode is active
+gamemoded -s
+```
+
+### MangoHud (Performance Overlay)
+
+MangoHud displays FPS, temperatures, and system stats:
+
+```bash
+# Launch game with MangoHud
+mangohud %command%
+
+# Or set as Steam launch option:
+mangohud %command%
+```
+
+**Configure MangoHud:**
+```bash
+# Launch graphical configurator
+goverlay
+```
+
+### Proton Compatibility
+
+Steam's Proton allows Windows games on Linux:
+
+1. **Settings** → **Compatibility**
+2. Enable "Steam Play for all other titles"
+3. Select Proton version (usually latest)
+
+**Per-game Proton version:**
+- Right-click game → **Properties** → **Compatibility**
+- Force specific Proton version
+
+**Check compatibility:**
+- Visit [ProtonDB](https://www.protondb.com)
+- Search for your game
+- Read compatibility reports and tweaks
+
+### Common Steam Launch Options
+
+Add these in game properties → Launch Options:
+
+```bash
+# GameScope + GameMode + MangoHud
+gamemoderun gamescope -f -- mangohud %command%
+
+# Force Proton version
+PROTON_USE_WINED3D=1 %command%
+
+# Enable DXVK HUD
+DXVK_HUD=fps %command%
+
+# Disable Steam Overlay (if causing issues)
+LD_PRELOAD= %command%
+```
+
+### Troubleshooting Steam
+
+#### Game Won't Launch
+1. Check ProtonDB for known issues
+2. Try different Proton version
+3. Verify game files (Right-click → Properties → Local Files)
+4. Check logs: `~/.local/share/Steam/logs/`
+
+#### Poor Performance
+```bash
+# Launch with GameMode + MangoHud to monitor
+gamemoderun mangohud %command%
+
+# Check if NVIDIA GPU is being used
+nvidia-smi
+
+# Verify GameMode is active
+gamemoded -s
+```
+
+#### Graphics Issues
+```bash
+# Force Vulkan
+VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json %command%
+
+# Use DXVK instead of WineD3D
+# (Remove PROTON_USE_WINED3D if set)
+```
+
+#### Controller Not Detected
+1. **Settings** → **Controller** → **General Controller Settings**
+2. Enable "PlayStation/Xbox Configuration Support"
+3. Test in **Gamepad Test**
+
+### Steam Games Storage Management
+
+Monitor storage usage:
+```bash
+# Check available space
+df -h /mnt/steamgames
+
+# Find largest games
+du -sh /mnt/steamgames/steamapps/common/* | sort -h
+```
+
+Move games between libraries:
+1. Right-click game → **Properties** → **Installed Files**
+2. **Move Install Folder**
+3. Select destination library
+
+### Additional Gaming Tools (Optional)
+
+Uncomment in `modules/nixos/gaming.nix` to enable:
+
+```nix
+# Proton-GE (community Proton with more fixes)
+protonup-qt      # GUI to manage Proton-GE versions
+
+# Game Launchers
+lutris           # Run games from various platforms
+heroic           # Epic Games and GOG launcher
+
+# Controller Tools
+antimicrox       # Map controller to keyboard/mouse
+```
+
+After uncommenting, rebuild:
+```bash
+sudo nixos-rebuild switch --flake ~/dotfiles#black-mesa
+```
+
 ## Differences from Desktop Configuration
 
-This configuration is identical to the desktop configuration except for:
-- Hostname: `black-mesa` instead of `nixos`
-- Hardware configuration: Unique to this machine's hardware
-
-All modules, packages, and settings are shared between both machines.
+This configuration includes gaming-specific modules not present on other hosts:
+- **Gaming Module**: Steam, GameMode, GameScope, XWayland
+- **NVIDIA Drivers**: Proprietary drivers for gaming performance
+- **Steam Games Storage**: Dedicated `/mnt/steamgames` mount point
+- **Hostname**: `black-mesa` instead of `nixos`
+- **Hardware Configuration**: Unique to this machine's hardware
