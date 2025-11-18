@@ -27,7 +27,8 @@
       "Bash(git log:*)",
       "Bash(gsettings get:*)",
       "Bash(gsettings set:*)",
-      "Bash(killall:*)"
+      "Bash(killall:*)",
+      "Bash(nix flake show:*)"
     ],
     "deny": [],
     "ask": []
