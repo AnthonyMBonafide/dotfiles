@@ -141,6 +141,88 @@
           desc = "Format document";
         };
       }
+
+      # DAP (Debug Adapter Protocol) keymaps
+      {
+        mode = "n";
+        key = "<leader>dO";
+        action = "<cmd>lua require('dap').step_out()<cr>";
+        options = {
+          desc = "Step Out";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>do";
+        action = "<cmd>lua require('dap').step_over()<cr>";
+        options = {
+          desc = "Step Over";
+        };
+      }
+
+      # Git worktree keymap
+      {
+        mode = "n";
+        key = "gW";
+        action = "<cmd>lua require('telescope').extensions.git_worktree.git_worktree()<cr>";
+        options = {
+          desc = "Git Worktrees";
+        };
+      }
+
+      # REST client (kulala) keymaps - only active for .http files
+      {
+        mode = "n";
+        key = "<leader>Rb";
+        action = "<cmd>lua require('kulala').scratchpad()<cr>";
+        options = {
+          desc = "Open scratchpad";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>Rc";
+        action = "<cmd>lua require('kulala').copy()<cr>";
+        options = {
+          desc = "Copy as cURL";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>Rs";
+        action = "<cmd>lua require('kulala').run()<cr>";
+        options = {
+          desc = "Send the request";
+        };
+      }
+
+      # Mini.files keymaps
+      {
+        mode = "n";
+        key = "<leader>fm";
+        action = "<cmd>lua require('mini.files').open(vim.api.nvim_buf_get_name(0), true)<cr>";
+        options = {
+          desc = "Open mini.files (current file dir)";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>fM";
+        action = "<cmd>lua require('mini.files').open(vim.uv.cwd(), true)<cr>";
+        options = {
+          desc = "Open mini.files (cwd)";
+        };
+      }
+
+      # Undotree keymap
+      {
+        mode = "n";
+        key = "<leader>su";
+        action = "<cmd>UndotreeToggle<cr>";
+        options = {
+          desc = "Toggle undotree";
+        };
+      }
     ];
 
     # Colorscheme
@@ -238,6 +320,11 @@
       ripgrep
       fd
       gcc
+    ];
+
+    # Extra plugins not available as nixvim modules
+    extraPlugins = with pkgs.vimPlugins; [
+      undotree  # Visualize undo history (classic vim plugin, not lua)
     ];
   };
 }
