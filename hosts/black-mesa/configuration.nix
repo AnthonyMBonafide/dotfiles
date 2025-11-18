@@ -115,6 +115,13 @@
   services.displayManager.gdm.wayland = true;  # Enable Wayland for GDM
   services.desktopManager.gnome.enable = true;
 
+  # Disable GNOME accessibility services (screen reader)
+  services.gnome.core-utilities.enable = false;
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    orca  # Screen reader
+  ];
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -228,7 +235,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 7d --keep 5";
-    flake = "/home/anthony/dotfiles";
+    flake = "/home/anthony/dotfiles#black-mesa";
   };
 
   # Stylix - System-wide theming

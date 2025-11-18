@@ -74,6 +74,12 @@
 
       # Add home-manager session variables
       set -gx PATH $HOME/.nix-profile/bin $PATH
+
+      # Custom Fish syntax highlighting colors (override stylix defaults)
+      # Arguments/parameters - blue (catppuccin mocha blue)
+      set -g fish_color_param 89b4fa
+      # Flags/options - orange (catppuccin mocha peach)
+      set -g fish_color_option fab387
     '';
 
     # Interactive shell config - manually initialize atuin for fish 4.0+ compatibility
