@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Import Neovim configuration
-  imports = [
-    ./neovim.nix
-  ];
+  # Temporarily disabled due to lazyvim-nix missing file error
+  # imports = [
+  #   ./neovim.nix
+  # ];
 
   # Editor and writing tools
   home.packages = with pkgs; [
@@ -23,7 +24,7 @@
     enable = true;
 
     settings = {
-      theme = "onedark";
+      theme = lib.mkDefault "onedark";
 
       keys.insert.j.k = "normal_mode";  # Maps `jk` to exit insert mode
       keys.insert.k.j = "normal_mode";  # Maps `kj` to exit insert mode

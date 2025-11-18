@@ -223,6 +223,35 @@
   # Enable fish shell system-wide
   programs.fish.enable = true;
 
+  # Enable nh - a nice NixOS and Home Manager helper
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 7d --keep 5";
+    flake = "/home/anthony/dotfiles";
+  };
+
+  # Stylix - System-wide theming
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+
+    fonts = {
+      monospace = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font";
+      };
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+    };
+  };
+
   # Gaming configuration (Steam, GameMode, etc.) is in modules/nixos/gaming.nix
 
   # Allow unfree packages

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   # Download scenic wallpaper from wallhaven
@@ -309,16 +309,16 @@ in
   gtk = {
     enable = true;
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = lib.mkDefault "Adwaita-dark";
+      package = lib.mkDefault pkgs.gnome-themes-extra;
     };
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = lib.mkDefault "Adwaita";
+      package = lib.mkDefault pkgs.adwaita-icon-theme;
     };
     cursorTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = lib.mkDefault "Adwaita";
+      package = lib.mkDefault pkgs.adwaita-icon-theme;
     };
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
@@ -331,8 +331,8 @@ in
   # Qt theme configuration
   qt = {
     enable = true;
-    platformTheme.name = "gtk";
-    style.name = "adwaita-dark";
+    platformTheme.name = lib.mkDefault "gtk";
+    style.name = lib.mkDefault "adwaita-dark";
   };
 
   # XDG configuration for Wayland
@@ -724,12 +724,12 @@ in
         offset = "30x50";
         origin = "top-right";
         transparency = 10;
-        frame_color = "#89b4fa";
-        font = "Noto Sans 10";
+        frame_color = lib.mkDefault "#89b4fa";
+        font = lib.mkDefault "Noto Sans 10";
       };
       urgency_normal = {
-        background = "#1e1e2e";
-        foreground = "#cdd6f4";
+        background = lib.mkDefault "#1e1e2e";
+        foreground = lib.mkDefault "#cdd6f4";
         timeout = 10;
       };
     };
