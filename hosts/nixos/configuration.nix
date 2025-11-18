@@ -187,6 +187,11 @@
     flake = "/home/anthony/dotfiles";
   };
 
+  # Set FLAKE environment variable for nh
+  environment.sessionVariables = {
+    FLAKE = "/home/anthony/dotfiles";
+  };
+
   # Stylix - System-wide theming
   stylix = {
     enable = true;
