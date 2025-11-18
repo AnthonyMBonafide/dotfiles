@@ -7,6 +7,16 @@
     viAlias = true;
     vimAlias = true;
 
+    # Set leader key explicitly before any plugins load
+    extraConfigLuaPre = ''
+      vim.g.mapleader = " "
+      vim.g.maplocalleader = " "
+    '';
+
+    # Set leader key in globals as well
+    globals.mapleader = " ";
+    globals.maplocalleader = " ";
+
     # Global options
     opts = {
       number = true;
@@ -29,12 +39,6 @@
 
       # Clipboard
       clipboard = "unnamedplus";
-    };
-
-    # Global settings
-    globals = {
-      mapleader = " ";
-      maplocalleader = " ";
     };
 
     # Key mappings
@@ -67,6 +71,76 @@
         key = "<C-l>";
         action = "<C-w>l";
       }
+
+      # Leader key mappings for Telescope
+      {
+        mode = "n";
+        key = "<leader>ff";
+        action = "<cmd>Telescope find_files<cr>";
+        options = {
+          desc = "Find files";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>fg";
+        action = "<cmd>Telescope live_grep<cr>";
+        options = {
+          desc = "Live grep";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>fb";
+        action = "<cmd>Telescope buffers<cr>";
+        options = {
+          desc = "Find buffers";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>fh";
+        action = "<cmd>Telescope help_tags<cr>";
+        options = {
+          desc = "Help tags";
+        };
+      }
+
+      # Leader key mappings for nvim-tree
+      {
+        mode = "n";
+        key = "<leader>e";
+        action = "<cmd>NvimTreeToggle<cr>";
+        options = {
+          desc = "Toggle file explorer";
+        };
+      }
+
+      # Leader key mappings for LSP
+      {
+        mode = "n";
+        key = "<leader>ca";
+        action = "<cmd>lua vim.lsp.buf.code_action()<cr>";
+        options = {
+          desc = "Code action";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>rn";
+        action = "<cmd>lua vim.lsp.buf.rename()<cr>";
+        options = {
+          desc = "Rename symbol";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>f";
+        action = "<cmd>lua vim.lsp.buf.format()<cr>";
+        options = {
+          desc = "Format document";
+        };
+      }
     ];
 
     # Colorscheme
@@ -80,6 +154,7 @@
     # Plugins
     plugins = {
       # Essential plugins
+      web-devicons.enable = true;
       lualine.enable = true;
       nvim-tree.enable = true;
       telescope.enable = true;

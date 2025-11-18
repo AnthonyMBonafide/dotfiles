@@ -27,7 +27,7 @@
           modules = [
             ./home.nix
             hostModule
-            nixvim.homeManagerModules.nixvim
+            nixvim.homeModules.nixvim
             {
               # Make flake root available to all modules
               _module.args.flakeRoot = self;
@@ -81,7 +81,7 @@
                 imports = [
                   ./home.nix
                   ./hosts/nixos-desktop.nix
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
                 ];
                 # Make flake root available to this home-manager configuration
                 _module.args.flakeRoot = self;
@@ -103,7 +103,7 @@
                 imports = [
                   ./home.nix
                   ./hosts/black-mesa-home.nix
-                  nixvim.homeManagerModules.nixvim
+                  nixvim.homeModules.nixvim
                 ];
                 # Make flake root available to this home-manager configuration
                 _module.args.flakeRoot = self;
