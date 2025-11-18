@@ -7,17 +7,17 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Temporarily disabled due to missing file error
-    # lazyvim = {
-    #   url = "github:pfassina/lazyvim-nix";
-    # };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, ... }:
+  outputs = { self, nixpkgs, home-manager, stylix, nixvim, ... }:
     let
       # Helper function to create home configuration for a system
       mkHomeConfiguration = { system, hostModule }:
@@ -27,8 +27,7 @@
           modules = [
             ./home.nix
             hostModule
-            # Temporarily disabled due to missing file error
-            # lazyvim.homeManagerModules.default
+            nixvim.homeManagerModules.nixvim
             {
               # Make flake root available to all modules
               _module.args.flakeRoot = self;
@@ -82,8 +81,7 @@
                 imports = [
                   ./home.nix
                   ./hosts/nixos-desktop.nix
-                  # Temporarily disabled due to missing file error
-                  # lazyvim.homeManagerModules.default
+                  nixvim.homeManagerModules.nixvim
                 ];
                 # Make flake root available to this home-manager configuration
                 _module.args.flakeRoot = self;
@@ -105,8 +103,7 @@
                 imports = [
                   ./home.nix
                   ./hosts/black-mesa-home.nix
-                  # Temporarily disabled due to missing file error
-                  # lazyvim.homeManagerModules.default
+                  nixvim.homeManagerModules.nixvim
                 ];
                 # Make flake root available to this home-manager configuration
                 _module.args.flakeRoot = self;

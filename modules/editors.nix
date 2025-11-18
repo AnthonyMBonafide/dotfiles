@@ -2,10 +2,9 @@
 
 {
   # Import Neovim configuration
-  # Temporarily disabled due to lazyvim-nix missing file error
-  # imports = [
-  #   ./neovim.nix
-  # ];
+  imports = [
+    ./nixvim.nix
+  ];
 
   # Editor and writing tools
   home.packages = with pkgs; [
