@@ -235,6 +235,7 @@
   home.sessionVariables = {
     VISUAL = "nvim";
     EDITOR = "nvim";
+    FLAKE = "$HOME/dotfiles";
   };
 
   # Starship Prompt
