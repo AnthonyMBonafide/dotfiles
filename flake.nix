@@ -34,34 +34,11 @@
             }
           ];
         };
-    in {
+    in
+    {
       homeConfigurations = {
-        # macOS (Apple Silicon) - Current system
+        # macOS (Apple Silicon) - Current macOS system
         "macbook-pro" = mkHomeConfiguration {
-          system = "aarch64-darwin";
-          hostModule = ./hosts/macbook-pro.nix;
-        };
-
-        # macOS (Intel) - For older Macs
-        "macbook-intel" = mkHomeConfiguration {
-          system = "x86_64-darwin";
-          hostModule = ./hosts/macbook-pro.nix;  # Reuse same config, different arch
-        };
-
-        # Linux (x86_64) - Arch/Manjaro/Endeavor OS
-        "arch-desktop" = mkHomeConfiguration {
-          system = "x86_64-linux";
-          hostModule = ./hosts/arch-desktop.nix;
-        };
-
-        # Linux (ARM) - For ARM-based Linux machines (Raspberry Pi, etc.)
-        "arch-arm" = mkHomeConfiguration {
-          system = "aarch64-linux";
-          hostModule = ./hosts/arch-desktop.nix;  # Reuse config, different arch
-        };
-
-        # Legacy alias for backward compatibility
-        "Anthony" = mkHomeConfiguration {
           system = "aarch64-darwin";
           hostModule = ./hosts/macbook-pro.nix;
         };

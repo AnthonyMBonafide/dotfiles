@@ -3,8 +3,6 @@
 {
   # General packages, fonts, and applications
   home.packages = with pkgs; [
-    podman
-
     # Applications
     discord
     spotify

@@ -4,9 +4,8 @@
   # Host-specific home-manager configuration for NixOS Desktop
 
   # Import window manager modules for this system
-  # Both Hyprland and Niri are available - you can choose at login
+  # Using Niri as the only window manager
   imports = [
-    ../modules/hyprland.nix
     ../modules/niri.nix
   ];
 

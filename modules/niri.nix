@@ -567,6 +567,4 @@ in
   };
 
   # Screensaver/lock configuration is in modules/screensaver.nix
-  # GTK, Qt, and environment variables are handled by hyprland.nix
-  # No need to duplicate them here since both modules are imported together
 }
