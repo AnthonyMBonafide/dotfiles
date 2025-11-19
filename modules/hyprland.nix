@@ -329,9 +329,9 @@ in
   };
 
   # Qt theme configuration
+  # Stylix handles qt platformTheme.name configuration, so we only set the style here
   qt = {
     enable = true;
-    platformTheme.name = lib.mkDefault "gtk";
     style.name = lib.mkDefault "adwaita-dark";
   };
 

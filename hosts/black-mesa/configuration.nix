@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running 'nixos-help').
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports =
@@ -68,13 +68,6 @@
     open = false;
   };
 
-  # Hyprland Configuration
-  # Enable Hyprland window manager
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   # Niri Configuration
   # Enable Niri window manager (scrollable-tiling compositor)
   programs.niri = {
@@ -85,7 +78,6 @@
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-hyprland
       xdg-desktop-portal-gnome  # Niri uses GNOME portal
       xdg-desktop-portal-gtk
     ];
@@ -109,18 +101,10 @@
     };
   };
 
-  # Enable the GNOME Desktop Environment (keeping as fallback)
-  # You can disable this later once you're happy with Hyprland
+  # Using Niri as the only window manager
+  # GDM is kept as a display manager for Niri login
   services.displayManager.gdm.enable = true;
   services.displayManager.gdm.wayland = true;  # Enable Wayland for GDM
-  services.desktopManager.gnome.enable = true;
-
-  # Disable GNOME accessibility services (screen reader)
-  services.gnome.core-utilities.enable = false;
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-tour
-    orca  # Screen reader
-  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -178,18 +162,19 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Nix garbage collection and store optimization (system-level)
-  # Note: User-level GC is configured in home.nix via home-manager
-  nix.gc = {
-    # Automatically clean up old system profiles and unused packages
-    automatic = true;
-
-    # Run GC weekly (same schedule as home-manager for consistency)
-    dates = "weekly";
-
-    # Delete system generations older than 30 days
-    # Keep at least 2-3 recent generations for safe rollback
-    options = "--delete-older-than 30d";
-  };
+  # Note: Garbage collection is now handled by programs.nh.clean (configured below)
+  # to avoid conflicts. User-level GC is still configured in home.nix via home-manager
+  # nix.gc = {
+  #   # Automatically clean up old system profiles and unused packages
+  #   automatic = true;
+  #
+  #   # Run GC weekly (same schedule as home-manager for consistency)
+  #   dates = "weekly";
+  #
+  #   # Delete system generations older than 30 days
+  #   # Keep at least 2-3 recent generations for safe rollback
+  #   options = "--delete-older-than 30d";
+  # };
 
   # Automatically optimize the Nix store to save disk space
   # This deduplicates identical files (hard-linking them)
@@ -213,14 +198,11 @@
     };
   };
 
-  # Disable GNOME automatic suspend
-  services.gnome.gnome-settings-daemon.enable = true;
-
-  # Enable automatic login for the user.
+  # Enable automatic login for the user
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "anthony";
 
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  # Workaround for GDM autologin
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
@@ -234,7 +216,8 @@
   programs.nh = {
     enable = true;
     clean.enable = true;
-    clean.extraArgs = "--keep-since 7d --keep 5";
+    # Keep generations from the last 30 days and keep at least 10 most recent generations
+    clean.extraArgs = "--keep-since 30d --keep 10";
     flake = "/home/anthony/dotfiles";
   };
 
@@ -261,6 +244,13 @@
         package = pkgs.dejavu_fonts;
         name = "DejaVu Serif";
       };
+    };
+
+    # Qt theming configuration
+    # Use qtct (Qt Configuration Tool) instead of gnome for better compatibility
+    targets.qt = {
+      enable = true;
+      platform = lib.mkForce "qtct";
     };
   };
 
