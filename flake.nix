@@ -7,8 +7,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
+    nvf = {
+      url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
@@ -17,7 +17,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nixvim, ... }:
+  outputs = { self, nixpkgs, home-manager, stylix, nvf, ... }:
     let
       # Helper function to create home configuration for a system
       mkHomeConfiguration = { system, hostModule }:
@@ -27,7 +27,7 @@
           modules = [
             ./home.nix
             hostModule
-            nixvim.homeModules.nixvim
+            nvf.homeManagerModules.default
             {
               # Make flake root available to all modules
               _module.args.flakeRoot = self;
@@ -81,7 +81,7 @@
                 imports = [
                   ./home.nix
                   ./hosts/nixos-desktop.nix
-                  nixvim.homeModules.nixvim
+                  nvf.homeManagerModules.default
                 ];
                 # Make flake root available to this home-manager configuration
                 _module.args.flakeRoot = self;
@@ -103,7 +103,7 @@
                 imports = [
                   ./home.nix
                   ./hosts/black-mesa-home.nix
-                  nixvim.homeModules.nixvim
+                  nvf.homeManagerModules.default
                 ];
                 # Make flake root available to this home-manager configuration
                 _module.args.flakeRoot = self;

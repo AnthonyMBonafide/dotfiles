@@ -28,7 +28,10 @@
       "Bash(gsettings get:*)",
       "Bash(gsettings set:*)",
       "Bash(killall:*)",
-      "Bash(nix flake show:*)"
+      "Bash(nix flake show:*)",
+      "Bash(git add:*)",
+      "Bash(nix build:*)",
+      "Bash(nh os build:*)"
     ],
     "deny": [],
     "ask": []

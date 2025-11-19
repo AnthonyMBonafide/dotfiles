@@ -3,7 +3,7 @@
 {
   # Import Neovim configuration
   imports = [
-    ./nixvim.nix
+    ./nvf.nix
   ];
 
   # Editor and writing tools
