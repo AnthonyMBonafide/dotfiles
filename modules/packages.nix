@@ -1,18 +1,14 @@
 { config, pkgs, ... }:
 
 {
-  # General packages, fonts, and applications
+  # General packages and applications
   home.packages = with pkgs; [
     # Applications
     discord
     spotify
     # Steam is now enabled at system level in configuration.nix with proper Wayland support
 
-    # Fonts
-    # Nerd Fonts are now separate packages in the nerd-fonts namespace
-    nerd-fonts.hack
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.ubuntu
+    # Fonts are managed by Stylix in configuration.nix (JetBrainsMono Nerd Font, DejaVu Sans/Serif)
 
     # Note: The following macOS applications are typically better installed via Homebrew casks
     # because they need to be in /Applications or have special system integration:
@@ -21,7 +17,4 @@
     # These should be installed via on macOS:
     # brew install --cask spotify discord ghostty firefox
   ];
-
-  # Font configuration
-  fonts.fontconfig.enable = true;
 }

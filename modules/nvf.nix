@@ -16,7 +16,10 @@
         lineNumberMode = "relNumber";
 
         # Clipboard configuration
-        clipboard.registers = "unnamedplus";
+        clipboard = {
+          providers.wl-copy.enable = true;
+          registers = "unnamedplus";
+        };
 
         # Tab and indent settings
         options = {

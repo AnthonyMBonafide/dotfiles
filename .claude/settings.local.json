@@ -31,7 +31,10 @@
       "Bash(nix flake show:*)",
       "Bash(git add:*)",
       "Bash(nix build:*)",
-      "Bash(nh os build:*)"
+      "Bash(nh os build:*)",
+      "Bash(nvim:*)",
+      "Bash(sqlite3:*)",
+      "WebFetch(domain:nix-community.github.io)"
     ],
     "deny": [],
     "ask": []

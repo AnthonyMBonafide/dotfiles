@@ -21,5 +21,8 @@
     # markdown-toc  # May need to be installed via npm
     nodePackages.prettier
     sqlfluff
+
+    # Clipboard utilities for Wayland
+    wl-clipboard  # Provides wl-copy and wl-paste for Wayland clipboard access
   ];
 }

@@ -219,7 +219,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    # vim is now managed through home-manager in modules/editors.nix
   #  wget
   ];
 

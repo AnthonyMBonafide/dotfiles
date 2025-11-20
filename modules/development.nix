@@ -5,6 +5,11 @@
   home.packages = with pkgs; [
     # AI Development tools
     claude-code
+
+    # Nix development tools
+    nixd       # Nix language server for IDE integration
+    alejandra  # Nix code formatter
+    statix     # Nix linter for detecting anti-patterns
   ];
   # Git Configuration
   programs.git = {
