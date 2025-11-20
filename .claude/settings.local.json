@@ -34,7 +34,8 @@
       "Bash(nh os build:*)",
       "Bash(nvim:*)",
       "Bash(sqlite3:*)",
-      "WebFetch(domain:nix-community.github.io)"
+      "WebFetch(domain:nix-community.github.io)",
+      "Bash(nh os test:*)"
     ],
     "deny": [],
     "ask": []

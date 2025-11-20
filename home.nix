@@ -9,6 +9,7 @@
     ./modules/development.nix
     ./modules/editors.nix
     ./modules/packages.nix
+    ./modules/firefox.nix
   ];
 
   # Allow unfree packages

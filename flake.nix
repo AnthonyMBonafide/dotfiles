@@ -15,9 +15,13 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nvf, ... }:
+  outputs = { self, nixpkgs, home-manager, stylix, nvf, firefox-addons, ... }:
     let
       # Helper function to create home configuration for a system
       mkHomeConfiguration = { system, hostModule }:
@@ -29,8 +33,9 @@
             hostModule
             nvf.homeManagerModules.default
             {
-              # Make flake root available to all modules
+              # Make flake root and inputs available to all modules
               _module.args.flakeRoot = self;
+              _module.args.firefox-addons = firefox-addons.packages.${system};
             }
           ];
         };
@@ -54,14 +59,16 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-backup";
               home-manager.users.anthony = { ... }: {
                 imports = [
                   ./home.nix
                   ./hosts/nixos-desktop.nix
                   nvf.homeManagerModules.default
                 ];
-                # Make flake root available to this home-manager configuration
+                # Make flake root and inputs available to this home-manager configuration
                 _module.args.flakeRoot = self;
+                _module.args.firefox-addons = firefox-addons.packages."x86_64-linux";
               };
             }
           ];
@@ -76,14 +83,16 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-backup";
               home-manager.users.anthony = { ... }: {
                 imports = [
                   ./home.nix
                   ./hosts/black-mesa-home.nix
                   nvf.homeManagerModules.default
                 ];
-                # Make flake root available to this home-manager configuration
+                # Make flake root and inputs available to this home-manager configuration
                 _module.args.flakeRoot = self;
+                _module.args.firefox-addons = firefox-addons.packages."x86_64-linux";
               };
             }
           ];

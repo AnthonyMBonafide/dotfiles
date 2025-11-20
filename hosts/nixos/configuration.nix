@@ -173,8 +173,7 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  # Firefox is now managed through home-manager in modules/firefox.nix
 
   # Enable fish shell system-wide
   programs.fish.enable = true;
