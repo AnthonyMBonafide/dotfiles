@@ -14,6 +14,10 @@
   home.username = "anthony";
   home.homeDirectory = "/home/anthony";
 
+  # Qt platform theme configuration
+  # Use adwaita instead of the deprecated gnome option
+  qt.platformTheme.name = "adwaita";
+
   # NixOS-specific packages
   home.packages = with pkgs; [
     # Display/GUI tools

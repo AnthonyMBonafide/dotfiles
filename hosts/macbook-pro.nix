@@ -15,6 +15,10 @@
     "claude-code"
   ];
 
+  # Enable automatic garbage collection on macOS
+  # (disabled by default on NixOS to avoid conflict with programs.nh.clean)
+  nix.gc.automatic = true;
+
   # Host-specific packages (if any)
   home.packages = with pkgs; [
     # Add macOS-specific packages here if needed

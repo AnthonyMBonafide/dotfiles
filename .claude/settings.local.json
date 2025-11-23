@@ -38,7 +38,8 @@
       "Bash(nh os test:*)",
       "Bash(python3:*)",
       "Bash(jq:*)",
-      "Bash(powerprofilesctl list:*)"
+      "Bash(powerprofilesctl list:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

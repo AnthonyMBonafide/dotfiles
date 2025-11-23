@@ -44,12 +44,15 @@
 
   # Nix garbage collection and store optimization
   # These settings help manage disk usage by automatically cleaning up old/unused packages
+  # Note: On NixOS systems, garbage collection is handled by programs.nh.clean (system-level)
+  # to avoid conflicts. This configuration is for standalone home-manager installations.
   nix = {
     package = pkgs.lib.mkDefault pkgs.nix;
 
     gc = {
-      # Automatically run garbage collection to free up disk space
-      automatic = true;
+      # Disabled on NixOS to avoid conflict with programs.nh.clean
+      # Only enabled on non-NixOS systems (macOS, other Linux distros with standalone home-manager)
+      automatic = pkgs.lib.mkDefault false;
 
       # Schedule: uses systemd.time calendar event format
       # "weekly" = once per week, "daily" = once per day

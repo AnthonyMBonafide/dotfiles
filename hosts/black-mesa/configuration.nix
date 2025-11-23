@@ -245,6 +245,9 @@
       };
     };
 
+    # Firefox profile configuration
+    targets.firefox.profileNames = [ "default" ];
+
     # Qt theming configuration
     # Use qtct (Qt Configuration Tool) instead of gnome for better compatibility
     targets.qt = {
