@@ -462,6 +462,11 @@ in
         // ============================================================
         XF86MonBrightnessUp { spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "+5%"; }
         XF86MonBrightnessDown { spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "5%-"; }
+
+        // ============================================================
+        // POWER PROFILE CONTROLS
+        // ============================================================
+        Mod+P { spawn "sh" "-c" "current=$(powerprofilesctl get); case $current in power-saver) next=balanced;; balanced) next=performance;; performance) next=power-saver;; esac; powerprofilesctl set $next && notify-send -i battery 'Power Profile' \"Switched to: $next\""; }
     }
 
     // Debug options (disable for production use)

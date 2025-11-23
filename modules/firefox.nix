@@ -97,6 +97,19 @@
         "browser.tabs.closeWindowWithLastTab" = false;
         "browser.tabs.warnOnClose" = false;
 
+        # Dark mode settings
+        "ui.systemUsesDarkTheme" = 1;
+        "browser.theme.dark-private-windows" = true;
+        "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+
+        # Enable extensions on all sites (including restricted domains)
+        "extensions.webextensions.restrictedDomains" = "";
+        "privacy.resistFingerprinting.block_mozAddonManager" = true;
+
+        # Automatically enable installed extensions
+        "extensions.autoDisableScopes" = 0;
+        "extensions.enabledScopes" = 15;
+
         # Smooth scrolling
         "general.smoothScroll" = true;
         "general.smoothScroll.msdPhysics.enabled" = true;

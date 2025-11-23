@@ -35,7 +35,10 @@
       "Bash(nvim:*)",
       "Bash(sqlite3:*)",
       "WebFetch(domain:nix-community.github.io)",
-      "Bash(nh os test:*)"
+      "Bash(nh os test:*)",
+      "Bash(python3:*)",
+      "Bash(jq:*)",
+      "Bash(powerprofilesctl list:*)"
     ],
     "deny": [],
     "ask": []
