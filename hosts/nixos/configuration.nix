@@ -127,11 +127,24 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Yubikey and FIDO2/U2F support
+  services.pcscd.enable = true;  # PC/SC Smart Card Daemon for FIDO2 support
+  services.udev.packages = [
+    pkgs.yubikey-personalization  # Yubikey udev rules
+    pkgs.libu2f-host  # U2F host library with udev rules
+  ];
+
+  # Add additional udev rules for YubiKey access
+  services.udev.extraRules = ''
+    # YubiKey FIDO/U2F support
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", MODE="0660", GROUP="plugdev", TAG+="uaccess"
+  '';
+
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.anthony = {
     isNormalUser = true;
     description = "Anthony Bonafide";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "plugdev" ];
     shell = pkgs.fish;
     packages = with pkgs; [
     #  thunderbird
@@ -219,6 +232,10 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # vim is now managed through home-manager in modules/editors.nix
+    # YubiKey tools
+    yubikey-manager  # CLI and GUI tool for configuring YubiKeys
+    yubioath-flutter  # GUI for YubiKey OATH (authenticator) management
+    yubico-piv-tool  # YubiKey PIV (smart card) tool
   #  wget
   ];
 

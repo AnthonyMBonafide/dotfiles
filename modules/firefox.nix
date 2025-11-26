@@ -122,6 +122,13 @@
 
         # Enable userChrome.css and userContent.css
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+        # Enable U2F/FIDO2 support for hardware security keys (Yubikey)
+        "security.webauthn.u2f" = true;
+        "security.webauthn.webauthn_enable_softtoken" = false;
+        "security.webauthn.webauthn_enable_usbtoken" = true;
+        "security.webauthn.ctap2" = true;
+        "security.webauthn.enable_conditional_mediation" = true;
       };
 
       # Bookmarks
