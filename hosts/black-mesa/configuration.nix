@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ../../modules/nixos/gaming.nix
       ../../modules/nixos/yubikey-auth.nix
+      ../../modules/nixos/yubikey-encryption.nix
     ];
 
   # Bootloader.

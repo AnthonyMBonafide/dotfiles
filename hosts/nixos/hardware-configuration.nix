@@ -18,7 +18,23 @@
       fsType = "ext4";
     };
 
-  boot.initrd.luks.devices."luks-f4e3d6cf-2405-48f7-9b30-2c7de8b0b2c8".device = "/dev/disk/by-uuid/f4e3d6cf-2405-48f7-9b30-2c7de8b0b2c8";
+  # LUKS encryption with YubiKey FIDO2 support
+  # See modules/nixos/yubikey-encryption.nix for enrollment instructions
+  boot.initrd.luks.devices."luks-f4e3d6cf-2405-48f7-9b30-2c7de8b0b2c8" = {
+    device = "/dev/disk/by-uuid/f4e3d6cf-2405-48f7-9b30-2c7de8b0b2c8";
+
+    # Enable FIDO2 (YubiKey) unlock at boot
+    # Manual enrollment required: sudo systemd-cryptenroll --fido2-device=auto \
+    #   --fido2-with-user-verification=true \
+    #   /dev/disk/by-uuid/f4e3d6cf-2405-48f7-9b30-2c7de8b0b2c8
+    crypttabExtraOpts = [
+      "fido2-device=auto"           # Automatically detect any enrolled FIDO2 token
+      "token-timeout=10"            # Wait 10 seconds for token before falling back
+    ];
+
+    # Note: Password fallback is automatic with systemd stage 1
+    # (fallbackToPassword option not needed - implied by systemd)
+  };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/F903-0A05";

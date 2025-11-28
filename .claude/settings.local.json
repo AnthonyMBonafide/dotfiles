@@ -43,7 +43,12 @@
       "Bash(lsusb:*)",
       "Bash(getfacl:*)",
       "Bash(getent group:*)",
-      "Bash(firefox --version:*)"
+      "Bash(firefox --version:*)",
+      "WebFetch(domain:discourse.nixos.org)",
+      "WebFetch(domain:nixos.wiki)",
+      "WebFetch(domain:0pointer.net)",
+      "WebFetch(domain:jnsgr.uk)",
+      "WebFetch(domain:kudelskisecurity.com)"
     ],
     "deny": [],
     "ask": []
