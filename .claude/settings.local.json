@@ -40,7 +40,10 @@
       "Bash(jq:*)",
       "Bash(powerprofilesctl list:*)",
       "Bash(find:*)",
-      "Bash(lsusb:*)"
+      "Bash(lsusb:*)",
+      "Bash(getfacl:*)",
+      "Bash(getent group:*)",
+      "Bash(firefox --version:*)"
     ],
     "deny": [],
     "ask": []

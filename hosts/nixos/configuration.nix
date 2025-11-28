@@ -134,6 +134,9 @@
     pkgs.libu2f-host  # U2F host library with udev rules
   ];
 
+  # Create plugdev group for hardware device access
+  users.groups.plugdev = {};
+
   # Add additional udev rules for YubiKey access
   services.udev.extraRules = ''
     # YubiKey FIDO/U2F support
