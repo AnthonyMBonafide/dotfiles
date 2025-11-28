@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/gaming.nix
+      ../../modules/nixos/yubikey-auth.nix
     ];
 
   # Bootloader.
@@ -211,13 +212,7 @@
     };
   };
 
-  # Enable automatic login for the user
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "anthony";
-
-  # Workaround for GDM autologin
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
+  # Auto-login disabled to enable Yubikey authentication
 
   # Firefox is now managed through home-manager in modules/firefox.nix
 

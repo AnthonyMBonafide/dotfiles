@@ -10,6 +10,7 @@
     ./modules/editors.nix
     ./modules/packages.nix
     ./modules/firefox.nix
+    ./modules/yubikey-keys.nix
   ];
 
   # Allow unfree packages
