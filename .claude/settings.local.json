@@ -48,7 +48,14 @@
       "WebFetch(domain:nixos.wiki)",
       "WebFetch(domain:0pointer.net)",
       "WebFetch(domain:jnsgr.uk)",
-      "WebFetch(domain:kudelskisecurity.com)"
+      "WebFetch(domain:kudelskisecurity.com)",
+      "Bash(tree:*)",
+      "Bash(gpg --list-keys:*)",
+      "Bash(sops --version:*)",
+      "Bash(chmod:*)",
+      "Bash(age-plugin-yubikey:*)",
+      "Bash(ykman piv access change-management-key:*)",
+      "Bash(sops:*)"
     ],
     "deny": [],
     "ask": []

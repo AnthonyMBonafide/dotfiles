@@ -310,6 +310,72 @@ This will configure:
 
 System-level modules are in `modules/nixos/`:
 
+#### sops.nix - Secrets Management with YubiKey
+
+Secure secrets management using SOPS (Secrets OPerationS) with YubiKey-based age encryption.
+
+**Features:**
+- SSH keys encrypted at rest with age encryption
+- YubiKey PIV stores age keys (any enrolled YubiKey can decrypt)
+- Password-protected backup age key for disaster recovery
+- Automatic deployment of decrypted secrets during system activation
+- Host-specific and personal SSH keys
+- Git-safe encrypted secrets
+
+**Secrets Managed:**
+- Personal SSH key (`~/.ssh/id_ed25519`)
+- Host-specific SSH keys (`~/.ssh/nixos_ed25519`, `~/.ssh/black-mesa_ed25519`)
+- Expandable for other secrets (tokens, credentials, certificates)
+
+**Quick Start:**
+```bash
+# Initial setup (generates age keys, creates backup, encrypts SSH keys)
+./scripts/manage-yubikey-secrets.sh init
+
+# Test YubiKey can decrypt secrets
+./scripts/test-yubikey-decrypt.sh
+
+# Rebuild system (deploys decrypted keys)
+sudo nixos-rebuild switch --flake .
+```
+
+**See:** [YubiKey SOPS Documentation](./docs/yubikey-sops-secrets.md) for:
+- Complete setup guide
+- Adding/removing YubiKeys
+- SSH key rotation
+- Backup and disaster recovery
+- Troubleshooting
+- Security best practices
+
+**Management Scripts:**
+- `scripts/manage-yubikey-secrets.sh` - Main management interface
+- `scripts/test-yubikey-decrypt.sh` - Verify YubiKey decryption
+- `scripts/rekey-secrets.sh` - Re-encrypt after key changes
+
+#### yubikey-auth.nix - YubiKey U2F Authentication
+
+YubiKey-based authentication for GDM, sudo, and SSH using U2F.
+
+**Features:**
+- Login with YubiKey touch (or password fallback)
+- Sudo authentication via YubiKey
+- Three YubiKeys enrolled for redundancy
+- U2F keys stored in Nix configuration
+
+**See:** [YubiKey LUKS Documentation](./docs/yubikey-luks-enrollment.md)
+
+#### yubikey-encryption.nix - YubiKey Disk Encryption
+
+Full disk encryption (LUKS) unlockable with YubiKey FIDO2.
+
+**Features:**
+- Boot-time disk decryption with YubiKey touch
+- Password fallback for security
+- Automatic YubiKey detection
+- Host-specific LUKS configuration
+
+**See:** [YubiKey LUKS Documentation](./docs/yubikey-luks-enrollment.md)
+
 #### gaming.nix - Gaming Configuration
 
 Comprehensive gaming setup for Steam and performance optimization.
@@ -513,6 +579,8 @@ If you cannot use Nix (work machines, restricted environments, or personal prefe
 
 ## Additional Documentation
 
+- **[docs/yubikey-sops-secrets.md](./docs/yubikey-sops-secrets.md)** - YubiKey SOPS secrets management (SSH keys, backup, recovery)
+- **[docs/yubikey-luks-enrollment.md](./docs/yubikey-luks-enrollment.md)** - YubiKey LUKS disk encryption and U2F authentication
 - **[TRADITIONAL-README.md](./TRADITIONAL-README.md)** - Installation without Nix (Homebrew, apt, pacman, etc.)
 - **[hosts/black-mesa/README.md](./hosts/black-mesa/README.md)** - Gaming with Steam on NixOS
 - **[modules/nixos/README.md](./modules/nixos/README.md)** - NixOS system modules

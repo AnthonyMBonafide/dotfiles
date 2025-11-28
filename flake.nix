@@ -19,9 +19,13 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nvf, firefox-addons, ... }:
+  outputs = { self, nixpkgs, home-manager, stylix, nvf, firefox-addons, sops-nix, ... }:
     let
       # Helper function to create home configuration for a system
       mkHomeConfiguration = { system, hostModule }:
@@ -55,6 +59,7 @@
           modules = [
             ./hosts/nixos/configuration.nix
             stylix.nixosModules.stylix
+            sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -79,6 +84,7 @@
           modules = [
             ./hosts/black-mesa/configuration.nix
             stylix.nixosModules.stylix
+            sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

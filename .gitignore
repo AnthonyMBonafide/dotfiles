@@ -2,3 +2,12 @@
 .config/fish/.workaliases.fish
 .config/gcloud
 result
+
+# SOPS secrets - only commit encrypted files
+secrets/**/*
+!secrets/**/*.yaml
+!secrets/**/*.json
+!secrets/**/*.enc
+!secrets/.gitkeep
+# Backup age key should be encrypted with a password before committing
+secrets/backup-key.age.enc
