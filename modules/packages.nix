@@ -6,7 +6,7 @@
     # Applications
     discord
     spotify
-    brave
+
     # Steam is now enabled at system level in configuration.nix with proper Wayland support
 
     # Fonts are managed by Stylix in configuration.nix (JetBrainsMono Nerd Font, DejaVu Sans/Serif)
