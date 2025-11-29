@@ -1,0 +1,25 @@
+# Dotfiles TODO
+
+## YubiKey Configuration
+
+### black-mesa (Current Machine)
+- [x] Configure YubiKey for disk decryption
+- [x] Configure YubiKey for sudo/login
+- [x] Test YubiKey authentication
+
+### lambda-core
+- [ ] Pull latest dotfiles changes
+- [ ] Run `sudo nixos-rebuild switch`
+- [ ] Run `home-manager switch`
+- [ ] Test YubiKey authentication with `sudo echo "test"`
+
+## Future Tasks
+- [ ] Fix nvim where when highlighing a bunch of text and adding indenting with >> the highlighted section gets unselected preventing multiple indents with the same highlight
+- [ ] Nvim add key map to go to last buffer
+- [ ] Nvim organize which key for easily navigating
+- [ ] Nvim add key map to seach all key maps
+- [ ] Update to stable nix channel
+- [ ] Update black-mesa to the lastest changes
+- [ ] Update black-mesa to use Yubikey on disk decryption
+- [ ] Nvim not using system clipboard cannot copy and paste between programs
+
