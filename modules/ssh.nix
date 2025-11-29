@@ -2,8 +2,6 @@
 
 {
   # SSH Client Configuration
-  # Note: SSH keys are managed by SOPS (see modules/nixos/sops.nix)
-  # Keys are decrypted from secrets/ssh/*.yaml and deployed to ~/.ssh/
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -13,7 +11,6 @@
       "github.com" = {
         hostname = "github.com";
         user = "git";
-        # Personal SSH key (deployed by SOPS from secrets/ssh/id_ed25519.yaml)
         identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
         addKeysToAgent = "yes";

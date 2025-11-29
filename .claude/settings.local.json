@@ -55,7 +55,11 @@
       "Bash(chmod:*)",
       "Bash(age-plugin-yubikey:*)",
       "Bash(ykman piv access change-management-key:*)",
-      "Bash(sops:*)"
+      "Bash(sops:*)",
+      "Bash(age-keygen:*)",
+      "Bash(sudo cat:*)",
+      "Bash(export SOPS_AGE_KEY_FILE=/home/anthony/.config/age/yubikey-identities.txt)",
+      "Bash(gpg:*)"
     ],
     "deny": [],
     "ask": []

@@ -10,7 +10,6 @@
       ./hardware-configuration.nix
       ../../modules/nixos/yubikey-auth.nix
       ../../modules/nixos/yubikey-encryption.nix
-      ../../modules/nixos/sops.nix
     ];
 
   # Bootloader.
