@@ -1,47 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # CLI tools and utilities
-  home.packages =
-    with pkgs;
-    [
-      # Modern CLI replacements
-      bat # Better cat
-      eza # Better ls
-      fd # Better find
-      ripgrep # Better grep
-      lsd # LSDeluxe - another ls alternative
-
-      # Search and navigation
-      fzf # Fuzzy finder
-      tldr # Simplified man pages
-
-      # Git tools
-      lazygit # Terminal UI for git
-
-      # GNU utilities
-      gnupg
-    ]
-    ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-      # macOS-specific packages
-      pinentry_mac
-    ]
-    ++ pkgs.lib.optionals pkgs.stdenv.isLinux [
-      # Linux-specific packages
-      pinentry-curses # or pinentry-gtk2 if you prefer GUI
-    ];
-
-  programs.zoxide = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  # Direnv - Automatic environment loading
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true; # Better Nix integration with caching
-  };
-
   # Fish Shell Configuration
   programs.fish = {
     enable = true;
@@ -151,47 +110,8 @@
       end
       # END of atuin fish 4.0+ workaround - remove everything above once atuin is fixed
     '';
-
-    # Environment variables
-    shellAbbrs = {
-      src = "source ~/.config/fish/config.fish";
-      gb = "go build ./... && go test -run=XXX_SHOULD_NEVER_MATCH_XXX ./...";
-      gbt = "go test -run=XXX_SHOULD_NEVER_MATCH_XXX ./...";
-      n = "nvim";
-      ls = "eza";
-      l = "eza -al --icons always -b --git";
-      lt = "eza -al --icons always -b --git --total-size -T";
-      cd = "z";
-      ".." = "z ..";
-      pms = "podman machine start";
-
-      # Git
-      g = "git";
-      gf = "git fetch --all";
-      grom = "git rebase origin/main";
-      gfrom = "git fetch --all && git rebase origin/main";
-      gp = "git push origin HEAD";
-      gpwl = "git push origin HEAD --force-with-lease";
-      ga = "git add .";
-      gc = "git commit -s -S";
-      gca = "git commit -s -S -a -u";
-      gs = "git status";
-      gl = "git log";
-      gd = "git diff";
-      gwta = "gf && git worktreea";
-      gcpe = "git commit -s -S -a -u && git push origin HEAD";
-      gcpef = "git commit -s -S -a -u && git push origin HEAD --force-with-lease";
-      gwtr = "git worktree remove";
-      gwtrf = "git worktree remove --force";
-
-      # Nix
-      not = "nh os test";
-      nob = "nh os build";
-      nos = "nh os switch";
-    };
   };
 
-  # Note: If you have alias files, you can still source them:
   # Source rust environment in fish (conditionally to avoid errors if cargo not installed)
   xdg.configFile."fish/conf.d/rustup.fish".text = ''
     if test -f "$HOME/.cargo/env.fish"
@@ -199,42 +119,10 @@
     end
   '';
 
-  # If the alias files exist, you can source them too
-  # Uncomment these if the files exist:
-  # xdg.configFile."fish/.dockeraliases.fish".source = ../.config/fish/.dockeraliases.fish;
-  # xdg.configFile."fish/.workaliases.fish".source = ../.config/fish/.workaliases.fish;
-  # xdg.configFile."fish/.gitaliases.fish".source = ../.config/fish/.gitaliases.fish;
-  # xdg.configFile."fish/.brewaliases.fish".source = ../.config/fish/.brewaliases.fish;
-  # xdg.configFile."fish/.clitools.fish".source = ../.config/fish/.clitools.fish;
-
-  # Environment variables set via home.sessionVariables
+  # Environment variables
   home.sessionVariables = {
     VISUAL = "nvim";
     EDITOR = "nvim";
     FLAKE = "$HOME/dotfiles";
-  };
-
-  # Starship Prompt
-  programs.starship = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  # Atuin - Shell History
-  # WORKAROUND: atuin 18.8.0 uses deprecated 'bind -k' syntax incompatible with fish 4.0+
-  # TODO: Change enableFishIntegration back to true once atuin > 18.8.0 is available
-  # See: https://github.com/atuinsh/atuin/issues/2613
-  programs.atuin = {
-    enable = true;
-    enableFishIntegration = false; # Temporarily disabled - using manual init in interactiveShellInit above
-    # Reference existing atuin config
-    settings = {
-      enter_accept = true;
-      sync = {
-        records = true;
-      };
-      # Add other settings from your config.toml as needed
-      # Most defaults in the config file are commented out, so only the above are explicitly set
-    };
   };
 }

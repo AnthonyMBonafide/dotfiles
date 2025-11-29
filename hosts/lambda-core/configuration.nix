@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running 'nixos-help').
 
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -19,7 +19,6 @@
     ../../modules/nixos/desktop/audio.nix
 
     # Hardware modules
-    ../../modules/nixos/hardware/gaming.nix
     ../../modules/nixos/hardware/yubikey.nix
   ];
 
@@ -28,33 +27,18 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Hostname
-  networking.hostName = "black-mesa";
+  networking.hostName = "lambda-core";
 
-  # Enable YubiKey authentication and encryption
+  # Enable YubiKey authentication and encryption support
   yubikey.auth.enable = true;
   yubikey.encryption.enable = true;
+  # Note: Actual LUKS device configuration is in hardware-configuration.nix
 
-  # NVIDIA GPU Configuration
-  # Enable proprietary NVIDIA drivers for better multi-monitor support
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.graphics.enable = true;
-
-  hardware.nvidia = {
-    # Use the production branch driver (recommended for most users)
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-    # Modesetting is required for Wayland compositors
-    modesetting.enable = true;
-
-    # Enable the NVIDIA settings menu
-    nvidiaSettings = true;
-
-    # Power management (may help with multi-monitor stability)
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-
-    # Open source kernel module (still beta, use false for stable)
-    open = false;
+  # Hyprland Configuration
+  # Enable Hyprland window manager
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
   };
 
   # Niri Configuration
@@ -63,26 +47,13 @@
     enable = true;
   };
 
-  # Enable libinput with natural scrolling for mouse
-  services.libinput = {
-    enable = true;
-    mouse = {
-      naturalScrolling = true;
-    };
-  };
+  # Add Hyprland portal to XDG portals
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-hyprland
+  ];
 
-  # Power Management Configuration
-  # Disable automatic suspend and hibernation
-  services.logind.settings = {
-    Login = {
-      HandleLidSwitch = "ignore";  # Don't suspend on lid close
-      HandleLidSwitchDocked = "ignore";
-      HandleLidSwitchExternalPower = "ignore";
-      HandlePowerKey = "ignore";
-      IdleAction = "ignore";
-      IdleActionSec = 0;
-    };
-  };
+  # Enable the GNOME Desktop Environment (keeping as fallback)
+  services.desktopManager.gnome.enable = true;
 
   # Stylix - System-wide theming
   stylix = {
@@ -104,12 +75,6 @@
       };
     };
   };
-
-  # Additional system packages for black-mesa
-  environment.systemPackages = with pkgs; [
-    swayidle  # Idle management for Wayland
-    swaylock  # Screen locker for Wayland
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

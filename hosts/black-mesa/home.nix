@@ -6,17 +6,26 @@
   # Import window manager modules for this system
   # Using Niri as the only window manager
   imports = [
-    ../modules/niri.nix
-    ../modules/screensaver.nix
+    ../../modules/home/niri.nix
+    ../../modules/home/screensaver.nix
   ];
 
   # User information (required for home-manager)
   home.username = "anthony";
   home.homeDirectory = "/home/anthony";
 
-  # Qt platform theme configuration
-  # Use adwaita instead of the deprecated gnome option
-  qt.platformTheme.name = "adwaita";
+  # Stylix home-manager specific settings
+  stylix.targets = {
+    # Firefox profile configuration
+    firefox.profileNames = [ "default" ];
+
+    # Qt theming configuration
+    # Use qtct (Qt Configuration Tool) instead of gnome for better compatibility
+    qt = {
+      enable = true;
+      platform = "qtct";
+    };
+  };
 
   # NixOS-specific packages
   home.packages = with pkgs; [

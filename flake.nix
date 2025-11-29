@@ -45,15 +45,15 @@
         # macOS (Apple Silicon) - Current macOS system
         "macbook-pro" = mkHomeConfiguration {
           system = "aarch64-darwin";
-          hostModule = ./hosts/macbook-pro.nix;
+          hostModule = ./hosts/macbook-pro/home.nix;
         };
       };
 
       nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
+        lambda-core = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./hosts/nixos/configuration.nix
+            ./hosts/lambda-core/configuration.nix
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
@@ -63,7 +63,7 @@
               home-manager.users.anthony = { ... }: {
                 imports = [
                   ./home.nix
-                  ./hosts/nixos-desktop.nix
+                  ./hosts/lambda-core/home.nix
                   nvf.homeManagerModules.default
                 ];
                 # Make flake root and inputs available to this home-manager configuration
@@ -87,7 +87,7 @@
               home-manager.users.anthony = { ... }: {
                 imports = [
                   ./home.nix
-                  ./hosts/black-mesa-home.nix
+                  ./hosts/black-mesa/home.nix
                   nvf.homeManagerModules.default
                 ];
                 # Make flake root and inputs available to this home-manager configuration

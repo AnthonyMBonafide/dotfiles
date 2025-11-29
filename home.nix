@@ -3,14 +3,14 @@
 {
   # Import all module configurations
   imports = [
-    ./modules/shell.nix
-    ./modules/ssh.nix
-    ./modules/terminals.nix
-    ./modules/development.nix
-    ./modules/editors.nix
-    ./modules/packages.nix
-    ./modules/firefox.nix
-    ./modules/yubikey-keys.nix
+    ./modules/home/shell
+    ./modules/home/ssh.nix
+    ./modules/home/terminals.nix
+    ./modules/home/development.nix
+    ./modules/home/editors.nix
+    ./modules/home/packages.nix
+    ./modules/home/firefox.nix
+    ./modules/home/yubikey-keys.nix
   ];
 
   # Allow unfree packages

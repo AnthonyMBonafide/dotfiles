@@ -6,12 +6,24 @@
   # Import window manager modules for this system
   # Using Niri as the only window manager
   imports = [
-    ../modules/niri.nix
+    ../../modules/home/niri.nix
   ];
 
   # User information (required for home-manager)
   home.username = "anthony";
   home.homeDirectory = "/home/anthony";
+
+  # Stylix home-manager specific settings
+  stylix.targets = {
+    # Firefox profile configuration
+    firefox.profileNames = [ "default" ];
+
+    # Qt theming configuration
+    qt = {
+      enable = true;
+      platform = "qtct";
+    };
+  };
 
   # NixOS-specific packages
   home.packages = with pkgs; [
