@@ -5,7 +5,7 @@
   # Includes window manager, screensaver, and common desktop settings
 
   imports = [
-    ../niri.nix
+    ../niri
     ../screensaver.nix
   ];
 

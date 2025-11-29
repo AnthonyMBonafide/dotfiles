@@ -8,7 +8,7 @@
 {
   # Import Neovim configuration
   imports = [
-    ./nvf.nix
+    ./development/nvf
   ];
 
   # Editor and writing tools

@@ -10,17 +10,17 @@
     ./hardware-configuration.nix
 
     # Core system modules
-    ../../modules/nixos/core/common.nix
-    ../../modules/nixos/core/nix-settings.nix
-    ../../modules/nixos/core/users.nix
+    ../../modules/system/core/common.nix
+    ../../modules/system/core/nix-settings.nix
+    ../../modules/system/core/users.nix
 
     # Desktop modules
-    ../../modules/nixos/desktop/desktop-base.nix
-    ../../modules/nixos/desktop/audio.nix
+    ../../modules/system/desktop/desktop-base.nix
+    ../../modules/system/desktop/audio.nix
 
     # Hardware modules
-    ../../modules/nixos/hardware/gaming.nix
-    ../../modules/nixos/hardware/yubikey.nix
+    ../../modules/system/hardware/gaming.nix
+    ../../modules/system/hardware/yubikey.nix
   ];
 
   # Bootloader

@@ -1,6 +1,6 @@
-# NixOS System Modules
+# System Modules
 
-This directory contains NixOS system-level modules that can be imported into host configurations.
+This directory contains system-level NixOS modules that can be imported into host configurations.
 
 ## Available Modules
 
@@ -23,14 +23,14 @@ Import in your host configuration:
 ```nix
 {
   imports = [
-    ../../modules/nixos/gaming.nix
+    ../../modules/system/hardware/gaming.nix
   ];
 }
 ```
 
 **Customization:**
 
-Edit `modules/nixos/gaming.nix` to:
+Edit `modules/system/hardware/gaming.nix` to:
 - Add additional game launchers (uncomment Lutris, Heroic, etc.)
 - Modify GameMode settings (CPU governor, GPU performance)
 - Change Steam games mount point
@@ -79,7 +79,7 @@ To create a new system module:
 ```nix
 {
   imports = [
-    ../../modules/nixos/your-module.nix
+    ../../modules/system/your-module.nix
   ];
 }
 ```

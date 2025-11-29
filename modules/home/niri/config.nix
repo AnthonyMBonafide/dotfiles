@@ -1,80 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, wallpaper, ... }:
 
-let
-  # Download scenic wallpaper from wallhaven (same as Hyprland)
-  wallpaper = pkgs.fetchurl {
-    url = "https://w.wallhaven.cc/full/gj/wallhaven-gjj89q.jpg";
-    sha256 = "sha256-BMyPZCT704JDjqsx6nMjfPs30S/Bq3gbpvksQM+BiBc=";
-  };
-in
 {
-  # Niri window manager and ecosystem
-  # Niri is a scrollable-tiling Wayland compositor with unique horizontal workspace scrolling
-
-  home.packages = with pkgs; [
-    # Core utilities (shared with Hyprland)
-    waybar             # Status bar (works with Niri)
-    wofi               # Application launcher
-    dunst              # Notification daemon
-    libnotify          # For notify-send command
-    # xwayland-satellite is provided by the gaming module (modules/nixos/gaming.nix)
-
-    # Screenshots and screen recording
-    grim               # Screenshot tool for wayland
-    slurp              # Screen area selection
-    swappy             # Screenshot editor
-    wf-recorder        # Screen recorder
-
-    # Clipboard
-    wl-clipboard       # Clipboard utilities
-    cliphist           # Clipboard history
-
-    # Logout/power menu
-    wlogout            # Wayland logout menu
-
-    # System utilities
-    brightnessctl      # Brightness control
-    playerctl          # Media player control
-    pamixer            # PulseAudio mixer
-    pavucontrol        # PulseAudio volume control GUI
-
-    # Network and Bluetooth
-    networkmanagerapplet  # Network manager tray icon
-    blueman               # Bluetooth manager
-
-    # File management
-    xfce.thunar           # Lightweight file manager
-    xfce.thunar-volman    # Removable device management
-    xfce.thunar-archive-plugin
-
-    # Image viewer
-    imv                # Wayland image viewer
-
-    # PDF viewer
-    zathura            # Lightweight PDF viewer
-
-    # Theming and appearance
-    qt5.qtwayland      # Qt5 Wayland support
-    qt6.qtwayland      # Qt6 Wayland support
-    adwaita-icon-theme # GTK icon theme
-
-    # Fonts
-    noto-fonts
-    noto-fonts-color-emoji
-    font-awesome       # For waybar icons
-
-    # Wallpaper setter for Niri
-    swaybg             # Wallpaper tool (works with any wlroots-based compositor)
-
-    # Idle management
-    swayidle           # Idle daemon for auto-locking
-
-    # Monitor management
-    wlopm              # Wayland output power management
-  ];
-
-  # Niri configuration
+  # Niri configuration file (KDL format)
   # Niri uses KDL (KubeDoc Language) for configuration
+
   xdg.configFile."niri/config.kdl".text = ''
     // Niri configuration
     // This configuration mirrors Hyprland keybindings where possible
@@ -475,91 +404,7 @@ in
     // }
   '';
 
-  # Waybar configuration for Niri
-  # Niri-specific waybar module
-  xdg.configFile."waybar/config-niri".text = ''
-    {
-      "layer": "top",
-      "position": "top",
-      "height": 30,
-      "spacing": 4,
-
-      "modules-left": ["custom/niri-workspaces", "custom/niri-window"],
-      "modules-center": ["clock"],
-      "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray"],
-
-      "custom/niri-workspaces": {
-        "format": "{}",
-        "exec": "${pkgs.niri}/bin/niri msg --json workspaces | ${pkgs.jq}/bin/jq -r '.[] | .id' | awk '{printf \" %s \", $1}'",
-        "interval": 1,
-        "on-click": "${pkgs.niri}/bin/niri msg action focus-workspace"
-      },
-
-      "custom/niri-window": {
-        "format": "{}",
-        "exec": "${pkgs.niri}/bin/niri msg --json windows | ${pkgs.jq}/bin/jq -r '.[] | select(.is_focused == true) | .title // \"\"' | head -c 50",
-        "interval": 1
-      },
-
-      "tray": {
-        "spacing": 10
-      },
-
-      "clock": {
-        "timezone": "America/New_York",
-        "tooltip-format": "<big>{:%Y %B}</big>\\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%a, %b %d  %I:%M %p}"
-      },
-
-      "cpu": {
-        "format": " {usage}%",
-        "tooltip": false
-      },
-
-      "memory": {
-        "format": " {}%"
-      },
-
-      "battery": {
-        "states": {
-          "warning": 30,
-          "critical": 15
-        },
-        "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{icon} {time}",
-        "format-icons": ["", "", "", "", ""]
-      },
-
-      "network": {
-        "format-wifi": " {essid} ({signalStrength}%)",
-        "format-ethernet": " {ifname}",
-        "format-linked": " {ifname} (No IP)",
-        "format-disconnected": "⚠ Disconnected",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
-      },
-
-      "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-bluetooth-muted": " {icon}",
-        "format-muted": "",
-        "format-icons": {
-          "headphone": "",
-          "hands-free": "",
-          "headset": "",
-          "phone": "",
-          "portable": "",
-          "car": "",
-          "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-      }
-    }
-  '';
-
-  # Startup script to launch waybar with Niri config
+  # Waybar launch script for Niri
   xdg.configFile."niri/waybar-launch.sh" = {
     text = ''
       #!/bin/sh
@@ -570,6 +415,4 @@ in
     '';
     executable = true;
   };
-
-  # Screensaver/lock configuration is in modules/screensaver.nix
 }

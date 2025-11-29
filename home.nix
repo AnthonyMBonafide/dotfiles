@@ -6,7 +6,7 @@
     ./modules/home/shell
     ./modules/home/ssh.nix
     ./modules/home/terminals.nix
-    ./modules/home/development.nix
+    ./modules/home/development
     ./modules/home/editors.nix
     ./modules/home/packages.nix
     ./modules/home/firefox.nix

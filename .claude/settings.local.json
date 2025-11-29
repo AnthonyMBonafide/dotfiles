@@ -57,7 +57,9 @@
       "Bash(export SSH_AUTH_SOCK=\"/run/user/1000/ssh-agent\")",
       "Bash(tree:*)",
       "Bash(nix flake metadata:*)",
-      "Bash(nix flake update:*)"
+      "Bash(nix flake update:*)",
+      "Bash(mkdir:*)",
+      "Bash(git mv:*)"
     ],
     "deny": [],
     "ask": []
