@@ -32,7 +32,7 @@ dotfiles/
    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
    ```
 
-2. **Enable Nix Flakes** (should be enabled by default with Determinate Nix Installer)
+2. **Enable Nix Flakes** (should be enabled by default with Determinate Nix Installer).
 
 ### Initial Setup
 
