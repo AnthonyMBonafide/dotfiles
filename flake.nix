@@ -39,6 +39,18 @@
             }
           ];
         };
+
+      # Helper function to create NixOS home-manager user configuration
+      mkNixOSHomeUser = hostname: { ... }: {
+        imports = [
+          ./home.nix
+          ./hosts/${hostname}/home.nix
+          nvf.homeManagerModules.default
+        ];
+        # Make flake root and inputs available to this home-manager configuration
+        _module.args.flakeRoot = self;
+        _module.args.firefox-addons = firefox-addons.packages."x86_64-linux";
+      };
     in
     {
       homeConfigurations = {
@@ -60,16 +72,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-backup";
-              home-manager.users.anthony = { ... }: {
-                imports = [
-                  ./home.nix
-                  ./hosts/lambda-core/home.nix
-                  nvf.homeManagerModules.default
-                ];
-                # Make flake root and inputs available to this home-manager configuration
-                _module.args.flakeRoot = self;
-                _module.args.firefox-addons = firefox-addons.packages."x86_64-linux";
-              };
+              home-manager.users.anthony = mkNixOSHomeUser "lambda-core";
             }
           ];
         };
@@ -84,16 +87,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-backup";
-              home-manager.users.anthony = { ... }: {
-                imports = [
-                  ./home.nix
-                  ./hosts/black-mesa/home.nix
-                  nvf.homeManagerModules.default
-                ];
-                # Make flake root and inputs available to this home-manager configuration
-                _module.args.flakeRoot = self;
-                _module.args.firefox-addons = firefox-addons.packages."x86_64-linux";
-              };
+              home-manager.users.anthony = mkNixOSHomeUser "black-mesa";
             }
           ];
         };

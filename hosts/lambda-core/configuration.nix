@@ -34,23 +34,11 @@
   yubikey.encryption.enable = true;
   # Note: Actual LUKS device configuration is in hardware-configuration.nix
 
-  # Hyprland Configuration
-  # Enable Hyprland window manager
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   # Niri Configuration
   # Enable Niri window manager (scrollable-tiling compositor)
   programs.niri = {
     enable = true;
   };
-
-  # Add Hyprland portal to XDG portals
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-hyprland
-  ];
 
   # Enable the GNOME Desktop Environment (keeping as fallback)
   services.desktopManager.gnome.enable = true;
