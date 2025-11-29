@@ -75,6 +75,10 @@
 
           # Interactive mode - prompt for touch
           cue = true;
+
+          # Use consistent origin across all machines so keys work everywhere
+          # Default is pam://$hostname which breaks when moving between machines
+          origin = "pam://nixos";
         };
       };
     })

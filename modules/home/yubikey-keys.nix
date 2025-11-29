@@ -1,23 +1,28 @@
 { config, pkgs, ... }:
 
 {
-  # Declarative Yubikey U2F registration
-  # This file contains public key material only (safe to commit to Git)
+  # YubiKey U2F Authentication Keys
+  # ================================
+  # This file configures PAM U2F authentication for login and sudo.
+  # Contains public key material only (safe to commit to Git).
+  #
+  # IMPORTANT: The u2f_keys file CANNOT contain comments - PAM U2F will fail to parse it.
+  # All documentation must be kept here in the Nix file as Nix comments.
+  #
+  # To add or regenerate keys:
+  # 1. Insert your YubiKey
+  # 2. Run: pamu2fcfg -u anthony
+  # 3. For multiple YubiKeys, append additional keys with colons:
+  #    anthony:key1Handle,key1PublicKey:key2Handle,key2PublicKey:key3Handle,key3PublicKey
+  #
+  # Current configuration: 3 YubiKeys enrolled
+  # Used for: sudo authentication, login authentication (via PAM)
+  # Not used for: LUKS disk encryption (that uses FIDO2, configured separately)
+  #
+  # Format: username:keyHandle,publicKey,algorithm,flags[:keyHandle2,publicKey2,algorithm2,flags2]
 
   home.file.".config/Yubico/u2f_keys".text = ''
-    # Replace this placeholder with your actual Yubikey registration(s)
-    #
-    # To generate, run with your Yubikey inserted:
-    #   pamu2fcfg -u anthony
-    #
-    # For multiple Yubikeys, run the command for each one and append with colons:
-    #   anthony:key1Handle,key1PublicKey:key2Handle,key2PublicKey:key3Handle,key3PublicKey
-    #
-    # Example format:
-    # anthony:abcdef123456...,uvwxyz789012...:ghijkl345678...,opqrst901234...
-    #
-    # IMPORTANT: Replace the line below with your actual registration data
-    anthony:nSPwHs6OtkF2JcDHYV45m2GwtBadNAOzq8VkYIgklQ5k200nNU4+nam6zEVBRjiheE7UFnx7G4MTeRFwqZqUjw==,MuZUIDvpVeXGDNZPRBx2NJY92x/hz3T09EJkbKg4r6hMUfTclI1m4KOaYcc0wTGzjjitckqDN8WdxjtWd1vJXg==,es256,+presence:R497bowDnFSSl4gxbM4nVRfPjb54cAtEK6bVICgZf+dHYt5jigoDTGGlR1hbQrSzkqh+wNK4fj4agDIKG99NLg==,jDoOzXXFb+VGsFlUQXdwpxd0ck2dsLqNnU53t0+9KwWAXlWoCw61MFsjXUt4/Bx3+Kq2tI2A6b4AgB68KBMR1g==,es256,+presence:Y2KzVpjeIajKL1A1DYSvDFMrHqj+x8Qfg28oDIvWDyU54N/lwURJcod+vQ84EJ/IYZwmMnMXiggI6nET1NlyVA==,szbV6YFro5ecJs7xfSP+cK3NC+fzLRmYHVqL6tVk1RVziLtGl9bHthecUlz8FfnE1iAyWakwjHWajqS+y4NEKg==,es256,+presence
+    anthony:epwGUynoZTAbiH8V+iPlMkk8DxtvH8sJV4p8rINX9Fml0a2tE4VQ/cLyUmW67M1QMsvtqiuB1boDAWCIjw9sOg==,NfGwHWPd9J5Zd5fafueEG4P42/5gMDq2fGCpR5I6tZsdJEBA1T7Uk4TmdKNu7ckZO12ihFNg9rL8/lAIqtFczg==,es256,+presence:ghEOtSRH+HKfkMDhz0t7Ar0E4Io/EL7x+TAg6YcidA2DntODjOZXS7K4ecfSyxL1RjamKMTGO8q462f3AOmfcw==,PuG12G8Rt325phw9DqiSmpJXWHv6QWp9iZ8i8Gb7Qr1YqIH0cwIH7MRMDPJQwE+ddQHNPutoTbcGmBrGVAKM2w==,es256,+presence:LNEK48k7jxLfXFKqxXw3LjJDakZmdwKQaweFgg0JW611+uxUh9AUUSGpYDyneAwBIYlwLkTNVqb7Yh+WB9Tq4g==,TPN7eJv0B7vLBxINQDdhsfD+WclHTqv6xsurFqxuJnKL6FrCd9l6vViUS2suea+wplbIIh0ltZzK/MtaUiLtEQ==,es256,+presence
   '';
 
   # Ensure the directory exists
