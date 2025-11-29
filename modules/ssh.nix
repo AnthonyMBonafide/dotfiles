@@ -37,6 +37,16 @@
     SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
   };
 
+  # Mask GCR SSH agent services to prevent them from interfering
+  # GCR's SSH agent doesn't properly support FIDO2/YubiKey signing
+  systemd.user.services.gcr-ssh-agent = {
+    Install.WantedBy = pkgs.lib.mkForce [ ];
+  };
+
+  systemd.user.sockets.gcr-ssh-agent = {
+    Install.WantedBy = pkgs.lib.mkForce [ ];
+  };
+
   # Ensure GNOME Keyring doesn't start its SSH component
   xdg.configFile."autostart/gnome-keyring-ssh.desktop" = {
     text = ''

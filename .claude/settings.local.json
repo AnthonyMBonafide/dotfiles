@@ -50,7 +50,11 @@
       "WebFetch(domain:jnsgr.uk)",
       "WebFetch(domain:kudelskisecurity.com)",
       "Bash(ykman list:*)",
-      "Bash(/tmp/test_sign.txt)"
+      "Bash(/tmp/test_sign.txt)",
+      "Bash(ssh-add:*)",
+      "Bash(env)",
+      "Bash(export SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent\")",
+      "Bash(export SSH_AUTH_SOCK=\"/run/user/1000/ssh-agent\")"
     ],
     "deny": [],
     "ask": []
