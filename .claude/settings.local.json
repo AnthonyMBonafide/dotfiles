@@ -55,7 +55,9 @@
       "Bash(env)",
       "Bash(export SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent\")",
       "Bash(export SSH_AUTH_SOCK=\"/run/user/1000/ssh-agent\")",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(nix flake metadata:*)",
+      "Bash(nix flake update:*)"
     ],
     "deny": [],
     "ask": []
