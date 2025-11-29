@@ -48,7 +48,9 @@
       "WebFetch(domain:nixos.wiki)",
       "WebFetch(domain:0pointer.net)",
       "WebFetch(domain:jnsgr.uk)",
-      "WebFetch(domain:kudelskisecurity.com)"
+      "WebFetch(domain:kudelskisecurity.com)",
+      "Bash(ykman list:*)",
+      "Bash(/tmp/test_sign.txt)"
     ],
     "deny": [],
     "ask": []

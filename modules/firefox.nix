@@ -14,6 +14,7 @@
         ublock-origin
         sponsorblock
         vimium
+        bitwarden
       ];
 
       # Search engines
