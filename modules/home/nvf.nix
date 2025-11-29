@@ -15,11 +15,15 @@
         # Options
         lineNumberMode = "relNumber";
 
-        # Clipboard configuration
+        # Clipboard configuration - use system clipboard
         clipboard = {
           providers.wl-copy.enable = true;
-          registers = "unnamedplus";
         };
+
+        # Use system clipboard by default
+        luaConfigRC.clipboard = ''
+          vim.opt.clipboard:append("unnamedplus")
+        '';
 
         # Tab and indent settings
         options = {

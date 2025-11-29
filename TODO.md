@@ -8,5 +8,6 @@
 - [ ] Update to stable nix channel
 - [ ] Update black-mesa to the lastest changes
 - [ ] Update black-mesa to use Yubikey on disk decryption
-- [ ] Nvim not using system clipboard cannot copy and paste between programs
+- [x] Nvim not using system clipboard cannot copy and paste between programs
 - [ ] Git rebase with conflicts doesn't allow for Yubikey signing
+- [x] Update laptop hostname to 'lambda-core'
