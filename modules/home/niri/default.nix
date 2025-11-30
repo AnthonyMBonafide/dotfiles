@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
+  cfg = config.myHome.niri;
+
   # Download scenic wallpaper from wallhaven
   wallpaper = pkgs.fetchurl {
     url = "https://w.wallhaven.cc/full/gj/wallhaven-gjj89q.jpg";
@@ -8,17 +10,30 @@ let
   };
 in
 {
-  # Niri window manager and ecosystem
-  # Niri is a scrollable-tiling Wayland compositor with unique horizontal workspace scrolling
+  options.myHome.niri = {
+    enable = lib.mkEnableOption "Niri window manager and ecosystem";
 
-  # Import Niri configuration modules
+    wallpaper = lib.mkOption {
+      type = lib.types.package;
+      default = wallpaper;
+      description = "Wallpaper package to use";
+    };
+
+    extraPackages = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [];
+      description = "Additional packages to install with Niri";
+    };
+  };
+
   imports = [
-    (import ./config.nix { inherit config pkgs wallpaper; })
+    (import ./config.nix { inherit config pkgs lib; wallpaper = cfg.wallpaper; })
     ./waybar.nix
   ];
 
-  # Packages for Niri window manager ecosystem
-  home.packages = with pkgs; [
+  config = lib.mkIf cfg.enable {
+    # Packages for Niri window manager ecosystem
+    home.packages = with pkgs; [
     # Core utilities
     waybar             # Status bar (works with Niri)
     wofi               # Application launcher
@@ -78,7 +93,8 @@ in
 
     # Monitor management
     wlopm              # Wayland output power management
-  ];
+  ] ++ cfg.extraPackages;
 
-  # Screensaver/lock configuration is in modules/screensaver.nix
+    # Screensaver/lock configuration is in modules/screensaver.nix
+  };
 }

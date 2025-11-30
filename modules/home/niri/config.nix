@@ -1,10 +1,14 @@
-{ config, pkgs, wallpaper, ... }:
+{ config, pkgs, lib, wallpaper, ... }:
 
+let
+  cfg = config.myHome.niri;
+in
 {
   # Niri configuration file (KDL format)
   # Niri uses KDL (KubeDoc Language) for configuration
 
-  xdg.configFile."niri/config.kdl".text = ''
+  config = lib.mkIf cfg.enable {
+    xdg.configFile."niri/config.kdl".text = ''
     // Niri configuration
     // This configuration mirrors Hyprland keybindings where possible
 
@@ -404,15 +408,16 @@
     // }
   '';
 
-  # Waybar launch script for Niri
-  xdg.configFile."niri/waybar-launch.sh" = {
-    text = ''
-      #!/bin/sh
-      # Kill existing waybar
-      pkill waybar
-      # Launch waybar with Niri config
-      ${pkgs.waybar}/bin/waybar -c ~/.config/waybar/config-niri -s ~/.config/waybar/style.css &
-    '';
-    executable = true;
+    # Waybar launch script for Niri
+    xdg.configFile."niri/waybar-launch.sh" = {
+      text = ''
+        #!/bin/sh
+        # Kill existing waybar
+        pkill waybar
+        # Launch waybar with Niri config
+        ${pkgs.waybar}/bin/waybar -c ~/.config/waybar/config-niri -s ~/.config/waybar/style.css &
+      '';
+      executable = true;
+    };
   };
 }

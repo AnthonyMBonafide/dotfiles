@@ -1,10 +1,101 @@
 # System Modules
 
-This directory contains system-level NixOS modules that can be imported into host configurations.
+This directory contains system-level NixOS modules that can be imported into host configurations. These modules handle system services, hardware configuration, and privileged operations.
 
-## Available Modules
+## Directory Structure
 
-### gaming.nix
+```
+system/
+├── core/              # Core system configuration
+│   ├── common.nix     # Networking, locale, timezone, keyboard
+│   ├── nix-settings.nix # Flakes, garbage collection, nh
+│   └── users.nix      # User account definitions
+├── desktop/           # Desktop environment services
+│   ├── desktop-base.nix # XDG portals, Polkit, GDM
+│   └── audio.nix      # PipeWire audio configuration
+└── hardware/          # Hardware-specific configuration
+    ├── gaming.nix     # Steam, GameMode, xwayland-satellite
+    └── yubikey.nix    # YubiKey support (U2F, FIDO2, encryption)
+```
+
+## Module Descriptions
+
+### Core Modules
+
+#### common.nix
+Base system configuration shared across all hosts.
+
+**Includes:**
+- Networking configuration
+- Locale and timezone
+- Keyboard layout
+- Printing support (CUPS)
+- Bluetooth support
+
+**Usage:**
+```nix
+imports = [ ../../modules/system/core/common.nix ];
+```
+
+#### nix-settings.nix
+Nix package manager configuration and automation.
+
+**Includes:**
+- Flakes and experimental features
+- Auto-optimization and garbage collection
+- `nh` (NixOS helper) for simplified rebuilds
+
+**Usage:**
+```nix
+imports = [ ../../modules/system/core/nix-settings.nix ];
+```
+
+#### users.nix
+System user account definitions.
+
+**Includes:**
+- User accounts with home directories
+- Shell configuration (Fish)
+- Sudo permissions
+- SSH key management
+
+**Usage:**
+```nix
+imports = [ ../../modules/system/core/users.nix ];
+```
+
+### Desktop Modules
+
+#### desktop-base.nix
+Desktop environment foundation.
+
+**Includes:**
+- X11 support (for XWayland)
+- XDG desktop portals
+- Polkit authentication agent
+- GDM display manager with Wayland
+
+**Usage:**
+```nix
+imports = [ ../../modules/system/desktop/desktop-base.nix ];
+```
+
+#### audio.nix
+Audio system configuration.
+
+**Includes:**
+- PipeWire audio server
+- ALSA and PulseAudio compatibility
+- Real-time audio priority
+
+**Usage:**
+```nix
+imports = [ ../../modules/system/desktop/audio.nix ];
+```
+
+### Hardware Modules
+
+#### gaming.nix
 
 Gaming configuration module with Steam, GameMode, and performance optimizations.
 
@@ -46,9 +137,37 @@ Edit `modules/system/hardware/gaming.nix` to:
 - [Steam on NixOS Wiki](https://nixos.wiki/wiki/Steam)
 - [ProtonDB](https://www.protondb.com) for game compatibility
 
+#### yubikey.nix
+YubiKey hardware security key support.
+
+**Includes:**
+- FIDO2/U2F authentication
+- PAM U2F integration (optional)
+- LUKS disk encryption support (optional)
+- PC/SC daemon for smart card operations
+
+**Options:**
+```nix
+yubikey.auth.enable = true;        # Enable YubiKey for authentication
+yubikey.encryption.enable = true;  # Enable for disk encryption
+```
+
+**Usage:**
+```nix
+{
+  imports = [ ../../modules/system/hardware/yubikey.nix ];
+
+  yubikey.auth.enable = true;
+  yubikey.encryption.enable = true;
+}
+```
+
+**See Also:**
+- [YubiKey Guide](https://github.com/drduh/YubiKey-Guide)
+
 ---
 
-## Creating New NixOS Modules
+## Creating New System Modules
 
 To create a new system module:
 
@@ -89,9 +208,9 @@ To create a new system module:
 
 ---
 
-## Module vs Home Manager
+## System Modules vs Home Manager
 
-**Use NixOS modules for:**
+**Use system modules for:**
 - System services (systemd, networking, etc.)
 - Hardware configuration (drivers, kernel modules)
 - System-wide packages available to all users
@@ -103,4 +222,4 @@ To create a new system module:
 - Dotfiles and user environment
 - Per-user customization
 
-Home Manager modules are located in `modules/` (parent directory).
+**See:** [Home Manager Modules](../home/README.md)

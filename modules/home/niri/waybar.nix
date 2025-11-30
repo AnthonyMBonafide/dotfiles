@@ -1,9 +1,13 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  cfg = config.myHome.niri;
+in
 {
   # Waybar configuration for Niri window manager
 
-  xdg.configFile."waybar/config-niri".text = ''
+  config = lib.mkIf cfg.enable {
+    xdg.configFile."waybar/config-niri".text = ''
     {
       "layer": "top",
       "position": "top",
@@ -84,4 +88,5 @@
       }
     }
   '';
+  };
 }

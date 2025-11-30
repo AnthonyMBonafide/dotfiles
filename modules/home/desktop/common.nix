@@ -9,6 +9,9 @@
     ../screensaver.nix
   ];
 
+  # Enable Niri window manager
+  myHome.niri.enable = true;
+
   # User information (required for home-manager)
   home.username = "anthony";
   home.homeDirectory = "/home/anthony";

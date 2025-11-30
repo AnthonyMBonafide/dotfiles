@@ -16,9 +16,6 @@
       fzf # Fuzzy finder
       tldr # Simplified man pages
 
-      # Git tools
-      lazygit # Terminal UI for git
-
       # GNU utilities
       gnupg
     ]

@@ -6,6 +6,9 @@
     # AI Development tools
     claude-code
 
+    # Git tools
+    lazygit # Terminal UI for git
+
     # Nix development tools
     nixd       # Nix language server for IDE integration
     alejandra  # Nix code formatter
