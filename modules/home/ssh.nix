@@ -35,6 +35,10 @@
   # This allows the native OpenSSH agent to handle YubiKey FIDO2 keys
   home.sessionVariables = {
     SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
+    # Force SSH to use askpass for YubiKey operations
+    # This ensures a GUI prompt appears for YubiKey touch confirmation
+    # Fixes "agent refused operation" errors during git commit signing
+    SSH_ASKPASS_REQUIRE = "force";
   };
 
   # Mask GCR SSH agent services to prevent them from interfering

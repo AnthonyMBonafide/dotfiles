@@ -13,6 +13,7 @@
     ../../modules/system/core/common.nix
     ../../modules/system/core/nix-settings.nix
     ../../modules/system/core/users.nix
+    ../../modules/system/core/auto-update.nix
 
     # Desktop modules
     ../../modules/system/desktop/desktop-base.nix

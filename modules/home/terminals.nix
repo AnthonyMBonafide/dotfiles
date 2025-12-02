@@ -15,7 +15,7 @@
     macos-option-as-alt = true
     background-opacity = 0.7
 
-    font-size = 20
+    font-size = 17 
     keybind = shift+enter=text:\x1b\r
   '';
 }
