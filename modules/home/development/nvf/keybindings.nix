@@ -181,6 +181,12 @@
         desc = "Toggle undotree";
       };
 
+      # Search keymaps
+      "<leader>sk" = {
+        action = "<cmd>Telescope keymaps<cr>";
+        desc = "Search keymaps";
+      };
+
       # Flash - quick navigation
       "s" = {
         action = "<cmd>lua require('flash').jump()<cr>";

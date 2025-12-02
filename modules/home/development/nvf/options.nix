@@ -12,8 +12,11 @@
   };
 
   # Use system clipboard by default
+  # Delay clipboard setup to avoid "Nothing is copied" error on startup
   luaConfigRC.clipboard = ''
-    vim.opt.clipboard:append("unnamedplus")
+    vim.schedule(function()
+      vim.opt.clipboard:append("unnamedplus")
+    end)
   '';
 
   # Tab and indent settings

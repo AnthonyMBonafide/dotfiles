@@ -45,7 +45,19 @@
   };
 
   # Which-key - shows available keybindings
-  binds.whichKey.enable = true;
+  binds.whichKey = {
+    enable = true;
+    register = {
+      "<leader>f" = "+Find/Files";
+      "<leader>s" = "+Search";
+      "<leader>c" = "+Code";
+      "<leader>r" = "+Refactor";
+      "<leader>d" = "+Debug";
+      "<leader>t" = "+Test";
+      "<leader>x" = "+Diagnostics";
+      "<leader>g" = "+Git";
+    };
+  };
 
   # Additional features
   autopairs.nvim-autopairs.enable = true;
