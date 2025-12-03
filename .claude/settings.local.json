@@ -60,7 +60,8 @@
       "Bash(nix flake update:*)",
       "Bash(mkdir:*)",
       "Bash(git mv:*)",
-      "Bash(gpg-connect-agent:*)"
+      "Bash(gpg-connect-agent:*)",
+      "Bash(home-manager switch:*)"
     ],
     "deny": [],
     "ask": []

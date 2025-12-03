@@ -1,6 +1,12 @@
 # Claude Context File
 
-This document provides context for Claude Code to better assist with this dotfiles repository.
+This document provides strategic context and project philosophy for Claude Code to better assist with this dotfiles repository.
+
+**For practical workflow rules and commands**, see [.claude/README.md](.claude/README.md) which covers:
+- Nix workflow rules (nh commands, formatting, git staging)
+- TODO list usage guidelines
+- Warning handling procedures
+- Current project structure reference
 
 ## Project Overview
 
@@ -44,24 +50,30 @@ Enable quick, consistent setup of any new system with identical configurations u
 - ✅ **Host-specific configurations** in `hosts/` directory
 - ✅ **Platform conditionals** in modules
 - ✅ Core modules:
-  - `modules/shell.nix` - Fish, Starship, Atuin, CLI tools
-  - `modules/terminals.nix` - Alacritty, Kitty, Ghostty, Zellij
-  - `modules/development.nix` - Git, Go, Rust, databases, dev tools
-  - `modules/editors.nix` - Editor configurations
-  - `modules/neovim.nix` - Neovim with LazyVim, LSP
-  - `modules/packages.nix` - Fonts, applications
-  - `modules/hyprland.nix` - Hyprland window manager (Wayland)
-  - `modules/niri.nix` - Niri scrollable-tiling compositor (Wayland)
-  - `modules/screensaver.nix` - Wayland screensavers (swaylock-effects, cava, pipes-rs)
+  - `modules/home/shell/` - Fish, Starship, aliases, CLI tools
+  - `modules/home/terminals.nix` - Alacritty, Kitty terminal emulators
+  - `modules/home/development/` - Git, dev tools (alejandra, nixd, statix)
+    - `modules/home/development/nvf/` - Neovim with nvf (LSP, DAP, plugins, keybindings)
+  - `modules/home/editors.nix` - Editor configurations
+  - `modules/home/packages.nix` - Fonts, applications
+  - `modules/home/niri/` - Niri scrollable-tiling compositor (Wayland)
+  - `modules/home/screensaver.nix` - Wayland screensavers
+  - `modules/home/firefox.nix` - Firefox configuration
+  - `modules/home/ssh.nix` - SSH configuration
+  - `modules/home/yubikey-keys.nix` - YubiKey SSH key management
 
 #### NixOS System Modules
-- ✅ `modules/nixos/gaming.nix` - Gaming configuration
-  - Steam with GameScope session
-  - GameMode with CPU/GPU optimizations
-  - XWayland support (services.xserver.enable, xwayland-satellite)
-  - MangoHud and Goverlay
-  - Steam games storage mount
-  - Optional: Proton-GE, Lutris, Heroic, controller tools
+- ✅ `modules/system/core/` - Core system configuration
+  - `common.nix` - Base system settings
+  - `nix-settings.nix` - Nix daemon configuration
+  - `users.nix` - User account management
+  - `auto-update.nix` - Automatic system updates
+- ✅ `modules/system/desktop/` - Desktop environment
+  - `desktop-base.nix` - Desktop base configuration
+  - `audio.nix` - PipeWire audio setup
+- ✅ `modules/system/hardware/` - Hardware-specific configuration
+  - `gaming.nix` - Steam, GameMode, GameScope, XWayland
+  - `yubikey.nix` - YubiKey system integration
 
 ### What's In Progress
 - 🔄 Testing Niri on additional systems
@@ -86,25 +98,32 @@ dotfiles/
 │   ├── black-mesa/        # NixOS gaming desktop (3 monitors, NVIDIA)
 │   │   ├── configuration.nix      # System configuration
 │   │   ├── hardware-configuration.nix  # Hardware detection
-│   │   └── README.md      # Gaming/Steam documentation
-│   ├── black-mesa-home.nix  # Home manager for black-mesa user
-│   ├── nixos/             # NixOS general desktop
-│   ├── nixos-desktop.nix  # Home manager for nixos user
-│   ├── macbook-pro.nix    # macOS configuration
-│   └── arch-desktop.nix   # Linux (Arch) configuration
-├── modules/               # Home Manager modules
-│   ├── shell.nix          # Shell environment (Fish, Starship, CLI tools)
-│   ├── terminals.nix      # Terminal emulators
-│   ├── development.nix    # Development tools, languages, databases
-│   ├── editors.nix        # Text editors and formatters
-│   ├── neovim.nix         # Neovim-specific configuration
-│   ├── packages.nix       # Fonts, applications, general packages
-│   ├── hyprland.nix       # Hyprland window manager (Wayland)
-│   ├── niri.nix           # Niri scrollable-tiling compositor (Wayland)
-│   ├── screensaver.nix    # Wayland screensavers
-│   └── nixos/             # NixOS system modules
-│       ├── gaming.nix     # Steam, GameMode, XWayland, gaming setup
-│       └── README.md      # NixOS modules documentation
+│   │   └── home.nix       # Home Manager user config
+│   ├── lambda-core/       # NixOS workstation
+│   │   ├── configuration.nix
+│   │   ├── hardware-configuration.nix
+│   │   └── home.nix
+│   └── macbook-pro/       # macOS configuration
+│       └── home.nix
+├── modules/               # Modular configurations
+│   ├── home/              # Home Manager modules
+│   │   ├── shell/         # Shell environment (Fish, aliases)
+│   │   ├── terminals.nix  # Terminal emulators (Kitty, Alacritty)
+│   │   ├── development/   # Development tools
+│   │   │   ├── default.nix  # Git, alejandra, nixd, statix
+│   │   │   └── nvf/       # Neovim configuration (LSP, DAP, plugins)
+│   │   ├── editors.nix    # Text editors
+│   │   ├── packages.nix   # Fonts, applications
+│   │   ├── niri/          # Niri window manager
+│   │   ├── desktop/       # Desktop environment common settings
+│   │   ├── screensaver.nix  # Wayland screensavers
+│   │   ├── firefox.nix    # Firefox configuration
+│   │   ├── ssh.nix        # SSH configuration
+│   │   └── yubikey-keys.nix  # YubiKey SSH keys
+│   └── system/            # NixOS system modules
+│       ├── core/          # Core system (users, nix settings, auto-update)
+│       ├── desktop/       # Desktop base, audio (PipeWire)
+│       └── hardware/      # Gaming, YubiKey hardware support
 ├── packages/              # Package lists for non-Nix installations
 │   ├── apt.txt            # Debian/Ubuntu packages
 │   ├── pacman.txt         # Arch/Manjaro/Endeavor packages
@@ -115,21 +134,24 @@ dotfiles/
 │   ├── bootstrap.sh       # Universal installer (detects OS)
 │   ├── link-configs.sh    # Manual config symlinking
 │   └── README.md          # Script documentation
+├── .claude/               # Claude Code configuration
+│   ├── README.md          # Practical workflow guide (nh commands, formatting)
+│   └── settings.local.json  # Claude Code settings
 ├── .config/               # Source configuration files (works with/without Nix)
-│   ├── nvim/              # Neovim LazyVim configuration
+│   ├── nvim/              # Neovim configuration
 │   ├── fish/              # Fish shell configs
 │   ├── starship.toml      # Starship prompt
 │   ├── helix/             # Helix editor
 │   ├── jujutsu/           # JJ version control
-│   ├── ghostty/           # Ghostty terminal
-│   ├── zellij/            # Zellij terminal multiplexer
 │   ├── kitty/             # Kitty terminal
-│   ├── karabiner/         # Karabiner Elements (macOS)
 │   └── gh/                # GitHub CLI
+├── docs/                  # Documentation
+│   ├── yubikey-ssh-signing.md
+│   └── yubikey-luks-enrollment.md
 └── Root-level configs:
     ├── .gitconfig         # Git configuration
     ├── .gitignore_global  # Global gitignore
-    └── .tmux.conf         # Tmux configuration
+    └── Claude.md          # This file - strategic context for Claude Code
 ```
 
 ## Key Design Decisions
@@ -170,7 +192,7 @@ The repository supports **three levels of configuration**:
 Each module is self-contained and can be commented out in `home.nix` if needed for debugging or platform-specific builds.
 
 ### Gaming Setup (NixOS)
-The gaming module (`modules/nixos/gaming.nix`) provides comprehensive gaming support:
+The gaming module (`modules/system/hardware/gaming.nix`) provides comprehensive gaming support:
 
 **Key Components:**
 - **Steam**: Full installation with Proton for Windows games
@@ -193,24 +215,16 @@ The gaming module (`modules/nixos/gaming.nix`) provides comprehensive gaming sup
 ### Window Managers (Wayland-Native)
 Two Wayland compositors are configured:
 
-**Hyprland** (`modules/hyprland.nix`):
-- Dynamic tiling window manager
-- Built-in XWayland support
-- Hypridle for idle management
-- Hyprlock for screen locking
-- Hyprpaper for wallpapers
-- Traditional tiling workflow
-
-**Niri** (`modules/niri.nix`):
+**Niri** (`modules/home/niri/`):
 - Scrollable-tiling compositor (unique horizontal workspace scrolling)
 - Uses xwayland-satellite for XWayland support
 - Configuration in KDL (KubeDoc Language) - strict syntax
-- Swayidle for idle management
 - Natural workflow for multi-monitor setups
 - **IMPORTANT**: Always run `niri validate` after config changes
+- Configured with Waybar status bar
 
 **black-mesa Monitor Setup:**
-- 3 monitors configured in Niri (modules/niri.nix:110-151)
+- 3 monitors configured in Niri (modules/home/niri/config.nix)
 - Left: Dell P2419H (1920x1080@60Hz) on DP-3
 - Center: Dell AW2521HF (1920x1080@60Hz) on DP-2
 - Right: Third monitor (commented - will activate when detected)
@@ -266,12 +280,13 @@ nix run home-manager/master -- switch --flake .#<hostname>
 
 #### Adding a New Package
 1. Identify the right module:
-   - CLI tool → `modules/shell.nix`
-   - Dev tool/language → `modules/development.nix`
-   - Editor/formatter → `modules/editors.nix`
-   - GUI app/font → `modules/packages.nix`
+   - CLI tool → `modules/home/shell/packages.nix`
+   - Dev tool/language → `modules/home/development/default.nix`
+   - Editor/formatter → `modules/home/editors.nix`
+   - GUI app/font → `modules/home/packages.nix`
 2. Add package to `home.packages` list
-3. For platform-specific packages, use:
+3. Format the file: `alejandra <file.nix>`
+4. For platform-specific packages, use:
    ```nix
    ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
      # macOS only
@@ -279,7 +294,9 @@ nix run home-manager/master -- switch --flake .#<hostname>
      # Linux only
    ];
    ```
-4. Test with: `home-manager switch --flake .#<hostname>`
+5. Test with: `home-manager switch --flake .#<hostname>`
+
+**See [.claude/README.md](.claude/README.md#nix-workflow-rules) for detailed workflow rules.**
 
 #### Adding a New Configuration
 1. If it's a program with home-manager module: Configure in appropriate module file using `programs.<name>.*`
@@ -315,9 +332,14 @@ stow .
 #### Gaming-Specific Tasks (NixOS)
 
 **Adding a game launcher:**
-1. Edit `modules/nixos/gaming.nix`
+1. Edit `modules/system/hardware/gaming.nix`
 2. Uncomment desired launcher (Lutris, Heroic, Proton-GE)
-3. Rebuild: `sudo nixos-rebuild switch --flake .#black-mesa`
+3. Stage changes: `git add modules/system/hardware/gaming.nix`
+4. Format: `alejandra modules/system/hardware/gaming.nix`
+5. Build and test: `nh os build` then `nh os test`
+6. Apply: `nh os switch` (when confident)
+
+**See [.claude/README.md](.claude/README.md#nix-workflow-rules) for NixOS workflow rules.**
 
 **Checking Steam games storage:**
 ```bash
@@ -381,15 +403,24 @@ home-manager switch --switch-generation <number>
 
 ## Guidelines for Claude
 
+**IMPORTANT**: See [.claude/README.md](.claude/README.md) for detailed workflow rules:
+- Nix workflow (nh commands, git staging, formatting with alejandra)
+- TODO list usage guidelines
+- Warning handling procedures
+
 ### When Modifying Nix Files
 1. **Always read the file first** before editing
-2. **Preserve existing structure** - keep modules organized
-3. **Use comments** to explain non-obvious choices
-4. **Test assumptions** - check if packages exist in nixpkgs before adding
-5. **Maintain consistency** - follow existing naming/organization patterns
+2. **Stage new files in git** before building: `git add <file.nix>`
+3. **Format with alejandra** before committing: `alejandra <file.nix>`
+4. **For NixOS changes**: Use `nh os build` → `nh os test` → `nh os switch` (minimize bootloader entries)
+5. **Preserve existing structure** - keep modules organized
+6. **Use comments** to explain non-obvious choices
+7. **Test assumptions** - check if packages exist in nixpkgs before adding
+8. **Maintain consistency** - follow existing naming/organization patterns
+9. **Fix warnings immediately** - don't let them accumulate
 
 ### When Modifying Niri Configuration
-1. **Always validate changes** - Run `niri validate` after modifying `modules/niri.nix`
+1. **Always validate changes** - Run `niri validate` after modifying `modules/home/niri/config.nix`
 2. **Check config syntax** - Niri uses KDL (KubeDoc Language) which has strict syntax requirements
 3. **Test before committing** - Invalid Niri configs can prevent the window manager from starting
 4. **Validation command**: `niri validate` (checks default location) or `niri validate -c <path>` for custom config path
@@ -520,9 +551,16 @@ home.packages = with pkgs; [
 
 ## Resources
 
+### Internal Documentation
+- **[.claude/README.md](.claude/README.md)** - Practical workflow rules and commands
+- [README.md](./README.md) - Primary Nix/NixOS documentation
+- [TRADITIONAL-README.md](./TRADITIONAL-README.md) - Traditional installation guide
+- [docs/yubikey-ssh-signing.md](./docs/yubikey-ssh-signing.md) - YubiKey SSH signing setup
+- [docs/yubikey-luks-enrollment.md](./docs/yubikey-luks-enrollment.md) - YubiKey LUKS encryption
+
+### External Resources
 - [Home Manager Manual](https://nix-community.github.io/home-manager/)
 - [Home Manager Options Search](https://nix-community.github.io/home-manager/options.html)
 - [Nix Package Search](https://search.nixos.org/packages)
 - [NixOS Options Search](https://search.nixos.org/options)
-- [My Nix README](./README.md)
-- [Traditional Installation README](./TRADITIONAL-README.md)
+- [nvf Documentation](https://github.com/notashelf/nvf) - Neovim configuration framework
