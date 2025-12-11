@@ -61,7 +61,16 @@
       "Bash(mkdir:*)",
       "Bash(git mv:*)",
       "Bash(gpg-connect-agent:*)",
-      "Bash(home-manager switch:*)"
+      "Bash(home-manager switch:*)",
+      "Bash(pgrep:*)",
+      "Bash(readlink:*)",
+      "Bash(/nix/store/wr4mv2yim011zp7rrv92pi13jxa173cj-spotify-1.2.74.477.g3be53afe/share/spotify/.spotify-wrapped)",
+      "Bash(nix-store --verify:*)",
+      "Bash(LD_LIBRARY_PATH=\"/nix/store/xgqagmh51yyxfr83fsb4gzkahwxjz55j-libayatana-appindicator-0.5.92/lib:$LD_LIBRARY_PATH\" /nix/store/wr4mv2yim011zp7rrv92pi13jxa173cj-spotify-1.2.74.477.g3be53afe/share/spotify/.spotify-wrapped)",
+      "Bash(ldd:*)",
+      "Bash(nix-store --query --requisites:*)",
+      "Bash(timeout 5 spotify:*)",
+      "Bash(/nix/store/7hmxaayf8b44c3dnazi0dmnwpx0wjsn0-spotify-1.2.74.477.g3be53afe/share/spotify/.spotify-wrapped)"
     ],
     "deny": [],
     "ask": []
