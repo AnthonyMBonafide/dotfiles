@@ -1,10 +1,22 @@
 { config, pkgs, ... }:
 
+let
+  discord-wayland = pkgs.symlinkJoin {
+    name = "discord";
+    paths = [ pkgs.discord ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/discord \
+        --add-flags "--enable-features=UseOzonePlatform,WaylandWindowDecorations" \
+        --add-flags "--ozone-platform=wayland"
+    '';
+  };
+in
 {
   # General packages and applications
   home.packages = with pkgs; [
     # Applications
-    discord
+    discord-wayland
     spotify
 
     # Steam is now enabled at system level in configuration.nix with proper Wayland support

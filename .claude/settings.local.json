@@ -70,7 +70,8 @@
       "Bash(ldd:*)",
       "Bash(nix-store --query --requisites:*)",
       "Bash(timeout 5 spotify:*)",
-      "Bash(/nix/store/7hmxaayf8b44c3dnazi0dmnwpx0wjsn0-spotify-1.2.74.477.g3be53afe/share/spotify/.spotify-wrapped)"
+      "Bash(/nix/store/7hmxaayf8b44c3dnazi0dmnwpx0wjsn0-spotify-1.2.74.477.g3be53afe/share/spotify/.spotify-wrapped)",
+      "Bash(discord:*)"
     ],
     "deny": [],
     "ask": []
