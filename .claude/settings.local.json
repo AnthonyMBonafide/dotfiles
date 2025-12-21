@@ -71,7 +71,14 @@
       "Bash(nix-store --query --requisites:*)",
       "Bash(timeout 5 spotify:*)",
       "Bash(/nix/store/7hmxaayf8b44c3dnazi0dmnwpx0wjsn0-spotify-1.2.74.477.g3be53afe/share/spotify/.spotify-wrapped)",
-      "Bash(discord:*)"
+      "Bash(discord:*)",
+      "Bash(bash -x:*)",
+      "Bash(bash /nix/store/wr4mv2yim011zp7rrv92pi13jxa173cj-spotify-1.2.74.477.g3be53afe/share/spotify/spotify)",
+      "Bash(spotify:*)",
+      "Bash(bash /etc/profiles/per-user/anthony/bin/spotify)",
+      "Bash(LD_LIBRARY_PATH=\"/nix/store/xgqagmh51yyxfr83fsb4gzkahwxjz55j-libayatana-appindicator-0.5.92/lib:/nix/store/0bpcnim5q2i7m670jsvprpgpjk4pkrdc-libdbusmenu-glib-16.04.0/lib:$LD_LIBRARY_PATH\" /nix/store/wr4mv2yim011zp7rrv92pi13jxa173cj-spotify-1.2.74.477.g3be53afe/bin/spotify:*)",
+      "Bash(strace:*)",
+      "Bash(export LD_LIBRARY_PATH=\"/nix/store/xgqagmh51yyxfr83fsb4gzkahwxjz55j-libayatana-appindicator-0.5.92/lib:/nix/store/0bpcnim5q2i7m670jsvprpgpjk4pkrdc-libdbusmenu-glib-16.04.0/lib:$LD_LIBRARY_PATH\":*)"
     ],
     "deny": [],
     "ask": []
