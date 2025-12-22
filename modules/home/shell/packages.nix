@@ -16,6 +16,10 @@
       fzf # Fuzzy finder
       tldr # Simplified man pages
 
+      # System information and monitoring
+      fastfetch # System information tool
+      btop # Modern resource monitor
+
       # GNU utilities
       gnupg
     ]

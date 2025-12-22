@@ -22,6 +22,11 @@
       set -g fish_color_param 89b4fa
       # Flags/options - orange (catppuccin mocha peach)
       set -g fish_color_option fab387
+
+      # Run fastfetch on startup
+      if status is-interactive
+        fastfetch
+      end
     '';
 
     # Interactive shell config - manually initialize atuin for fish 4.0+ compatibility

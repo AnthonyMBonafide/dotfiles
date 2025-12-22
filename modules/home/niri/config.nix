@@ -2,6 +2,47 @@
 
 let
   cfg = config.myHome.niri;
+
+  # Spotify wrapper with required libraries
+  spotify-fixed = pkgs.symlinkJoin {
+    name = "spotify";
+    paths = [ pkgs.spotify ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/spotify \
+        --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [
+          pkgs.libayatana-appindicator
+          pkgs.libdbusmenu
+          pkgs.gtk3
+          pkgs.pango
+          pkgs.harfbuzz
+          pkgs.atk
+          pkgs.cairo
+          pkgs.gdk-pixbuf
+          pkgs.glib
+          pkgs.alsa-lib
+          pkgs.gcc.cc.lib
+          pkgs.xorg.libX11
+          pkgs.xorg.libXcomposite
+          pkgs.xorg.libXdamage
+          pkgs.xorg.libXext
+          pkgs.xorg.libXfixes
+          pkgs.xorg.libXrandr
+          pkgs.xorg.libxcb
+          pkgs.libxkbcommon
+          pkgs.mesa
+          pkgs.libgbm
+          pkgs.expat
+          pkgs.systemd
+          pkgs.nspr
+          pkgs.nss
+          pkgs.dbus
+          pkgs.cups
+          pkgs.at-spi2-atk
+          pkgs.at-spi2-core
+        ]}"
+    '';
+  };
 in
 {
   # Niri configuration file (KDL format)
@@ -198,7 +239,7 @@ in
         Mod+E { spawn "${pkgs.xfce.thunar}/bin/thunar"; }
         Mod+B { spawn "${pkgs.firefox}/bin/firefox"; }
         Mod+Shift+B { spawn "${pkgs.firefox}/bin/firefox" "--private-window"; }
-        Mod+M { spawn "${pkgs.spotify}/bin/spotify"; }
+        Mod+M { spawn "${spotify-fixed}/bin/spotify"; }
         Mod+D { spawn "${pkgs.discord}/bin/discord"; }
 
         // ============================================================
