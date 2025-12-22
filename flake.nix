@@ -91,6 +91,21 @@
             }
           ];
         };
+
+        # Homelab servers (Beelink mini computers)
+        homelab = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/homelab/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-backup";
+              home-manager.users.anthony = mkNixOSHomeUser "homelab";
+            }
+          ];
+        };
       };
     };
 

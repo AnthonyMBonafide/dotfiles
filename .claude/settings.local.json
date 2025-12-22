@@ -82,7 +82,8 @@
       "Bash(/nix/store/avvl0drmh8j934ydnwmzbwsxbafmzhw1-spotify-1.2.74.477.g3be53afe/bin/spotify:*)",
       "Bash(/nix/store/ikvwgd0idwycnghifxb8kwdbnwz3pdwv-discord-0.0.117/bin/discord:*)",
       "Bash(/nix/store/ljw2dh6bnbi1hm78p95p2yy630k24m92-nixos-system-lambda-core-25.11.20251215.c6f52eb/activate)",
-      "Bash(/nix/store/slwjkmijw0lgarqpyvyslbp1fr1i1vsr-spotify/bin/spotify:*)"
+      "Bash(/nix/store/slwjkmijw0lgarqpyvyslbp1fr1i1vsr-spotify/bin/spotify:*)",
+      "Bash(nix flake check:*)"
     ],
     "deny": [],
     "ask": []
