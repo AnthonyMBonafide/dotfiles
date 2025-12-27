@@ -41,9 +41,6 @@
     enable = true;
   };
 
-  # Enable the GNOME Desktop Environment (keeping as fallback)
-  services.desktopManager.gnome.enable = true;
-
   # Stylix - System-wide theming
   stylix = {
     enable = true;
