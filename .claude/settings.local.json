@@ -85,7 +85,9 @@
       "Bash(/nix/store/slwjkmijw0lgarqpyvyslbp1fr1i1vsr-spotify/bin/spotify:*)",
       "Bash(nix flake check:*)",
       "Bash(nix-store --query --references:*)",
-      "Bash(nix-store -q --tree:*)"
+      "Bash(nix-store -q --tree:*)",
+      "Bash(git config:*)",
+      "Bash(DISPLAY=:0 spotify:*)"
     ],
     "deny": [],
     "ask": []

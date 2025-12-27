@@ -1,4 +1,4 @@
-{ config, pkgs, lib, wallpaper, ... }:
+{ config, pkgs, lib, wallpaper, discordWayland, ... }:
 
 let
   cfg = config.myHome.niri;
@@ -198,6 +198,7 @@ in
         Mod+E { spawn "${pkgs.xfce.thunar}/bin/thunar"; }
         Mod+B { spawn "${pkgs.firefox}/bin/firefox"; }
         Mod+Shift+B { spawn "${pkgs.firefox}/bin/firefox" "--private-window"; }
+        Mod+D { spawn "${discordWayland}/bin/vesktop"; }
 
         // ============================================================
         // WINDOW MANAGEMENT

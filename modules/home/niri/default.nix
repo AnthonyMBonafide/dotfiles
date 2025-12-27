@@ -8,6 +8,9 @@ let
     url = "https://w.wallhaven.cc/full/gj/wallhaven-gjj89q.jpg";
     sha256 = "sha256-BMyPZCT704JDjqsx6nMjfPs30S/Bq3gbpvksQM+BiBc=";
   };
+
+  # Use Vesktop instead of Discord - better Wayland support
+  discord-wayland = pkgs.vesktop;
 in
 {
   options.myHome.niri = {
@@ -27,13 +30,16 @@ in
   };
 
   imports = [
-    (import ./config.nix { inherit config pkgs lib; wallpaper = cfg.wallpaper; })
+    (import ./config.nix { inherit config pkgs lib; wallpaper = cfg.wallpaper; discordWayland = discord-wayland; })
     ./waybar.nix
   ];
 
   config = lib.mkIf cfg.enable {
     # Packages for Niri window manager ecosystem
     home.packages = with pkgs; [
+    # Applications
+    discord-wayland    # Voice and text chat (Vesktop - better Wayland support than regular Discord)
+
     # Core utilities
     waybar             # Status bar (works with Niri)
     wofi               # Application launcher

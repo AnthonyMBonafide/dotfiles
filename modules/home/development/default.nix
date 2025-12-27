@@ -102,9 +102,9 @@
       };
     };
 
-    # SSH-based commit signing with YubiKey FIDO2
+    # SSH-based commit signing
     signing = {
-      key = "~/.ssh/id_ed25519_sk.pub";
+      key = "~/.ssh/id_ed25519.pub";
       signByDefault = true;
     };
 
@@ -118,10 +118,10 @@
   };
 
   # Git allowed signers file for SSH signing verification
-  # This activation script generates the allowed_signers file from your YubiKey FIDO2 SSH key
+  # This activation script generates the allowed_signers file from your SSH key
   # so it automatically stays in sync when you regenerate keys
   home.activation.generateAllowedSigners = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    SSH_KEY="${config.home.homeDirectory}/.ssh/id_ed25519_sk.pub"
+    SSH_KEY="${config.home.homeDirectory}/.ssh/id_ed25519.pub"
     SIGNERS_FILE="${config.home.homeDirectory}/.config/git/allowed_signers"
 
     if [ -f "$SSH_KEY" ]; then
